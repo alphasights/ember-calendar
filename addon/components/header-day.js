@@ -7,7 +7,7 @@ export default Ember.Component.extend({
 
   isSelected: Ember.computed('day.isSelected', function(key, value) {
     if (arguments.length > 1) {
-      this.sendAction('onToggleDaySelection', {
+      this.sendAction('onToggleSelection', {
         day: this.get('day'),
         value: value
       });

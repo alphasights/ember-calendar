@@ -185,8 +185,8 @@ export default Ember.Component.extend({
       this.set('startingDate', startOfCurrentWeek);
     },
 
-    dayIsSelectedChange: function(params) {
-      this.sendAction('dayIsSelectedChange', params);
+    onDayToggleSelection: function(params) {
+      this.sendAction('onDayToggleSelection', params);
     }
   }
 });
