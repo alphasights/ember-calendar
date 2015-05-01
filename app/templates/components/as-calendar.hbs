@@ -1,0 +1,85 @@
+<header>
+  <div class="details">
+    <h1>
+      {{title}}
+    </h1>
+
+    <div class="navigation">
+      <ul class="navigation-actions">
+        <li>
+          <button class="previous-week" {{action "navigateWeek" -1}}></button>
+        </li>
+        <li>
+          <button disabled={{isShowingCurrentWeek}} class="current-week" {{action "goToCurrentWeek"}}>This Week</button>
+        </li>
+        <li>
+          <button class="next-week" {{action "navigateWeek" 1}}></button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="time-zone">
+    {{#rl-dropdown-container class="dropdown-search"}}
+      {{#rl-dropdown-toggle tagName="a" class="toggle"}}
+        <span>{{selectedTimeZoneOption.abbreviation}}</span>
+        <i></i>
+      {{/rl-dropdown-toggle}}
+
+      {{#rl-dropdown tagName="ul" class="bottom" closeOnChildClick=true}}
+        <li class="input">
+          <div class="icon"><i></i></div>
+          {{input type="text" value=timeZoneQuery click=onSearchClick placeholder="Search for more timezones"}}
+        </li>
+
+        <li class="results">
+          <ul>
+            {{#each timeZoneOption in filteredTimeZoneOptions class="results"}}
+              <li>
+                {{as-calendar/time-zone-option
+                  timeZoneOption=timeZoneOption
+                  calendar=this}}
+              </li>
+            {{/each}}
+          </ul>
+        </li>
+      {{/rl-dropdown}}
+    {{/rl-dropdown-container}}
+
+    <div>All Day</div>
+  </div>
+
+  <div class="days">
+    <ul>
+      {{#each day in days}}
+        <li style={{dayStyle}}>
+          {{as-calendar/header-day day=day calendar=this isSelectedChange="dayIsSelectedChange"}}
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+</header>
+
+<div>
+  <ul class="time-slots" style={{timeSlotsHeaderStyle}}>
+    {{#each timeSlot in headerTimeSlots}}
+      <li style={{headerTimeSlotStyle}}>
+        {{moment timeSlot.localValue "h A"}}
+      </li>
+    {{/each}}
+  </ul>
+
+  <ul class="days">
+    {{#each day in days}}
+      <li style={{dayStyle}} class="{{if day.isSelected "is-selected"}}">
+        <ul class="times">
+          {{#each timeSlot in timeSlots}}
+            <li>
+              {{as-calendar/time timeSlot=timeSlot day=day calendar=this}}
+            </li>
+          {{/each}}
+        </ul>
+      </li>
+    {{/each}}
+  </ul>
+</div>
