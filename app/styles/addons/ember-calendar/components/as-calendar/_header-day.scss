@@ -6,45 +6,47 @@ $calendar-day-checkbox-color: $calendar-occurrence-selection-color;
   border-color: $calendar-day-checkbox-color;
 }
 
-.as-calendar-day-checkbox {
-  line-height: 0;
-  padding: $column-gutter / 4 0;
-  width: 100%;
+.as-calendar-header-day {
+  .calendar-day-checkbox {
+    line-height: 0;
+    padding: $column-gutter / 4 0;
+    width: 100%;
 
-  &:before,
-  &:after {
-    content: '\00a0';
-    display: inline-block;
-    line-height: $base-line-height;
-  }
-
-  input[type=checkbox] {
-    display: none;
-    margin: 0;
-
-    &:checked + label {
-      @include calendar-day-hovered-checkbox;
-    }
-
-    &:checked + label:before {
-      opacity: 1;
-    }
-
-    + label {
-      @include icon(check);
-
-      background: $ghost;
-      border: 1px solid $iron;
-      cursor: pointer;
+    &:before,
+    &:after {
+      content: '\00a0';
       display: inline-block;
-      height: $calendar-day-checkbox-size;
-      margin: 0 auto;
-      user-select: none;
-      width: $calendar-day-checkbox-size;
+      line-height: $base-line-height;
+    }
 
-      &:before {
-        color: $white;
-        opacity: 0;
+    input[type=checkbox] {
+      display: none;
+      margin: 0;
+
+      &:checked + label {
+        @include calendar-day-hovered-checkbox;
+      }
+
+      &:checked + label:before {
+        opacity: 1;
+      }
+
+      + label {
+        @include icon(check);
+
+        background: $ghost;
+        border: 1px solid $iron;
+        cursor: pointer;
+        display: inline-block;
+        height: $calendar-day-checkbox-size;
+        margin: 0 auto;
+        user-select: none;
+        width: $calendar-day-checkbox-size;
+
+        &:before {
+          color: $white;
+          opacity: 0;
+        }
       }
     }
   }
