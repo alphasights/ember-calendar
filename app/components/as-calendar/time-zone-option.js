@@ -1,2 +1,2 @@
-import TimeZoneOptionComponent from 'ember-calendar/components/time-zone-option';
+import TimeZoneOptionComponent from 'ember-calendar/components/as-calendar/time-zone-option';
 export default TimeZoneOptionComponent;

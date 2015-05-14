@@ -2,8 +2,19 @@ $calendar-occurrence-color: #696969;
 $calendar-occurrence-selection-color: #ff6868;
 $calendar-legend-item-size: 15px;
 
-.calendar {
+.as-calendar {
   @include clearfix;
+
+  background: $white;
+
+  ul,
+  li,
+  ul li ul,
+  ul li ul li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
 
   ul {
     line-height: $base-line-height;
@@ -137,7 +148,7 @@ $calendar-legend-item-size: 15px;
         }
       }
 
-      .calendar-time {
+      .as-calendar-time {
         border: 1px solid $global-section-border-color;
         border-bottom: 0;
         border-right: 0;

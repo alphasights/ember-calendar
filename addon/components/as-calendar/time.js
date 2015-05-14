@@ -1,12 +1,12 @@
 import Ember from 'ember';
 import moment from 'moment';
-import Occurrence from '../models/occurrence';
 import interact from 'interact';
+import Occurrence from 'ember-calendar/models/occurrence';
 
 export default Ember.Component.extend({
   tagName: 'article',
 
-  classNameBindings: [':calendar-time'],
+  classNameBindings: [':as-calendar-time'],
   attributeBindings: ['style'],
 
   timeSlot: null,

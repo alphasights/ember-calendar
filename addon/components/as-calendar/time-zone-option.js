@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   tagName: 'a',
-  classNameBindings: [':calendar-time-zone-option', 'isSelected:selected'],
+  classNameBindings: [':as-calendar-time-zone-option', 'isSelected:selected'],
 
   timeZoneOption: null,
   calendar: null,

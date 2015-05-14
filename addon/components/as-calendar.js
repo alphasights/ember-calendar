@@ -1,15 +1,15 @@
+import _ from 'lodash';
 import moment from 'moment';
 import Ember from 'ember';
-import TimeSlot from '../models/time-slot';
-import Day from '../models/day';
-import TimeZoneOption from '../models/time-zone-option';
-import _ from 'lodash';
+import TimeSlot from 'ember-calendar/models/time-slot';
+import Day from 'ember-calendar/models/day';
+import TimeZoneOption from 'ember-calendar/models/time-zone-option';
 
 var startOfCurrentWeek = moment().startOf('week');
 
 export default Ember.Component.extend({
   tagName: 'section',
-  classNameBindings: [':calendar'],
+  classNameBindings: [':as-calendar'],
 
   defaultSelectionDuration: moment.duration(60, 'minute'),
   defaultSelectionType: null,

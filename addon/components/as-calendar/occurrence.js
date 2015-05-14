@@ -4,7 +4,7 @@ import interact from 'interact';
 
 export default Ember.Component.extend({
   tagName: 'article',
-  classNameBindings: [':calendar-occurrence', 'occurrence.type', 'type'],
+  classNameBindings: [':as-calendar-occurrence', 'occurrence.type', 'type'],
   attributeBindings: ['style'],
 
   calendar: null,
@@ -128,16 +128,16 @@ export default Ember.Component.extend({
     var relativeTimeOffset = this.relativeTimeOffsetFromEvent(component, event);
 
     if (lastRelativeTime != null) {
-      lastRelativeTime.$('.calendar-occurrence:last').hide();
+      lastRelativeTime.$('.as-calendar-occurrence:last').hide();
     }
 
     var relativeTime = this.componentFromElement(Ember.$(document.elementFromPoint(
       relativeTimeOffset.left - Ember.$(window).scrollLeft(),
       relativeTimeOffset.top - Ember.$(window).scrollTop()
-    )).closest('.calendar-time'));
+    )).closest('.as-calendar-time'));
 
     if (lastRelativeTime != null) {
-      lastRelativeTime.$('.calendar-occurrence:last').show();
+      lastRelativeTime.$('.as-calendar-occurrence:last').show();
     }
 
     return relativeTime;

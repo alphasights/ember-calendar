@@ -1,0 +1,13 @@
+@import 'paint-settings';
+@import 'bower_components/paint/paint';
+@import 'addons/ember-calendar/main';
+
+body {
+  background-color: $iron;
+  padding: $column-gutter;
+
+  .as-calendar {
+    border-radius: $global-radius;
+    overflow: hidden;
+  }
+}
