@@ -1,0 +1,28 @@
+.as-calendar-editable-occurrence {
+  &:hover {
+    .delete {
+      opacity: 1;
+    }
+
+    &.resizing .delete {
+      opacity: 0;
+    }
+  }
+
+  .delete {
+    @include single-transition(color, 150ms);
+    @include single-transition(opacity, 150ms);
+    @include icon(times);
+
+    color: $white;
+    opacity: 0;
+    position: absolute;
+    right: $column-gutter / 4;
+    top: $column-gutter / 8;
+
+    &:hover {
+      background-color: transparent;
+      color: darken($alert-color, 10%);
+    }
+  }
+}

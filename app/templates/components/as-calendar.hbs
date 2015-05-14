@@ -53,7 +53,7 @@
     <ul>
       {{#each day in days}}
         <li style={{dayStyle}}>
-          {{as-calendar/header-day day=day calendar=this onToggleSelection="onDayToggleSelection"}}
+          {{as-calendar/header-day day=day calendar=this isSelectedChange="dayIsSelectedChange"}}
         </li>
       {{/each}}
     </ul>

@@ -25,20 +25,13 @@ export default Ember.Component.extend({
   timeZone: null,
   title: '',
   timeZoneQuery: '',
+  disableInteractions: false,
 
-  initializeDefaults: Ember.on('init', function() {
+  initializeTimeZone: function() {
     if (this.get('timeZone') == null) {
       this.set('timeZone', 'UTC');
     }
-
-    if (this.get('selections') == null) {
-      this.set('selections', []);
-    }
-
-    if (this.get('occurrences') == null) {
-      this.set('occurrences', []);
-    }
-  }),
+  }.on('init'),
 
   localTimeZoneOffset: Ember.computed('timeZone', 'startingDate', function() {
     var startingDate = this.get('startingDate');
@@ -185,8 +178,8 @@ export default Ember.Component.extend({
       this.set('startingDate', startOfCurrentWeek);
     },
 
-    onDayToggleSelection: function(params) {
-      this.sendAction('onDayToggleSelection', params);
+    dayIsSelectedChange: function(params) {
+      this.sendAction('dayIsSelectedChange', params);
     }
   }
 });

@@ -1,7 +1,8 @@
+import interact from 'interact';
 import Ember from 'ember';
 import moment from 'moment';
-import interact from 'interact';
 import Occurrence from 'ember-calendar/models/occurrence';
+import TimeOccurrence from 'ember-calendar/models/time/occurrence';
 
 export default Ember.Component.extend({
   tagName: 'article',
@@ -33,10 +34,14 @@ export default Ember.Component.extend({
     interact(this.$()[0])
       .dropzone({})
       .on('dragenter', (event) => {
-        this.dragEnter(event);
+        Ember.run(() => {
+          this.dragEnter(event);
+        });
       })
       .on('drop', (event) => {
-        this.drop(event);
+        Ember.run(() => {
+          this.drop(event);
+        });
       });
   }),
 
@@ -71,6 +76,8 @@ export default Ember.Component.extend({
     return this.get('allOccurrences').filter((occurrence) => {
       var occurrenceTime = occurrence.get('time').toDate();
       return occurrenceTime >= time && occurrenceTime < endingTime;
+    }).map((occurrence) => {
+      return TimeOccurrence.create({ time: this, occurrence: occurrence });
     });
   })
 });

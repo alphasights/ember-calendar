@@ -4,6 +4,7 @@
 
 body {
   background-color: $iron;
+  cursor: inherit;
   padding: $column-gutter;
 
   .as-calendar {

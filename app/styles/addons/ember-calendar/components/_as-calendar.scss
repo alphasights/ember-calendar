@@ -133,16 +133,9 @@ $calendar-legend-item-size: 15px;
       > li.is-selected {
         background-color: $iron;
         opacity: .2;
-
-        &,
-        * {
-          pointer-events: none;
-        }
       }
 
       .times > li {
-        cursor: auto;
-
         &:first-child .calendar-time {
           border-top: 0;
         }

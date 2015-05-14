@@ -1,7 +1,9 @@
 <ul class="occurrences">
   {{#each occurrence in occurrences}}
     <li>
-      {{as-calendar/occurrence occurrence=occurrence calendar=calendar}}
+      {{component occurrence.componentName
+        occurrence=occurrence.occurrence
+        calendar=calendar}}
     </li>
   {{/each}}
 </ul>

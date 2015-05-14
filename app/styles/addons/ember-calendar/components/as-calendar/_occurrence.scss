@@ -1,17 +1,16 @@
-.as-calendar-occurrence {
+.calendar-occurrence {
   background-color: rgba($calendar-occurrence-color, .8);
   border: 1px solid;
   border-color: $calendar-occurrence-color;
   color: $white;
-  cursor: move;
   overflow: hidden;
   padding: 0 $column-gutter / 4;
-  pointer-events: none;
   position: relative;
   text-align: left;
 
-  &:hover .delete {
-    opacity: 1;
+  &.selection {
+    background-color: rgba($calendar-occurrence-selection-color, .8);
+    border-color: $calendar-occurrence-selection-color;
   }
 
   &,
@@ -25,35 +24,11 @@
     margin: 0;
   }
 
-  .delete {
-    @include single-transition(color, 150ms);
-    @include single-transition(opacity, 150ms);
-    @include icon(times);
-
-    color: $white;
-    opacity: 0;
-    position: absolute;
-    right: $column-gutter / 4;
-    top: $column-gutter / 8;
-
-    &:hover {
-      background-color: transparent;
-      color: darken($alert-color, 10%);
-    }
-  }
-
   .resize-handle {
     bottom: 0;
-    cursor: ns-resize;
     height: rem-calc(8);
     left: 0;
     position: absolute;
     right: 0;
-  }
-
-  &.selection {
-    background-color: rgba($calendar-occurrence-selection-color, .8);
-    border-color: $calendar-occurrence-selection-color;
-    pointer-events: auto;
   }
 }
