@@ -22,14 +22,16 @@
 
 <section class="days">
   <header>
-    {{as-calendar/time-zone-select calendar=this onSelectOption="onSelectTimeZone"}}
+    {{as-calendar/time-zone-select
+      timeZone=timeZone
+      onSelectOption="onSelectTimeZone"}}
 
     <div class="all-day-label">All Day</div>
 
-    <ul class="time-slot-labels" style={{timeSlotsHeaderStyle}}>
-      {{#each timeSlot in headerTimeSlots}}
-        <li style={{headerTimeSlotStyle}}>
-          {{moment timeSlot.localValue "h A"}}
+    <ul class="time-slot-labels" style={{timeSlotLabelListStyle}}>
+      {{#each timeSlot in daysHeaderTimeSlots}}
+        <li style={{timeSlotStyle}}>
+          {{moment timeSlot.value "h A"}}
         </li>
       {{/each}}
     </ul>
@@ -38,7 +40,7 @@
   <ul>
     {{#each day in days}}
       <li style={{dayStyle}}>
-        {{as-calendar/day day=day calendar=this}}
+        {{as-calendar/day day=day}}
       </li>
     {{/each}}
   </ul>

@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  classNameBindings: [':as-calendar-header-day'],
+  classNameBindings: [':as-calendar-day'],
   calendar: null,
   day: null,
 
