@@ -6,25 +6,25 @@ var ComponentCalendar = Calendar.extend({
   occurrences: Ember.computed.oneWay('component.occurrences'),
   timeZone: Ember.computed.oneWay('component.timeZone'),
   startingDate: Ember.computed.oneWay('component.startingDate'),
-  dayStartingHour: Ember.computed.oneWay('component.dayStartingHour'),
-  dayEndingHour: Ember.computed.oneWay('component.dayEndingHour'),
-  timeSlotMinutes: Ember.computed.oneWay('component.timeSlotMinutes')
+  dayStartingTime: Ember.computed.oneWay('component.dayStartingTime'),
+  dayEndingTime: Ember.computed.oneWay('component.dayEndingTime'),
+  timeSlotDuration: Ember.computed.oneWay('component.timeSlotDuration')
 });
 
 export default Ember.Component.extend({
   classNameBindings: [':as-calendar'],
   tagName: 'section',
 
-  dayEndingHour: 22,
-  dayStartingHour: 7,
+  dayEndingTime: '22:00',
+  dayStartingTime: '8:00',
   days: Ember.computed.oneWay('_model.days'),
   defaultTimeZoneRegexp: /New York|London|Dubai|Hong Kong/,
   isEditing: true,
   isInCurrentWeek: Ember.computed.oneWay('_model.isInCurrentWeek'),
   occurrences: null,
   startingDate: null,
+  timeSlotDuration: '00:30',
   timeSlotHeight: 20,
-  timeSlotMinutes: 30,
   timeSlots: Ember.computed.oneWay('_model.timeSlots'),
   timeZone: 'UTC',
   title: '',

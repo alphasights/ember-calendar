@@ -1,13 +1,16 @@
 import Ember from 'ember';
-import _ from 'lodash';
 import moment from 'moment';
 import TimeSlot from './time-slot';
 import Day from './day';
+import computedDuration from 'ember-calendar/macros/computed-duration';
 
 export default Ember.Object.extend({
+  dayEndingTime: null,
+  dayStartingTime: null,
   occurrences: null,
   startingDate: null,
-  timeSlotMinutes: null,
+  timeSlotDuration: null,
+  timeZone: null,
 
   isInCurrentWeek: Ember.computed('week', '_currentWeek', function() {
     return this.get('week').isSame(this.get('_currentWeek'));
@@ -15,24 +18,19 @@ export default Ember.Object.extend({
 
   timeSlots: Ember.computed(
     'timeZone',
-    'dayStartingHour',
-    'dayEndingHour',
-    'timeSlotMinutes', function() {
-    return TimeSlot.createList({
+    '_dayStartingTime',
+    '_dayEndingTime',
+    '_timeSlotDuration', function() {
+    return TimeSlot.buildDay({
       timeZone: this.get('timeZone'),
-      dayStartingHour: this.get('dayStartingHour'),
-      dayEndingHour: this.get('dayEndingHour'),
-      minutes: this.get('timeSlotMinutes')
+      startingTime: this.get('_dayStartingTime'),
+      endingTime: this.get('_dayEndingTime'),
+      duration: this.get('_timeSlotDuration')
     });
   }),
 
   days: Ember.computed(function() {
-    return _.range(0, 6).map((dayOffset) => {
-      return Day.create({
-        calendar: this,
-        offset: dayOffset
-      });
-    });
+    return Day.buildWeek({ calendar: this });
   }),
 
   week: Ember.computed('startingDate', 'timeZone', function(_, value) {
@@ -45,6 +43,10 @@ export default Ember.Object.extend({
       .tz(this.get('timeZone'))
       .startOf('week');
   }),
+
+  _dayStartingTime: computedDuration('dayStartingTime'),
+  _dayEndingTime: computedDuration('dayEndingTime'),
+  _timeSlotDuration: computedDuration('timeSlotDuration'),
 
   _currentWeek: Ember.computed('timeZone', function() {
     return moment().utc().tz(this.get('timeZone')).startOf('week');
