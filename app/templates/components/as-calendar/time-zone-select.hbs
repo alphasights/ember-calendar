@@ -1,25 +1,29 @@
-{{#rl-dropdown-container class="dropdown-search"}}
-  {{#rl-dropdown-toggle tagName="a" class="toggle"}}
+{{#rl-dropdown-container}}
+  {{#rl-dropdown-toggle}}
     <span>{{selectedOption.abbreviation}}</span>
     <i></i>
   {{/rl-dropdown-toggle}}
 
-  {{#rl-dropdown tagName="ul" class="bottom" closeOnChildClick=true}}
-    <li class="input">
+  {{#rl-dropdown class="bottom" closeOnChildClick=true}}
+    <div class="search">
       <div class="icon"><i></i></div>
-      {{input type="text" value=timeZoneQuery click=onSearchClick placeholder="Search for more timezones"}}
-    </li>
 
-    <li class="results">
+      {{input type="text"
+        value=query
+        click=onSearchClick
+        placeholder="Search for more timezones"}}
+    </div>
+
+    <div class="results">
       <ul>
-        {{#each timeZoneOption in filteredTimeZoneOptions class="results"}}
+        {{#each option in arrangedOptions}}
           <li>
             {{as-calendar/time-zone-option
-              timeZoneOption=timeZoneOption
-              calendar=this}}
+              option=option
+              onSelect="onSelectOption"}}
           </li>
         {{/each}}
       </ul>
-    </li>
+    </div>
   {{/rl-dropdown}}
 {{/rl-dropdown-container}}

@@ -1,31 +1,41 @@
+import moment from 'moment';
 import Ember from 'ember';
+import TimeZoneOption from 'ember-calendar/models/time-zone-option';
 
 export default Ember.Component.extend({
   classNameBindings: [':as-calendar-time-zone-select'],
 
-  _timeZoneQuery: '',
+  defaultRegexp: null,
+  value: null,
+  query: '',
 
-  _timeZoneOptions: moment.tz.names().map(function(timeZoneName) {
-    return TimeZoneOption.create({ value: timeZoneName });
-  }),
+  arrangedOptions: Ember.computed('_options.[]', 'query', function() {
+    var query = this.get('query');
+    var regexp;
 
-  _arrangedTimeZoneOptions: Ember.computed('_timeZoneOptions.[]', '_timeZoneQuery', function() {
-    var timeZoneQuery = this.get('_timeZoneQuery');
-    var timeZoneRegexp;
-
-    if (timeZoneQuery.length > 1) {
-      timeZoneRegexp = new RegExp(timeZoneQuery, 'i');
+    if (query.length > 1) {
+      regexp = new RegExp(query, 'i');
     } else {
-      timeZoneRegexp = this.get('defaultTimeZoneRegexp');
+      regexp = this.get('defaultRegexp');
     }
 
-    return this.get('_timeZoneOptions').filter((timeZoneOption) => {
-      return timeZoneOption.get('description').match(timeZoneRegexp) ||
-             timeZoneOption === this.get('_selectedTimeZoneOption');
+    return this.get('_options').filter((option) => {
+      return option.get('description').match(regexp) ||
+             option === this.get('selectedOption');
     });
   }),
 
-  _selectedTimeZoneOption: Ember.computed('timeZone', '_timeZoneOptions.@each.value', function() {
-    return this.get('_timeZoneOptions').findBy('value', this.get('timeZone'));
+  selectedOption: Ember.computed('value', '_options.@each.value', function() {
+    return this.get('_options').findBy('value', this.get('value'));
   }),
+
+  _options: moment.tz.names().map(function(timeZoneName) {
+    return TimeZoneOption.create({ value: timeZoneName });
+  }),
+
+  actions: {
+    onSelectOption: function(option) {
+      this.sendAction('onChangeValue', option.get('value'));
+    }
+  }
 });

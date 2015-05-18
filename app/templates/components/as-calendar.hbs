@@ -23,8 +23,9 @@
 <section class="days">
   <header>
     {{as-calendar/time-zone-select
-      timeZone=timeZone
-      onSelectOption="onSelectTimeZone"}}
+      value=timeZone
+      onChangeValue="onChangeTimeZone"
+      defaultRegexp=defaultTimeZoneRegexp}}
 
     <div class="all-day-label">All Day</div>
 

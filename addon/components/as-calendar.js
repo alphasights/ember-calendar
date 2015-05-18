@@ -65,7 +65,7 @@ export default Ember.Component.extend({
   },
 
   actions: {
-    onSelectTimeZone: function(timeZone) {
+    onChangeTimeZone: function(timeZone) {
       this.set('timeZone', timeZone);
     },
 
