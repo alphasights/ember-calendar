@@ -69,12 +69,16 @@ export default Ember.Component.extend({
       this.set('timeZone', timeZone);
     },
 
+    onDayToggleSelect: function(day, value) {
+      day.set('isSelected', value);
+    },
+
     navigateWeek: function(index) {
       this.get('_model').navigateWeek(index);
     },
 
     goToCurrentWeek: function() {
       this.get('_model').goToCurrentWeek();
-    },
+    }
   }
 });

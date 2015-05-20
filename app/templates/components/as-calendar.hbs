@@ -9,8 +9,8 @@
 
       <li>
         <button disabled={{isInCurrentWeek}}
-                class="current-week"
-                {{action "goToCurrentWeek"}}>This Week</button>
+          class="current-week"
+          {{action "goToCurrentWeek"}}>This Week</button>
       </li>
 
       <li>
@@ -41,7 +41,7 @@
   <ul>
     {{#each day in days}}
       <li style={{dayStyle}}>
-        {{as-calendar/day day=day}}
+        {{as-calendar/day day=day onToggleSelect="onDayToggleSelect"}}
       </li>
     {{/each}}
   </ul>

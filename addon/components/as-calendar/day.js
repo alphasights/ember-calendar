@@ -2,21 +2,20 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   classNameBindings: [':as-calendar-day'],
-  calendar: null,
-  day: null,
 
-  isSelected: Ember.computed('day.isSelected', function(key, value) {
+  day: null,
+  value: Ember.computed.oneWay('day.value'),
+  timeSlots: Ember.computed.oneWay('day.calendar.timeSlots'),
+
+  isSelected: Ember.computed('day.isSelected', function(_, value) {
     if (arguments.length > 1) {
-      this.sendAction('isSelectedChange', {
-        day: this.get('day'),
-        value: value
-      });
+      this.sendAction('onToggleSelect', this.get('day'), value);
     }
 
     return this.get('day.isSelected');
   }),
 
-  checkboxId: Ember.computed('elementId', function() {
+  selectCheckboxId: Ember.computed('elementId', function() {
     return `${this.get('elementId')}-checkbox`;
   })
 });

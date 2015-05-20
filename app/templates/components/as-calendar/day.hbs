@@ -1,1 +1,14 @@
-{{moment day.value "ddd D MMM"}}
+<header>
+  <h1>{{moment value "ddd D MMM"}}</h1>
+
+  <div class="select">
+    {{input type="checkbox" id=selectCheckboxId checked=isSelected}}
+    <label for="{{selectCheckboxId}}"></label>
+  </div>
+</header>
+
+<ul>
+  {{#each timeSlot in timeSlots}}
+    <li></li>
+  {{/each}}
+</ul>
