@@ -1,13 +1,9 @@
-$calendar-day-checkbox-size: 18px;
-$calendar-day-checkbox-color: $alert-color;
+.as-calendar-day {
+  h1 {
+    font-size: $base-font-size;
+  }
 
-@mixin calendar-day-hovered-checkbox {
-  background-color: rgba($calendar-day-checkbox-color, .8);
-  border-color: $calendar-day-checkbox-color;
-}
-
-.as-calendar-header-day {
-  .calendar-day-checkbox {
+  .select {
     line-height: 0;
     padding: $column-gutter / 4 0;
     width: 100%;
@@ -24,7 +20,8 @@ $calendar-day-checkbox-color: $alert-color;
       margin: 0;
 
       &:checked + label {
-        @include calendar-day-hovered-checkbox;
+        background-color: rgba($alert-color, .8);
+        border-color: $alert-color;
       }
 
       &:checked + label:before {
@@ -38,10 +35,10 @@ $calendar-day-checkbox-color: $alert-color;
         border: 1px solid $iron;
         cursor: pointer;
         display: inline-block;
-        height: $calendar-day-checkbox-size;
+        height: 18px;
         margin: 0 auto;
         user-select: none;
-        width: $calendar-day-checkbox-size;
+        width: 18px;
 
         &:before {
           color: $white;

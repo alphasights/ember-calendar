@@ -48,12 +48,28 @@
   .days {
     @extend %grid-row;
 
+    * {
+      white-space: nowrap;
+    }
+
+    header {
+      &, h1 {
+        text-align: center;
+        color: $small-font-color;
+        font-weight: $font-weight-bold;
+      }
+    }
+
     > header {
       @extend %grid-column-1;
+
+      padding: 0;
     }
 
     > div {
       @extend %grid-column-11;
+
+      padding: 0 !important;
 
       > ul {
         @include clearfix;
@@ -72,6 +88,19 @@
           }
         }
       }
+    }
+
+    .as-calendar-time-zone-select,
+    .all-day-label,
+    .as-calendar-day header h1,
+    .as-calendar-day .select {
+      background-color: lighten($global-section-border-color, 3%);
+      padding: $column-gutter / 4 0;
+    }
+
+    .as-calendar-time-zone-select,
+    .as-calendar-day header h1 {
+      border-bottom: 1px solid darken($global-section-border-color, 5%);
     }
   }
 }

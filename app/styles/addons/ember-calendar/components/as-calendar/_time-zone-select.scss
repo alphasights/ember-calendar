@@ -1,0 +1,107 @@
+.as-calendar-time-zone-select {
+  position: relative;
+
+  .rl-dropdown-toggle {
+    background-color: transparent;
+    border: 0;
+    color: $anchor-font-color;
+    margin: 0;
+
+    i {
+      @include icon(caret-down);
+    }
+
+    span {
+      font-weight: $font-weight-bold;
+    }
+  }
+
+  .rl-dropdown {
+    &:before {
+      @include dropdown-triangle(12px, $white, 'bottom');
+    }
+
+    background-clip: padding-box;
+    background-color: $dropdown-background-color;
+    border-radius: $global-radius / 2;
+    border: 1px solid $dropdown-border-color;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .175);
+    display: none;
+    float: left;
+    font-size: $base-font-size;
+    left: 0;
+    list-style: none;
+    margin: 0;
+    min-width: 100px;
+    position: absolute;
+    text-align: left;
+    top: 100%;
+    z-index: $dropdown-z-index;
+
+    .search, .results {
+      @extend %dropdown-item;
+    }
+
+    .search {
+      cursor: auto;
+      padding: $dropdown-search-inner-padding $dropdown-search-inner-padding * 2;
+      position: relative;
+
+      &:hover {
+        background-color: transparent;
+      }
+
+      .icon {
+        height: $dropdown-search-icon-size;
+        left: $dropdown-search-inner-padding;
+        margin: $dropdown-search-inner-padding * 2 0;
+        overflow: hidden;
+        position: absolute;
+        text-align: center;
+        top: $dropdown-search-inner-padding;
+        width: $dropdown-search-icon-size;
+
+        i {
+          @include icon(search);
+
+          color: $primary-color;
+          line-height: $dropdown-search-icon-size;
+        }
+      }
+
+      input {
+        @include form-input;
+
+        height: $dropdown-search-icon-size;
+        line-height: $dropdown-search-icon-size;
+        margin: $dropdown-search-inner-padding * 2 0;
+        padding-left: $dropdown-search-icon-size;
+        width: 100%;
+      }
+    }
+
+    .results {
+      margin: 0;
+      max-height: $dropdown-search-results-height;
+      overflow-x: hidden;
+      overflow-y: scroll;
+      padding: 0;
+
+      > ul {
+        margin: 0;
+        padding: 0;
+
+        > li {
+          @extend %dropdown-item;
+
+          cursor: pointer;
+          padding: $dropdown-search-inner-padding $column-gutter / 2;
+
+          &:hover {
+            background-color: $dropdown-link-hover-background-color;
+          }
+        }
+      }
+    }
+  }
+}

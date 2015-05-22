@@ -9,10 +9,16 @@ export default Ember.Object.extend({
   }),
 
   abbreviation: Ember.computed('value', function() {
-    return moment().tz(this.get('value')).zoneAbbr();
+    return moment().tz(this.get('value')).format('z');
+  }),
+
+  offset: Ember.computed('value', function() {
+    return moment().tz(this.get('value')).format('Z');
   }),
 
   description: Ember.computed('value', function() {
-    return `${this.get('title')} (${this.get('abbreviation')})`;
+    return `${this.get('title')}
+            (${this.get('offset')}
+            ${this.get('abbreviation')})`;
   })
 });

@@ -4,7 +4,7 @@
     <i></i>
   {{/rl-dropdown-toggle}}
 
-  {{#rl-dropdown class="bottom" closeOnChildClick=true}}
+  {{#rl-dropdown closeOnChildClick=".results"}}
     <div class="search">
       <div class="icon"><i></i></div>
 
@@ -20,6 +20,7 @@
           <li>
             {{as-calendar/time-zone-option
               option=option
+              select=this
               onSelect="onSelectOption"}}
           </li>
         {{/each}}
