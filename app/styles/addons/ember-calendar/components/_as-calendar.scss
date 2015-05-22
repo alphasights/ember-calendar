@@ -90,6 +90,10 @@
       }
     }
 
+    .time-slot-labels li:first-child {
+      color: transparent;
+    }
+
     .as-calendar-time-zone-select,
     .all-day-label,
     .as-calendar-day header h1,

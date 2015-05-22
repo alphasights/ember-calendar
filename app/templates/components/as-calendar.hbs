@@ -31,7 +31,7 @@
 
     <ul class="time-slot-labels" style={{timeSlotLabelListStyle}}>
       {{#each timeSlot in daysHeaderTimeSlots}}
-        <li style={{timeSlotStyle}}>
+        <li style={{timeSlotLabelStyle}}>
           {{moment timeSlot.value "h A"}}
         </li>
       {{/each}}
@@ -41,8 +41,11 @@
   <div>
     <ul>
       {{#each day in days}}
-        <li style={{dayStyle}}>
-          {{as-calendar/day day=day onToggleSelect="onDayToggleSelect"}}
+        <li>
+          {{as-calendar/day
+            day=day
+            calendar=this
+            onToggleSelect="onDayToggleSelect"}}
         </li>
       {{/each}}
     </ul>

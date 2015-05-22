@@ -1,4 +1,9 @@
 .as-calendar-day {
+  &.selected .time-slots {
+    background-color: $iron;
+    opacity: .2;
+  }
+
   h1 {
     font-size: $base-font-size;
   }
@@ -45,6 +50,21 @@
           opacity: 0;
         }
       }
+    }
+  }
+
+  .time-slots li {
+    border: 1px solid $global-section-border-color;
+    border-bottom: 0;
+    border-right: 0;
+    border-top-color: darken($global-section-border-color, 2%);
+
+    &:first-child {
+      border-top: 0;
+    }
+
+    &:nth-child(even) {
+      border-top-color: lighten($global-section-border-color, 3%);
     }
   }
 }
