@@ -1,174 +1,77 @@
-$calendar-occurrence-color: #696969;
-$calendar-occurrence-selection-color: #ff6868;
-$calendar-legend-item-size: 15px;
-
 .as-calendar {
-  @include clearfix;
-
   background: $white;
 
-  h1 {
-    margin: 0;
-  }
-
-  ul,
-  li,
-  ul li ul,
-  ul li ul li {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  ul {
-    line-height: $base-line-height;
-  }
-
-  header {
+  > header {
     @extend %grid-row;
 
-    background-color: lighten($global-section-border-color, 3%);
+    background-color: $ghost;
     border: 1px solid $global-section-border-color;
 
-    .details {
-      @extend %grid-row;
-
-      background-color: $ghost;
-
-      &,
-      h1 {
-        line-height: rem-calc(80);
-      }
-
-      h1 {
-        @extend %grid-column-6;
-      }
-
-      .navigation {
-        @extend %grid-column-6;
-
-        text-align: right;
-
-        > ul {
-          @extend %button-group;
-
-          > li {
-            padding: $column-gutter / 4 0;
-          }
-        }
-
-        .previous-week {
-          @include button-icon('caret-left');
-        }
-
-        .current-week {
-          &:disabled {
-            color: $global-section-border-color;
-          }
-        }
-
-        .next-week {
-          @include button-icon('caret-right');
-        }
-      }
+    nav,
+    h1 {
+      line-height: rem-calc(80);
     }
 
-    .days .calendar-day-label,
-    .time-zone > div {
-      padding: $column-gutter / 4 0;
+    h1 {
+      @extend %grid-column-6;
     }
 
-    .dropdown-search,
-    .days .calendar-day-label {
-      border-bottom: 1px solid darken($global-section-border-color, 5%);
-      color: $monsoon;
-    }
+    nav {
+      @extend %grid-column-6;
 
-    .time-zone {
+      text-align: right;
+
+      > ul {
+        @extend %button-group;
+
+        > li {
+          padding: $column-gutter / 4 0;
+        }
+      }
+
+      .previous-week {
+        @include button-icon('caret-left');
+      }
+
+      .current-week {
+        &:disabled {
+          color: $global-section-border-color;
+        }
+      }
+
+      .next-week {
+        @include button-icon('caret-right');
+      }
+    }
+  }
+
+  .days {
+    @extend %grid-row;
+
+    > header {
       @extend %grid-column-1;
-
-      padding: 0;
-
-      .dropdown-search {
-        display: block;
-
-        > ul {
-          max-height: 380px;
-          min-width: 250px;
-        }
-      }
-
-      .toggle i {
-        @include icon(caret-down);
-      }
     }
 
-    .days {
+    > div {
       @extend %grid-column-11;
 
       > ul {
-        @extend %grid-row;
-      }
-    }
-  }
+        @include clearfix;
 
-  > div {
-    @extend %grid-row;
+        > li {
+          float: left;
+          width: (100% / 7);
 
-    overflow: auto;
+          &:first-child {
+            color: transparent;
+          }
 
-    .time-slots {
-      @extend %grid-column-1;
-
-      > li {
-        &:first-child {
-          color: transparent;
+          &.selected {
+            background-color: $iron;
+            opacity: .2;
+          }
         }
       }
     }
-
-    .days {
-      @extend %grid-column-11;
-
-      > li.is-selected {
-        background-color: $iron;
-        opacity: .2;
-      }
-
-      .times > li {
-        &:first-child .calendar-time {
-          border-top: 0;
-        }
-
-        &:nth-child(even) .calendar-time {
-          border-top-color: lighten($global-section-border-color, 3%);
-        }
-      }
-
-      .as-calendar-time {
-        border: 1px solid $global-section-border-color;
-        border-bottom: 0;
-        border-right: 0;
-        border-top-color: darken($global-section-border-color, 2%);
-      }
-    }
-  }
-
-  .time-zone,
-  .days,
-  .time-slots {
-    color: $small-font-color;
-    font-weight: $font-weight-bold;
-    text-align: center;
-  }
-
-  header .days > ul > li,
-  > div .days > li {
-    float: left;
-  }
-
-  header .days,
-  > div .days {
-    padding: 0 !important;
   }
 }

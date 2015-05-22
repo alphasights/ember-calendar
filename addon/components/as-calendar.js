@@ -46,10 +46,6 @@ export default Ember.Component.extend({
     return (`height: ${2 * this.get('timeSlotHeight')}px;`).htmlSafe();
   }),
 
-  dayStyle: Ember.computed('days.length', function() {
-    return (`width: ${100 / this.get('days.length')}%;`).htmlSafe();
-  }),
-
   _model: null,
 
   initializeModel: function() {

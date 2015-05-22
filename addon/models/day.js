@@ -15,7 +15,7 @@ var Day = Ember.Object.extend({
 
 Day.reopenClass({
   buildWeek: function(options) {
-    return Ember.A(_.range(0, 6).map(function(dayOffset) {
+    return Ember.A(_.range(0, 7).map(function(dayOffset) {
       return Day.create({
         calendar: options.calendar,
         offset: dayOffset

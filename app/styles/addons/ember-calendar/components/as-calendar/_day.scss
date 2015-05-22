@@ -1,5 +1,5 @@
 $calendar-day-checkbox-size: 18px;
-$calendar-day-checkbox-color: $calendar-occurrence-selection-color;
+$calendar-day-checkbox-color: $alert-color;
 
 @mixin calendar-day-hovered-checkbox {
   background-color: rgba($calendar-day-checkbox-color, .8);

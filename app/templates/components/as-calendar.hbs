@@ -38,11 +38,13 @@
     </ul>
   </header>
 
-  <ul>
-    {{#each day in days}}
-      <li style={{dayStyle}}>
-        {{as-calendar/day day=day onToggleSelect="onDayToggleSelect"}}
-      </li>
-    {{/each}}
-  </ul>
+  <div>
+    <ul>
+      {{#each day in days}}
+        <li style={{dayStyle}}>
+          {{as-calendar/day day=day onToggleSelect="onDayToggleSelect"}}
+        </li>
+      {{/each}}
+    </ul>
+  </div>
 </section>
