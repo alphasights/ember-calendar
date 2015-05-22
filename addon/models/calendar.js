@@ -38,10 +38,15 @@ export default Ember.Object.extend({
       this.set('startingDate', value.toDate());
     }
 
-    return moment(this.get('startingDate'))
+    var startingDate = this.get('startingDate');
+    var timeZone = this.get('timeZone');
+
+    return moment(startingDate)
+      .startOf('week')
       .utc()
       .tz(this.get('timeZone'))
-      .startOf('week');
+      .subtract(startingDate.getTimezoneOffset() -
+                moment.tz.zone(timeZone).offset(startingDate.getTime()), 'minutes');
   }),
 
   _dayStartingTime: computedDuration('dayStartingTime'),
@@ -49,7 +54,7 @@ export default Ember.Object.extend({
   _timeSlotDuration: computedDuration('timeSlotDuration'),
 
   _currentWeek: Ember.computed('timeZone', function() {
-    return moment().utc().tz(this.get('timeZone')).startOf('week');
+    return moment().tz(this.get('timeZone')).startOf('week').utc();
   }),
 
   initializeCalendar: Ember.on('init', function() {
