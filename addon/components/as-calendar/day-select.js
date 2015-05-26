@@ -5,12 +5,15 @@ export default Ember.Component.extend({
 
   day: null,
 
-  isSelected: Ember.computed('day.isSelected', function(_, value) {
-    if (arguments.length > 1) {
-      this.sendAction('onToggleSelect', this.get('day'), value);
-    }
+  isSelected: Ember.computed('day.isSelected', {
+    get() {
+      return this.get('day.isSelected');
+    },
 
-    return this.get('day.isSelected');
+    set(_, value) {
+      this.sendAction('onToggleSelect', this.get('day'), value);
+      return value;
+    }
   }),
 
   checkboxId: Ember.computed('elementId', function() {

@@ -1,15 +1,5 @@
 import Ember from 'ember';
-import Calendar from 'ember-calendar/models/calendar';
-
-var ComponentCalendar = Calendar.extend({
-  component: null,
-  occurrences: Ember.computed.oneWay('component.occurrences'),
-  timeZone: Ember.computed.oneWay('component.timeZone'),
-  startingDate: Ember.computed.oneWay('component.startingDate'),
-  dayStartingTime: Ember.computed.oneWay('component.dayStartingTime'),
-  dayEndingTime: Ember.computed.oneWay('component.dayEndingTime'),
-  timeSlotDuration: Ember.computed.oneWay('component.timeSlotDuration')
-});
+import ComponentCalendar from 'ember-calendar/models/component-calendar';
 
 export default Ember.Component.extend({
   classNameBindings: [':as-calendar'],
