@@ -10,6 +10,10 @@ var Day = Ember.Object.extend({
 
   value: Ember.computed('week', 'offset', function() {
     return moment(this.get('week')).add(this.get('offset'), 'day');
+  }),
+
+  occurrences: Ember.computed('calendar.occurrences', function() {
+    return this.get('calendar.occurrences');
   })
 });
 

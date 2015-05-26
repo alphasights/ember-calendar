@@ -46,10 +46,6 @@ export default Ember.Component.extend({
     return (`height: ${2 * this.get('timeSlotHeight')}px;`).htmlSafe();
   }),
 
-  timeStyle: Ember.computed('timeSlotHeight', function() {
-    return (`height: ${this.get('timeSlotHeight')}px;`).htmlSafe();
-  }),
-
   _model: null,
 
   initializeModel: function() {

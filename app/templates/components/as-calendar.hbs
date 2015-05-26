@@ -77,8 +77,8 @@
           <li>
             <ul class="times">
               {{#each timeSlot in timeSlots}}
-                <li style={{timeStyle}}>
-                  {{as-calendar/time day=day timeSlot=timeSlot}}
+                <li>
+                  {{as-calendar/time day=day timeSlot=timeSlot calendar=this}}
                 </li>
               {{/each}}
             </ul>
@@ -87,7 +87,9 @@
               {{#each occurrence in day.occurrences}}
                 <li>
                   {{#each occurrence in occurrences}}
-                    {{as-calendar/occurrence occurrence=occurrence}}
+                    {{as-calendar/occurrence
+                      occurrence=occurrence
+                      calendar=this}}
                   {{/each}}
                 </li>
               {{/each}}
