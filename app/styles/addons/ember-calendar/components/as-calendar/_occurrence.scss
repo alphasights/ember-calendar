@@ -1,9 +1,13 @@
 .as-calendar-occurrence {
   background-color: rgba($alert-color, .8);
   border: 1px solid $alert-color;
+  border-left-width: 2px;
+  border-left-color: darken($alert-color, 5%);
   color: $white;
   padding: 0 $column-gutter / 4;
   position: absolute;
+  left: $column-gutter / 8;
+  right: $column-gutter / 2;
 
   h1 {
     color: $white;
