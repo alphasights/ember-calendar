@@ -20,34 +20,79 @@
   </nav>
 </header>
 
-<section class="days">
-  <header>
-    {{as-calendar/time-zone-select
-      value=timeZone
-      onChangeValue="onChangeTimeZone"
-      defaultRegexp=defaultTimeZoneRegexp}}
-
-    <div class="all-day-label">All Day</div>
-
-    <ul class="time-slot-labels" style={{timeSlotLabelListStyle}}>
-      {{#each timeSlot in daysHeaderTimeSlots}}
-        <li style={{timeSlotLabelStyle}}>
-          {{moment timeSlot.value "h A"}}
-        </li>
-      {{/each}}
-    </ul>
-  </header>
-
-  <div>
+<section class="timed">
+  <div class="header columns">
     <ul>
-      {{#each day in days}}
-        <li>
-          {{as-calendar/day
-            day=day
-            calendar=this
-            onToggleSelect="onDayToggleSelect"}}
-        </li>
-      {{/each}}
+      <li>
+        <div class="time-zone">
+          {{as-calendar/time-zone-select
+            value=timeZone
+            onChangeValue="onChangeTimeZone"
+            defaultRegexp=defaultTimeZoneRegexp}}
+        </div>
+
+        <div class="day-labels">
+          <ul>
+            {{#each day in days}}
+              <li>{{moment day.value "ddd D MMM"}}</li>
+            {{/each}}
+          </ul>
+        </div>
+      </li>
+
+      <li>
+        <div class="day-selects-label">
+          <span>All Day</span>
+        </div>
+
+        <div class="day-selects">
+          <ul>
+            {{#each day in days}}
+              <li>
+                {{as-calendar/day-select
+                  day=day
+                  onToggleSelect="onDayToggleSelect"}}
+              </li>
+            {{/each}}
+          </ul>
+        </div>
+      </li>
     </ul>
+  </div>
+
+  <div class="content">
+    <div class="header rows">
+      <ul class="time-slot-labels" style={{timeSlotLabelListStyle}}>
+        {{#each timeSlot in labeledTimeSlots}}
+          <li style={{timeSlotLabelStyle}}>
+            {{moment timeSlot.value "h A"}}
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+
+    <div class="layers">
+      <ul class="days">
+        {{#each day in days}}
+          <li>
+            <ul class="times">
+              {{#each timeSlot in timeSlots}}
+                <li style={{timeStyle}}>
+                  {{as-calendar/time day=day timeSlot=timeSlot}}
+                </li>
+              {{/each}}
+            </ul>
+          </li>
+        {{/each}}
+      </ul>
+
+      <ul class="occurrences">
+        <li>
+          {{#each occurrence in occurrences}}
+            {{as-calendar/occurrence occurrence=occurrence}}
+          {{/each}}
+        </li>
+      </ul>
+    </div>
   </div>
 </section>

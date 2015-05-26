@@ -45,48 +45,85 @@
     }
   }
 
-  .days {
-    @extend %grid-row;
-
-    * {
-      white-space: nowrap;
+  .timed {
+    > .content {
+      @extend %grid-row;
     }
 
-    header {
-      &, h1 {
-        text-align: center;
-        color: $small-font-color;
-        font-weight: $font-weight-bold;
+    .header {
+      color: $small-font-color;
+      font-weight: $font-weight-bold;
+      text-align: center;
+
+      * {
+        white-space: nowrap;
+      }
+
+      &.columns {
+        background-color: lighten($global-section-border-color, 3%);
+
+        > ul > li {
+          @extend %grid-row;
+
+          border-bottom: 1px solid darken($global-section-border-color, 5%);
+
+          &:last-child {
+            border-bottom: 0;
+          }
+        }
+      }
+
+      &.rows {
+        @extend %grid-column-1;
+
+        padding: 0;
       }
     }
 
-    > header {
+    .time-zone,
+    .day-selects-label {
       @extend %grid-column-1;
 
       padding: 0;
     }
 
-    > div {
+    .day-labels,
+    .day-selects,
+    .layers {
       @extend %grid-column-11;
 
-      padding: 0 !important;
+      &, &:last-child {
+        padding: 0;
+      }
+    }
 
-      > ul {
-        @include clearfix;
+    .day-labels > ul,
+    .day-selects > ul,
+    .days {
+      @include clearfix;
 
-        > li {
-          float: left;
-          width: (100% / 7);
+      > li {
+        float: left;
+        width: (100% / 7);
+      }
+    }
 
-          &:first-child {
-            color: transparent;
-          }
+    .layers {
+      position: relative;
+    }
 
-          &.selected {
-            background-color: $iron;
-            opacity: .2;
-          }
-        }
+    .times > li {
+      border: 1px solid $global-section-border-color;
+      border-bottom: 0;
+      border-right: 0;
+      border-top-color: darken($global-section-border-color, 2%);
+
+      &:first-child {
+        border-top: 0;
+      }
+
+      &:nth-child(even) {
+        border-top-color: lighten($global-section-border-color, 3%);
       }
     }
 
@@ -94,17 +131,12 @@
       color: transparent;
     }
 
+    .time-slot-labels > ul > li,
     .as-calendar-time-zone-select,
-    .all-day-label,
-    .as-calendar-day header h1,
-    .as-calendar-day .select {
-      background-color: lighten($global-section-border-color, 3%);
+    .day-labels > ul > li,
+    .day-selects > li,
+    .day-selects-label {
       padding: $column-gutter / 4 0;
-    }
-
-    .as-calendar-time-zone-select,
-    .as-calendar-day header h1 {
-      border-bottom: 1px solid darken($global-section-border-color, 5%);
     }
   }
 }

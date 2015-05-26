@@ -29,7 +29,7 @@ export default Ember.Component.extend({
   timeZone: 'UTC',
   title: '',
 
-  daysHeaderTimeSlots: Ember.computed('timeSlots.[]', function() {
+  labeledTimeSlots: Ember.computed('timeSlots.[]', function() {
     return this.get('timeSlots').filter(function(_, index) {
       return (index % 2) === 0;
     });
@@ -44,6 +44,10 @@ export default Ember.Component.extend({
 
   timeSlotLabelStyle: Ember.computed('timeSlotHeight', function() {
     return (`height: ${2 * this.get('timeSlotHeight')}px;`).htmlSafe();
+  }),
+
+  timeStyle: Ember.computed('timeSlotHeight', function() {
+    return (`height: ${this.get('timeSlotHeight')}px;`).htmlSafe();
   }),
 
   _model: null,
