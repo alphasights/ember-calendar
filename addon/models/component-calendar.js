@@ -9,7 +9,15 @@ export default Calendar.extend({
   dayEndingTime: computedDuration('component.dayEndingTime'),
   timeSlotDuration: computedDuration('component.timeSlotDuration'),
 
-  occurrences: Ember.computed('component.occurrences', function() {
+  occurrences: Ember.computed('component.occurrences.[]', {
+    get() {
+      return this.get('component.occurrences');
+    },
 
+    set(_, value) {
+      this.set('component.occurrences', value.map(function(occurrence) {
+        return Occurrence.create({ calendar: this, content: occurrence });
+      }));
+    }
   })
 });
