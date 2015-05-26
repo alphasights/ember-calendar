@@ -4,8 +4,7 @@ export default Ember.Component.extend({
   attributeBindings: ['style'],
   classNameBindings: [':as-calendar-time'],
 
-  calendar: null,
-  timeSlotHeight: Ember.computed.oneWay('calendar.timeSlotHeight'),
+  timeSlotHeight: null,
 
   style: Ember.computed('timeSlotHeight', function() {
     return `height: ${this.get('timeSlotHeight')}px`.htmlSafe();

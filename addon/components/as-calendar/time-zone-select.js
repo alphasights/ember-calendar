@@ -5,10 +5,11 @@ import TimeZoneOption from 'ember-calendar/models/time-zone-option';
 export default Ember.Component.extend({
   classNameBindings: [':as-calendar-time-zone-select'],
   tagName: 'section',
-  
+
   defaultRegexp: null,
   value: null,
   query: '',
+  selectedOptionAbbreviation: Ember.computed.oneWay('selectedOption.abbreviation'),
 
   arrangedOptions: Ember.computed('_options.[]', 'query', function() {
     var query = this.get('query');

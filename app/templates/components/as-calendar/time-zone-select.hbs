@@ -1,6 +1,6 @@
 {{#rl-dropdown-container}}
   {{#rl-dropdown-toggle}}
-    <span>{{selectedOption.abbreviation}}</span>
+    <span>{{selectedOptionAbbreviation}}</span>
     <i></i>
   {{/rl-dropdown-toggle}}
 
@@ -21,6 +21,7 @@
             {{as-calendar/time-zone-option
               option=option
               select=this
+              selectedOption=selectedOption
               onSelect="onSelectOption"}}
           </li>
         {{/each}}

@@ -5,16 +5,17 @@ import Ember from 'ember';
 var Day = Ember.Object.extend({
   calendar: null,
   offset: 0,
-  week: Ember.computed.oneWay('calendar.week'),
   isSelected: false,
 
-  value: Ember.computed('week', 'offset', function() {
-    return moment(this.get('week')).add(this.get('offset'), 'day');
+  value: Ember.computed('_week', 'offset', function() {
+    return moment(this.get('_week')).add(this.get('offset'), 'day');
   }),
 
   occurrences: Ember.computed('calendar.occurrences', function() {
     return this.get('calendar.occurrences');
-  })
+  }),
+
+  _week: Ember.computed.oneWay('calendar.week')
 });
 
 Day.reopenClass({

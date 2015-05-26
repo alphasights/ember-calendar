@@ -1,5 +1,7 @@
+import Ember from 'ember';
 import computedDuration from 'ember-calendar/macros/computed-duration';
-import Calendar from 'ember-calendar/models/calendar';
+import Calendar from './calendar';
+import Occurrence from './occurrence';
 
 export default Calendar.extend({
   component: null,
@@ -9,15 +11,9 @@ export default Calendar.extend({
   dayEndingTime: computedDuration('component.dayEndingTime'),
   timeSlotDuration: computedDuration('component.timeSlotDuration'),
 
-  occurrences: Ember.computed('component.occurrences.[]', {
-    get() {
-      return this.get('component.occurrences');
-    },
-
-    set(_, value) {
-      this.set('component.occurrences', value.map(function(occurrence) {
-        return Occurrence.create({ calendar: this, content: occurrence });
-      }));
-    }
+  occurrences: Ember.computed('component.occurrences.[]', function() {
+    return this.get('component.occurrences').map((occurrence) => {
+      return Occurrence.create({ calendar: this, content: occurrence });
+    });
   })
 });

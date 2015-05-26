@@ -11,6 +11,7 @@ export default Ember.Component.extend({
   defaultTimeZoneRegexp: /New York|London|Dubai|Hong Kong/,
   isEditing: true,
   isInCurrentWeek: Ember.computed.oneWay('_model.isInCurrentWeek'),
+  modelTimeSlotDuration: Ember.computed.oneWay('_model.timeSlotDuration'),
   occurrences: null,
   startingDate: null,
   timeSlotDuration: '00:30',
