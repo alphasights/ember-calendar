@@ -89,26 +89,24 @@
 
     .day-labels,
     .day-selects,
-    .layers {
+    .days {
       @extend %grid-column-11;
 
       &, &:last-child {
         padding: 0;
       }
-    }
 
-    .day-labels > ul,
-    .day-selects > ul,
-    .days {
-      @include clearfix;
+      > ul {
+        @include clearfix;
 
-      > li {
-        float: left;
-        width: (100% / 7);
+        > li {
+          float: left;
+          width: (100% / 7);
+        }
       }
     }
 
-    .layers {
+    .days {
       position: relative;
     }
 

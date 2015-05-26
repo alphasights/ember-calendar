@@ -1,0 +1,13 @@
+.as-calendar-occurrence {
+  background-color: rgba($alert-color, .8);
+  border: 1px solid $alert-color;
+  color: $white;
+  padding: 0 $column-gutter / 4;
+  position: absolute;
+
+  h1 {
+    color: $white;
+    font-size: .9rem;
+    font-weight: $font-weight-extrabold;
+  }
+}

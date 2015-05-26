@@ -71,8 +71,8 @@
       </ul>
     </div>
 
-    <div class="layers">
-      <ul class="days">
+    <div class="days">
+      <ul>
         {{#each day in days}}
           <li>
             <ul class="times">
@@ -82,16 +82,18 @@
                 </li>
               {{/each}}
             </ul>
+
+            <ul class="occurrences">
+              {{#each occurrence in day.occurrences}}
+                <li>
+                  {{#each occurrence in occurrences}}
+                    {{as-calendar/occurrence occurrence=occurrence}}
+                  {{/each}}
+                </li>
+              {{/each}}
+            </ul>
           </li>
         {{/each}}
-      </ul>
-
-      <ul class="occurrences">
-        <li>
-          {{#each occurrence in occurrences}}
-            {{as-calendar/occurrence occurrence=occurrence}}
-          {{/each}}
-        </li>
       </ul>
     </div>
   </div>
