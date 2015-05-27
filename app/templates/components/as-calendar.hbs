@@ -74,7 +74,7 @@
     <div class="days">
       <ul>
         {{#each day in days}}
-          <li>
+          <li class={{if day.isSelected "selected"}}>
             <ul class="times">
               {{#each timeSlot in timeSlots}}
                 <li>

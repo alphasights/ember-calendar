@@ -20,7 +20,7 @@ var Day = Ember.Object.extend({
         calendar: this.get('calendar'),
         offset: this.get('offset') + 1
       });
-      
+
       return startingDate >= this.get('value').toDate() &&
              startingDate <= nextDay.get('value').toDate();
     }).map((occurrence) => {
@@ -31,7 +31,9 @@ var Day = Ember.Object.extend({
     });
   }),
 
-  startingTime: Ember.computed('value', '_timeSlots.firstObject.time', function() {
+  startingTime: Ember.computed(
+    'value',
+    '_timeSlots.firstObject.time', function() {
     return moment(this.get('value'))
       .add(this.get('_timeSlots.firstObject.time'));
   }),

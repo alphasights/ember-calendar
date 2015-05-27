@@ -108,6 +108,16 @@
 
     .days > ul > li {
       position: relative;
+
+      &.selected {
+        .as-calendar-occurrence {
+          opacity: .2;
+        }
+
+        * {
+          pointer-events: none;
+        }
+      }
     }
 
     .times > li {
