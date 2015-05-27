@@ -1,13 +1,13 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  selections: [],
+  selections: Ember.A(),
 
-  occurrences: [Ember.Object.create({
+  occurrences: Ember.A([Ember.Object.create({
     title: 'Some event',
-    startsAt: moment().startOf('day').add(10, 'hours'),
-    endsAt: moment().startOf('day').add(12, 'hours')
-  })],
+    startsAt: moment().tz('UTC').startOf('day').add(10, 'hours').toDate(),
+    endsAt: moment().tz('UTC').startOf('day').add(12, 'hours').toDate()
+  })]),
 
   actions: {
     onCalendarAddSelection: function() {

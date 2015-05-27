@@ -42,7 +42,8 @@ export default Ember.Object.extend({
         .utc()
         .tz(this.get('timeZone'))
         .subtract(startingDate.getTimezoneOffset() -
-                  moment.tz.zone(timeZone).offset(startingDate.getTime()), 'minutes');
+                  moment.tz.zone(timeZone)
+                    .offset(startingDate.getTime()), 'minutes');
     },
 
     set(_, value) {

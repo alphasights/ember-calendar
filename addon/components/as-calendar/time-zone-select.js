@@ -9,7 +9,10 @@ export default Ember.Component.extend({
   defaultRegexp: null,
   value: null,
   query: '',
-  selectedOptionAbbreviation: Ember.computed.oneWay('selectedOption.abbreviation'),
+
+  selectedOptionAbbreviation: Ember.computed.oneWay(
+    'selectedOption.abbreviation'
+  ),
 
   arrangedOptions: Ember.computed('_options.[]', 'query', function() {
     var query = this.get('query');
