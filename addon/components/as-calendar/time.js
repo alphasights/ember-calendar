@@ -1,12 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  attributeBindings: ['style'],
+  attributeBindings: ['_style:style'],
   classNameBindings: [':as-calendar-time'],
 
   timeSlotHeight: null,
 
-  style: Ember.computed('timeSlotHeight', function() {
+  _style: Ember.computed('timeSlotHeight', function() {
     return `height: ${this.get('timeSlotHeight')}px`.htmlSafe();
   })
 });

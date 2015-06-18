@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import moment from 'moment';
 import computedMoment from 'ember-calendar/macros/computed-moment';
 
 export default Ember.Object.extend({

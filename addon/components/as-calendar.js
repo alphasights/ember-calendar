@@ -7,40 +7,18 @@ export default Ember.Component.extend({
 
   dayEndingTime: '22:00',
   dayStartingTime: '8:00',
-  days: Ember.computed.oneWay('_model.days'),
   defaultTimeZoneRegexp: /New York|London|Dubai|Hong Kong/,
   isEditing: true,
-  isInCurrentWeek: Ember.computed.oneWay('_model.isInCurrentWeek'),
-  modelTimeSlotDuration: Ember.computed.oneWay('_model.timeSlotDuration'),
+  model: null,
   occurrences: null,
   startingDate: null,
   timeSlotDuration: '00:30',
   timeSlotHeight: 20,
-  timeSlots: Ember.computed.oneWay('_model.timeSlots'),
   timeZone: 'UTC',
-  title: '',
-
-  labeledTimeSlots: Ember.computed('timeSlots.[]', function() {
-    return this.get('timeSlots').filter(function(_, index) {
-      return (index % 2) === 0;
-    });
-  }),
-
-  timeSlotLabelListStyle: Ember.computed('timeSlotHeight', function() {
-    var timeSlotHeight = this.get('timeSlotHeight');
-
-    return (`margin-top: -${timeSlotHeight}px;
-             line-height: ${timeSlotHeight * 2}px;`).htmlSafe();
-  }),
-
-  timeSlotLabelStyle: Ember.computed('timeSlotHeight', function() {
-    return (`height: ${2 * this.get('timeSlotHeight')}px;`).htmlSafe();
-  }),
-
-  _model: null,
+  title: null,
 
   initializeModel: function() {
-    this.set('_model', ComponentCalendar.create({ component: this }));
+    this.set('model', ComponentCalendar.create({ component: this }));
   }.on('init'),
 
   addOccurrence: function(occurrence) {
@@ -52,20 +30,8 @@ export default Ember.Component.extend({
   },
 
   actions: {
-    onChangeTimeZone: function(timeZone) {
+    onChangeTimetableTimeZone: function(timeZone) {
       this.set('timeZone', timeZone);
-    },
-
-    onDayToggleSelect: function(day, value) {
-      day.set('isSelected', value);
-    },
-
-    navigateWeek: function(index) {
-      this.get('_model').navigateWeek(index);
-    },
-
-    goToCurrentWeek: function() {
-      this.get('_model').goToCurrentWeek();
     }
   }
 });

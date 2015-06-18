@@ -1,0 +1,64 @@
+<div class="header columns">
+  <ul>
+    <li>
+      <div class="time-zone">
+        {{as-calendar/time-zone-select
+          value=timeZone
+          onChangeValue="onChangeTimeZone"
+          defaultRegexp=defaultTimeZoneRegexp}}
+      </div>
+
+      <div class="day-labels">
+        <ul>
+          {{#each day in days}}
+            <li>{{moment day.value "ddd D MMM"}}</li>
+          {{/each}}
+        </ul>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<div class="content">
+  <div class="header rows">
+    <ul class="time-slot-labels" style={{timeSlotLabelListStyle}}>
+      {{#each timeSlot in labeledTimeSlots}}
+        <li style={{timeSlotLabelStyle}}>
+          {{moment timeSlot.value "h A"}}
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+
+  <div class="days">
+    <ul>
+      {{#each day in days}}
+        <li class={{if day.isSelected "selected"}}>
+          <ul class="times">
+            {{#each timeSlot in timeSlots}}
+              <li>
+                {{as-calendar/time
+                  day=day
+                  timeSlot=timeSlot
+                  timeSlotHeight=timeSlotHeight}}
+              </li>
+            {{/each}}
+          </ul>
+
+          <ul class="occurrences">
+            {{#each occurrence in day.occurrences}}
+              <li>
+                {{as-calendar/occurrence
+                  occurrence=occurrence
+                  timeSlotHeight=timeSlotHeight
+                  timeSlotDuration=timeSlotDuration}}
+              </li>
+            {{/each}}
+          </ul>
+
+          {{yield day this}}
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+</div>
