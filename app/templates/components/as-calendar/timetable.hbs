@@ -10,7 +10,7 @@
 
       <div class="day-labels">
         <ul>
-          {{#each day in days}}
+          {{#each days as |day|}}
             <li>{{moment day.value "ddd D MMM"}}</li>
           {{/each}}
         </ul>
@@ -22,7 +22,7 @@
 <div class="content">
   <div class="header rows">
     <ul class="time-slot-labels" style={{timeSlotLabelListStyle}}>
-      {{#each timeSlot in labeledTimeSlots}}
+      {{#each labeledTimeSlots as |timeSlot|}}
         <li style={{timeSlotLabelStyle}}>
           {{moment timeSlot.value "h A"}}
         </li>
@@ -32,10 +32,10 @@
 
   <div class="days">
     <ul>
-      {{#each day in days}}
+      {{#each days as |day|}}
         <li class={{if day.isSelected "selected"}}>
           <ul class="times">
-            {{#each timeSlot in timeSlots}}
+            {{#each timeSlots as |timeSlot|}}
               <li>
                 {{as-calendar/time
                   day=day
@@ -46,7 +46,7 @@
           </ul>
 
           <ul class="occurrences">
-            {{#each occurrence in day.occurrences}}
+            {{#each day.occurrences as |occurrence|}}
               <li>
                 {{as-calendar/occurrence
                   occurrence=occurrence

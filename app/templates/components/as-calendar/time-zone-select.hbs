@@ -16,7 +16,7 @@
 
     <div class="results">
       <ul>
-        {{#each option in arrangedOptions}}
+        {{#each arrangedOptions as |option|}}
           <li>
             {{as-calendar/time-zone-option
               option=option
