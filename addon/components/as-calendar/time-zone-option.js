@@ -6,12 +6,12 @@ export default Ember.Component.extend({
   option: null,
   selectedOption: null,
   description: Ember.computed.oneWay('option.description'),
-  
+
   isSelected: Ember.computed('selectedOption', 'option', function() {
     return this.get('selectedOption') === this.get('option');
   }),
 
-  click: function() {
+  selectOption: Ember.on('click', function() {
     this.sendAction('onSelect', this.get('option'));
-  }
+  })
 });

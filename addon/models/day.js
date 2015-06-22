@@ -11,17 +11,14 @@ var Day = Ember.Object.extend({
   }),
 
   occurrences: Ember.computed(
-    'calendar.occurrences.@each.startingTime', function() {
+    'calendar.occurrences.@each.startingTime',
+    'startingTime',
+    'endingTime', function() {
     return this.get('calendar.occurrences').filter((occurrence) => {
       var startingDate = occurrence.get('startingTime').toDate();
 
-      var nextDay = Day.create({
-        calendar: this.get('calendar'),
-        offset: this.get('offset') + 1
-      });
-
-      return startingDate >= this.get('value').toDate() &&
-             startingDate <= nextDay.get('value').toDate();
+      return startingDate >= this.get('startingTime').toDate() &&
+             startingDate <= this.get('_endingTime').toDate();
     }).map((occurrence) => {
       return Ember.ObjectProxy.create({
         content: occurrence,
@@ -35,6 +32,13 @@ var Day = Ember.Object.extend({
     '_timeSlots.firstObject.time', function() {
     return moment(this.get('value'))
       .add(this.get('_timeSlots.firstObject.time'));
+  }),
+
+  _endingTime: Ember.computed(
+    'value',
+    '_timeSlots.lastObject.time', function() {
+    return moment(this.get('value'))
+      .add(this.get('_timeSlots.lastObject.time'));
   }),
 
   _week: Ember.computed.oneWay('calendar.week'),
