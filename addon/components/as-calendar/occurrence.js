@@ -5,18 +5,18 @@ export default Ember.Component.extend({
   classNameBindings: [':as-calendar-occurrence'],
   tagName: 'section',
 
-  occurrence: null,
+  model: null,
   timeSlotDuration: null,
   timeSlotHeight: null,
-  title: Ember.computed.oneWay('occurrence.title'),
+  title: Ember.computed.oneWay('model.title'),
 
   titleStyle: Ember.computed('timeSlotHeight', function() {
     return `line-height: ${this.get('timeSlotHeight')}px;`.htmlSafe();
   }),
 
-  _duration: Ember.computed.oneWay('occurrence.duration'),
-  _startingTime: Ember.computed.oneWay('occurrence.startingTime'),
-  _day: Ember.computed.oneWay('occurrence.day'),
+  _duration: Ember.computed.oneWay('model.duration'),
+  _startingTime: Ember.computed.oneWay('model.startingTime'),
+  _day: Ember.computed.oneWay('model.day'),
   _dayStartingTime: Ember.computed.oneWay('_day.startingTime'),
 
   _occupiedTimeSlots: Ember.computed(

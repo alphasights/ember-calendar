@@ -30,35 +30,34 @@
     </ul>
   </div>
 
-  <div class="days">
-    <ul>
-      {{#each days as |day|}}
-        <li class={{if day.isSelected "selected"}}>
-          <ul class="times">
-            {{#each timeSlots as |timeSlot|}}
-              <li>
-                {{as-calendar/time
-                  day=day
-                  timeSlot=timeSlot
-                  timeSlotHeight=timeSlotHeight}}
-              </li>
-            {{/each}}
-          </ul>
+  <div class="grid">
+    <div>
+      <ul class="time-slots">
+        {{#each timeSlots as |timeSlot|}}
+          <li style={{timeSlotStyle}}></li>
+        {{/each}}
+      </ul>
 
-          <ul class="occurrences">
-            {{#each day.occurrences as |occurrence|}}
-              <li>
-                {{as-calendar/occurrence
-                  occurrence=occurrence
-                  timeSlotHeight=timeSlotHeight
-                  timeSlotDuration=timeSlotDuration}}
-              </li>
-            {{/each}}
-          </ul>
-
-          {{yield day this}}
-        </li>
-      {{/each}}
-    </ul>
+      <ul class="days">
+        {{#each days as |day|}}
+          <li class={{if day.isToday "today"}}>
+            {{#if hasBlock}}
+              {{yield day this}}
+            {{else}}
+              <ul class="occurrences">
+                {{#each day.occurrences as |occurrence|}}
+                  <li>
+                    {{as-calendar/occurrence
+                      model=occurrence
+                      timeSlotHeight=timeSlotHeight
+                      timeSlotDuration=timeSlotDuration}}
+                  </li>
+                {{/each}}
+              </ul>
+            {{/if}}
+          </li>
+        {{/each}}
+      </ul>
+    </div>
   </div>
 </div>

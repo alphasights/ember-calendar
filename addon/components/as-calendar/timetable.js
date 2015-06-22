@@ -9,7 +9,7 @@ export default Ember.Component.extend({
   timeSlotHeight: null,
   timeSlots: Ember.computed.oneWay('model.timeSlots'),
   timeSlotDuration: Ember.computed.oneWay('model.timeSlotDuration'),
-  
+
   labeledTimeSlots: Ember.computed('timeSlots.[]', function() {
     return this.get('timeSlots').filter(function(_, index) {
       return (index % 2) === 0;
@@ -25,6 +25,10 @@ export default Ember.Component.extend({
 
   timeSlotLabelStyle: Ember.computed('timeSlotHeight', function() {
     return (`height: ${2 * this.get('timeSlotHeight')}px;`).htmlSafe();
+  }),
+
+  timeSlotStyle: Ember.computed('timeSlotHeight', function() {
+    return `height: ${this.get('timeSlotHeight')}px`.htmlSafe();
   }),
 
   actions: {

@@ -2,11 +2,11 @@
   {{yield model this}}
 {{else}}
   {{as-calendar/header title=title model=model}}
-
-  {{as-calendar/timetable
-    model=model
-    timeZone=timeZone
-    timeSlotHeight=timeSlotHeight
-    defaultTimeZoneRegexp=defaultTimeZoneRegexp
-    onChangeTimeZone="onChangeTimetableTimeZone"}}
 {{/if}}
+
+{{as-calendar/timetable
+  model=model
+  timeZone=timeZone
+  timeSlotHeight=timeSlotHeight
+  defaultTimeZoneRegexp=defaultTimeZoneRegexp
+  onChangeTimeZone="onChangeTimetableTimeZone"}}

@@ -40,55 +40,53 @@
   }
 
   .day-labels,
-  .days {
+  .grid {
     @extend %grid-column-11;
 
     &, &:last-child {
       padding: 0;
     }
-
-    > ul {
-      @include clearfix;
-
-      > li {
-        float: left;
-        width: (100% / 7);
-      }
-    }
   }
 
-  .days > ul > li {
+  .grid > div {
     position: relative;
+  }
 
-    &.selected {
-      .as-calendar-occurrence {
-        opacity: .2;
-      }
+  .days,
+  .day-labels > ul {
+    @include clearfix;
 
-      * {
-        pointer-events: none;
-      }
+    > li {
+      float: left;
+      width: (100% / 7);
     }
   }
 
-  .times > li {
-    .as-calendar-time {
-      border: 1px solid $global-section-border-color;
-      border-bottom: 0;
-      border-right: 0;
-      border-top-color: darken($global-section-border-color, 2%);
-    }
+  .days, .time-slots {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .days > li {
+    border-right: 1px solid $global-section-border-color;
+    position: relative;
+  }
+
+  .time-slots > li {
+    border: 1px solid $global-section-border-color;
+    border-bottom: 0;
+    border-right: 0;
+    border-top-color: darken($global-section-border-color, 2%);
 
     &:first-child {
-      .as-calendar-time {
-        border-top: 0;
-      }
+      border-top: 0;
     }
 
     &:nth-child(even) {
-      .as-calendar-time {
-        border-top-color: lighten($global-section-border-color, 3%);
-      }
+      border-top-color: lighten($global-section-border-color, 3%);
     }
   }
 
