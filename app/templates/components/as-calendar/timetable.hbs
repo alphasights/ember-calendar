@@ -1,25 +1,21 @@
 <div class="header columns">
-  <ul>
-    <li>
-      <div class="time-zone">
-        {{as-calendar/time-zone-select
-          value=timeZone
-          onChangeValue="onChangeTimeZone"
-          defaultRegexp=defaultTimeZoneRegexp}}
-      </div>
+  <div class="time-zone">
+    {{as-calendar/time-zone-select
+      value=timeZone
+      onChangeValue="onChangeTimeZone"
+      defaultRegexp=defaultTimeZoneRegexp}}
+  </div>
 
-      <div class="day-labels">
-        <ul>
-          {{#each days as |day|}}
-            <li>{{moment day.value "ddd D MMM"}}</li>
-          {{/each}}
-        </ul>
-      </div>
-    </li>
-  </ul>
+  <div class="day-labels">
+    <ul>
+      {{#each days as |day|}}
+        <li>{{moment day.value "ddd D MMM"}}</li>
+      {{/each}}
+    </ul>
+  </div>
 </div>
 
-<div class="content">
+<div class="content-wrapper">
   <div class="header rows">
     <ul class="time-slot-labels" style={{timeSlotLabelListStyle}}>
       {{#each labeledTimeSlots as |timeSlot|}}
@@ -30,8 +26,8 @@
     </ul>
   </div>
 
-  <div class="grid">
-    <div>
+  <div class="content">
+    <div style={{contentStyle}}>
       <ul class="time-slots">
         {{#each timeSlots as |timeSlot|}}
           <li style={{timeSlotStyle}}></li>
@@ -40,7 +36,7 @@
 
       <ul class="days">
         {{#each days as |day|}}
-          <li class={{if day.isToday "today"}}>
+          <li>
             {{#if hasBlock}}
               {{yield day this}}
             {{else}}

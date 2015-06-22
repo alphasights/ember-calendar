@@ -6,10 +6,6 @@ var Day = Ember.Object.extend({
   calendar: null,
   offset: 0,
 
-  isToday: Ember.computed('value', function() {
-    return this.get('value').isSame(moment(), 'day');
-  }),
-
   value: Ember.computed('_week', 'offset', function() {
     return moment(this.get('_week')).add(this.get('offset'), 'day');
   }),

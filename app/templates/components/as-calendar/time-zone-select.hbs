@@ -1,0 +1,33 @@
+{{#rl-dropdown-container dropdownExpanded=showResults}}
+  {{#rl-dropdown-toggle}}
+    <span>{{selectedOptionAbbreviation}}</span>
+    <i></i>
+  {{/rl-dropdown-toggle}}
+
+  {{#rl-dropdown closeOnChildClick=".results"}}
+    {{#if showResults}}
+      <div class="search">
+        <div class="icon"><i></i></div>
+
+        {{input type="text"
+          value=query
+          click=onSearchClick
+          placeholder="Search for more timezones"}}
+      </div>
+
+      <div class="results">
+        <ul>
+          {{#each arrangedOptions as |option|}}
+            <li>
+              {{as-calendar/time-zone-option
+                option=option
+                select=this
+                selectedOption=selectedOption
+                onSelect="onSelectOption"}}
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+    {{/if}}
+  {{/rl-dropdown}}
+{{/rl-dropdown-container}}

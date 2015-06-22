@@ -31,6 +31,13 @@ export default Ember.Component.extend({
     return `height: ${this.get('timeSlotHeight')}px`.htmlSafe();
   }),
 
+  contentStyle: Ember.computed(
+  'timeSlotHeight',
+  'timeSlots.length', function() {
+    return (`height: ${this.get('timeSlots.length') *
+                       this.get('timeSlotHeight')}px;`).htmlSafe();
+  }),
+
   actions: {
     onChangeTimeZone: function() {
       this.sendAction('onChangeTimeZone', ...arguments);
