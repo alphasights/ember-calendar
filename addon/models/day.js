@@ -1,27 +1,59 @@
+import _ from 'lodash';
 import moment from 'moment';
 import Ember from 'ember';
-import Time from './time';
 
-export default Time.extend({
+var Day = Ember.Object.extend({
+  calendar: null,
   offset: 0,
-  localStartingDate: Ember.computed.oneWay('calendar.localStartingDate'),
-  selections: Ember.computed.oneWay('calendar.selections'),
 
-  value: Ember.computed('localStartingDate', 'offset', function() {
-    return moment(this.get('localStartingDate')).add(this.get('offset'), 'day');
+  value: Ember.computed('_week', 'offset', function() {
+    return moment(this.get('_week')).add(this.get('offset'), 'day');
   }),
 
-  serializedValue: Ember.computed('value', function() {
-    return moment(this.get('value')).format('YYYY,M,D');
-  }),
+  occurrences: Ember.computed(
+    'calendar.occurrences.@each.startingTime',
+    'startingTime',
+    'endingTime', function() {
+    return this.get('calendar.occurrences').filter((occurrence) => {
+      var startingDate = occurrence.get('startingTime').toDate();
 
-  selection: Ember.computed('selections.@each.day', 'serializedValue', function() {
-    return this.get('selections').find((selection) => {
-      return selection.get('day') === this.get('serializedValue');
+      return startingDate >= this.get('startingTime').toDate() &&
+             startingDate <= this.get('_endingTime').toDate();
+    }).map((occurrence) => {
+      return Ember.ObjectProxy.create({
+        content: occurrence,
+        day: this
+      });
     });
   }),
 
-  isSelected: Ember.computed('selection', function() {
-    return this.get('selection') != null;
-  })
+  startingTime: Ember.computed(
+    'value',
+    '_timeSlots.firstObject.time', function() {
+    return moment(this.get('value'))
+      .add(this.get('_timeSlots.firstObject.time'));
+  }),
+
+  _endingTime: Ember.computed(
+    'value',
+    '_timeSlots.lastObject.time', function() {
+    return moment(this.get('value'))
+      .add(this.get('_timeSlots.lastObject.time'));
+  }),
+
+  _week: Ember.computed.oneWay('calendar.week'),
+  _timeSlots: Ember.computed.oneWay('calendar.timeSlots')
 });
+
+Day.reopenClass({
+  buildWeek: function(options) {
+    return Ember.A(_.range(0, 7).map(function(dayOffset) {
+      return Day.create({
+        calendar: options.calendar,
+        offset: dayOffset
+      });
+    }));
+  }
+});
+
+export default Day;

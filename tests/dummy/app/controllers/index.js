@@ -1,9 +1,14 @@
 import Ember from 'ember';
-import Occurrence from 'ember-calendar/models/occurrence';
+import moment from 'moment';
 
 export default Ember.Controller.extend({
-  selections: [],
-  occurrences: [],
+  selections: Ember.A(),
+
+  occurrences: Ember.A([Ember.Object.create({
+    title: 'Some event',
+    startsAt: moment().utc().startOf('day').add(10, 'hours').toDate(),
+    endsAt: moment().utc().startOf('day').add(12, 'hours').toDate()
+  })]),
 
   actions: {
     onCalendarAddSelection: function() {
@@ -14,16 +19,8 @@ export default Ember.Controller.extend({
 
     },
 
-    onCalendarDayToggleSelection: function(params) {
-      var selections = this.get('selections');
+    onCalendarDayToggleSelection: function() {
 
-      if (params.value) {
-        selections.pushObject(Occurrence.create({
-          day: params.day.get('serializedValue')
-        }));
-      } else {
-        selections.removeObject(selections.findBy('day'), params.day.get('serializedValue'));
-      }
     }
   }
 });

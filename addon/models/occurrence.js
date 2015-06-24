@@ -1,43 +1,18 @@
-import moment from 'moment';
 import Ember from 'ember';
+import moment from 'moment';
+import computedMoment from 'ember-calendar/macros/computed-moment';
 
-var Occurrence = Ember.Object.extend(Ember.Copyable, {
-  duration: moment.duration(),
-  title: null,
-  time: null,
+export default Ember.Object.extend({
+  calendar: null,
+  content: null,
+  startingTime: computedMoment('content.startsAt'),
+  title: Ember.computed.oneWay('content.title'),
 
-  endingTime: Ember.computed('time', 'duration', function() {
-    return moment(this.get('time')).add(this.get('duration'));
+  duration: Ember.computed('startingTime', '_endingTime', function() {
+    return moment.duration(
+      this.get('_endingTime').diff(this.get('startingTime'))
+    );
   }),
 
-  overlapsWith: function(occurrences) {
-    var time = this.get('time').toDate();
-    var endingTime = this.get('endingTime').toDate();
-
-    return occurrences.any(function(occurrence) {
-      var occurrenceTime = occurrence.get('time').toDate();
-      var occurrenceEndingTime = occurrence.get('endingTime').toDate();
-
-      return (endingTime > occurrenceTime && time < occurrenceEndingTime);
-    });
-  },
-
-  endsBefore: function(date) {
-    return this.get('endingTime').toDate() <= date.toDate();
-  },
-
-  isEqual: function(other) {
-    return this.get('time').isSame(other.get('time')) &&
-           this.get('endingTime').isSame(other.get('endingTime'));
-  },
-
-  copy: function() {
-    return Occurrence.create({
-      time: this.get('time'),
-      title: this.get('title'),
-      duration: this.get('duration')
-    });
-  }
+  _endingTime: computedMoment('content.endsAt')
 });
-
-export default Occurrence;

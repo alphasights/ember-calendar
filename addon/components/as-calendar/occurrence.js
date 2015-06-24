@@ -1,72 +1,47 @@
 import Ember from 'ember';
-import moment from 'moment';
 
 export default Ember.Component.extend({
-  tagName: 'article',
-  classNameBindings: [':as-calendar-occurrence', 'type', 'selectionClass'],
-  attributeBindings: ['style'],
-  layoutName: 'components/as-calendar/occurrence',
+  attributeBindings: ['_style:style'],
+  classNameBindings: [':as-calendar-occurrence'],
+  tagName: 'section',
 
-  headerTemplateName: null,
-  calendar: null,
-  occurrence: null,
-  timeSlotHeight: Ember.computed.oneWay('calendar.timeSlotHeight'),
-  timeSlotDuration: Ember.computed.oneWay('calendar.timeSlotDuration'),
-  timeZone: Ember.computed.oneWay('calendar.timeZone'),
-  duration: Ember.computed.oneWay('occurrence.duration'),
-  time: Ember.computed.oneWay('occurrence.time'),
-  endingTime: Ember.computed.oneWay('occurrence.endingTime'),
-  type: Ember.computed.oneWay('occurrence.type'),
+  model: null,
+  timeSlotDuration: null,
+  timeSlotHeight: null,
+  title: Ember.computed.oneWay('model.title'),
 
-  selectionClass: Ember.computed('calendar.selections.[]', 'occurrence', function() {
-    if (this.get('calendar.selections').contains(this.get('occurrence'))) {
-      return 'selection';
-    } else {
-      return null;
-    }
+  titleStyle: Ember.computed('timeSlotHeight', function() {
+    return `line-height: ${this.get('timeSlotHeight')}px;`.htmlSafe();
   }),
 
-  occupiedTimeSlots: Ember.computed('duration', function() {
-    return this.get('duration').as('milliseconds') /
-           this.get('timeSlotDuration').as('milliseconds');
+  _duration: Ember.computed.oneWay('model.duration'),
+  _startingTime: Ember.computed.oneWay('model.startingTime'),
+  _day: Ember.computed.oneWay('model.day'),
+  _dayStartingTime: Ember.computed.oneWay('_day.startingTime'),
+
+  _occupiedTimeSlots: Ember.computed(
+    '_duration',
+    'timeSlotDuration', function() {
+      return this.get('_duration').as('ms') /
+             this.get('timeSlotDuration').as('ms');
   }),
 
-  style: Ember.computed('timeSlotHeight', 'occupiedTimeSlots', function() {
-    return (`height: ${this.get('occupiedTimeSlots') * this.get('timeSlotHeight')}px;`).htmlSafe();
+  _height: Ember.computed('_occupiedTimeSlots', function() {
+    return this.get('timeSlotHeight') * this.get('_occupiedTimeSlots');
   }),
 
-  lineStyle: Ember.computed('timeSlotHeight', function() {
-    return (`line-height: ${this.get('timeSlotHeight')}px;`).htmlSafe();
+  _top: Ember.computed(
+    '_startingTime',
+    '_dayStartingTime',
+    'timeSlotDuration',
+    'timeSlotHeight', function() {
+    return (this.get('_startingTime').diff(this.get('_dayStartingTime')) /
+            this.get('timeSlotDuration').as('ms')) *
+            this.get('timeSlotHeight');
   }),
 
-  timeInterval: Ember.computed('time', 'endingTime', 'timeZone', function() {
-    var timeZone = this.get('timeZone');
-    var includeAmPm = moment(this.get('time')).tz(timeZone).format('a') !== moment(this.get('endingTime')).tz(timeZone).format('a');
-    var formattedTime = this.formattedTime(this.get('time'), timeZone, includeAmPm);
-    var formattedEndingTime = this.formattedTime(this.get('endingTime'), timeZone);
-
-    return `${formattedTime} - ${formattedEndingTime}`;
-  }),
-
-  formattedTime: function(time, timeZone, includeAmPm = true) {
-    var localTime = moment(time);
-
-    if (timeZone != null) {
-      localTime = localTime.tz(timeZone);
-    }
-
-    var format;
-
-    if (localTime.format('mm') === '00') {
-      format = 'h';
-    } else {
-      format = 'h:mm';
-    }
-
-    if (includeAmPm) {
-      format = format + 'a';
-    }
-
-    return localTime.format(format);
-  }
+  _style: Ember.computed('_height', '_top', function() {
+    return `top: ${this.get('_top')}px;
+            height: ${this.get('_height')}px;`.htmlSafe();
+  })
 });

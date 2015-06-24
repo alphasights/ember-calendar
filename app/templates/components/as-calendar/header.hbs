@@ -1,0 +1,21 @@
+<h1>{{title}}</h1>
+
+{{yield this}}
+
+<nav>
+  <ul>
+    <li>
+      <button class="previous-week" {{action "navigateWeek" -1}}></button>
+    </li>
+
+    <li>
+      <button disabled={{isInCurrentWeek}}
+        class="current-week"
+        {{action "goToCurrentWeek"}}>This Week</button>
+    </li>
+
+    <li>
+      <button class="next-week" {{action "navigateWeek" 1}}></button>
+    </li>
+  </ul>
+</nav>

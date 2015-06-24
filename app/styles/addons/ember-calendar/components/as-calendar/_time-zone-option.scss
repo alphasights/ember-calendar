@@ -1,5 +1,8 @@
 .as-calendar-time-zone-option {
+  font-weight: $font-weight-normal;
+  color: $body-font-color;
+
   &.selected {
-    font-weight: $font-weight-bold !important;
+    font-weight: $font-weight-bold;
   }
 }

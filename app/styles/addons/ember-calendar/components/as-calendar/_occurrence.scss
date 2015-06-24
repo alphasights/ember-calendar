@@ -1,34 +1,15 @@
-.calendar-occurrence {
-  background-color: rgba($calendar-occurrence-color, .8);
-  border: 1px solid;
-  border-color: $calendar-occurrence-color;
+.as-calendar-occurrence {
+  background-color: rgba($alert-color, .8);
+  border-left: 2px solid darken($alert-color, 5%);
   color: $white;
-  overflow: hidden;
   padding: 0 $column-gutter / 4;
-  position: relative;
-  text-align: left;
-
-  &.selection {
-    background-color: rgba($calendar-occurrence-selection-color, .8);
-    border-color: $calendar-occurrence-selection-color;
-  }
-
-  &,
-  h1 {
-    font-size: .9rem;
-  }
+  position: absolute;
+  left: 0;
+  right: 0;
 
   h1 {
     color: $white;
+    font-size: .9rem;
     font-weight: $font-weight-extrabold;
-    margin: 0;
-  }
-
-  .resize-handle {
-    bottom: 0;
-    height: rem-calc(8);
-    left: 0;
-    position: absolute;
-    right: 0;
   }
 }
