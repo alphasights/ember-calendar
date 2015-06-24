@@ -27,12 +27,12 @@ export default Ember.Component.extend({
 
     return this.get('_options').filter((option) => {
       return option.get('description').match(regexp) ||
-             option === this.get('selectedOption');
+             option.get('value') === this.get('selectedOption.value');
     });
   }),
 
-  selectedOption: Ember.computed('value', '_options.@each.value', function() {
-    return this.get('_options').findBy('value', this.get('value'));
+  selectedOption: Ember.computed('value', function() {
+    return TimeZoneOption.create({ value: this.get('value') });
   }),
 
   _options: Ember.computed(function() {

@@ -7,8 +7,10 @@ export default Ember.Component.extend({
   selectedOption: null,
   description: Ember.computed.oneWay('option.description'),
 
-  isSelected: Ember.computed('selectedOption', 'option', function() {
-    return this.get('selectedOption') === this.get('option');
+  isSelected: Ember.computed(
+    'selectedOption.value',
+    'option.value', function() {
+      return this.get('selectedOption.value') === this.get('option.value');
   }),
 
   selectOption: Ember.on('click', function() {
