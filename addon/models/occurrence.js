@@ -1,18 +1,13 @@
-import Ember from 'ember';
 import moment from 'moment';
-import computedMoment from 'ember-calendar/macros/computed-moment';
+import Ember from 'ember';
 
 export default Ember.Object.extend({
   calendar: null,
-  content: null,
-  startingTime: computedMoment('content.startsAt'),
-  title: Ember.computed.oneWay('content.title'),
+  duration: null,
+  startingTime: null,
+  title: '',
 
-  duration: Ember.computed('startingTime', '_endingTime', function() {
-    return moment.duration(
-      this.get('_endingTime').diff(this.get('startingTime'))
-    );
-  }),
-
-  _endingTime: computedMoment('content.endsAt')
+  endingTime: Ember.computed('startingTime', 'duration', function() {
+    return moment(this.get('startingTime')).add(this.get('duration'));
+  })
 });

@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import ComponentCalendar from 'ember-calendar/models/component-calendar';
+import Occurrence from 'ember-calendar/models/occurrence';
 import moment from 'moment';
 
 export default Ember.Component.extend({
@@ -8,11 +9,12 @@ export default Ember.Component.extend({
 
   dayEndingTime: '22:00',
   dayStartingTime: '8:00',
-  defaultTimeZoneRegexp: /New York|London|Dubai|Hong Kong/,
-  defaultOccurrenceTitle: 'New event',
   defaultOccurrenceDuration: '1:00',
+  defaultOccurrenceTitle: 'New event',
+  defaultTimeZoneRegexp: /New York|London|Dubai|Hong Kong/,
   isEditing: true,
   model: null,
+  modelTimeSlotDuration: Ember.computed.oneWay('model.timeSlotDuration'),
   occurrences: null,
   startingDate: null,
   timeSlotDuration: '00:30',
@@ -30,10 +32,17 @@ export default Ember.Component.extend({
     },
 
     addOccurrence: function(time) {
-      this.sendAction('onAddOccurrence', Ember.Object.create({
+      var occurrence = Occurrence.create({
+        calendar: this.get('model'),
+        startingTime: time,
         title: this.get('defaultOccurrenceTitle'),
-        startsAt: time,
-        endsAt: moment(time).add(moment.duration(this.get('defaultOccurrenceDuration')))
+        duration: moment.duration(this.get('defaultOccurrenceDuration'))
+      });
+
+      this.sendAction('onAddOccurrence', Ember.Object.create({
+        title: occurrence.get('title'),
+        startsAt: occurrence.get('startingTime').toDate(),
+        endsAt: occurrence.get('endingTime').toDate()
       }));
     }
   }

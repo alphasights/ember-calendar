@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import computedDuration from 'ember-calendar/macros/computed-duration';
 import Calendar from './calendar';
-import Occurrence from './occurrence';
+import OccurrenceProxy from './occurrence-proxy';
 
 export default Calendar.extend({
   component: null,
@@ -13,7 +13,7 @@ export default Calendar.extend({
 
   occurrences: Ember.computed('component.occurrences.[]', function() {
     return this.get('component.occurrences').map((occurrence) => {
-      return Occurrence.create({ calendar: this, content: occurrence });
+      return OccurrenceProxy.create({ calendar: this, content: occurrence });
     });
   })
 });
