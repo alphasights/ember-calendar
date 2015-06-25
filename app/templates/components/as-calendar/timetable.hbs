@@ -2,7 +2,7 @@
   <div class="time-zone">
     {{as-calendar/time-zone-select
       value=timeZone
-      onChangeValue="onChangeTimeZone"
+      onChangeValue="changeTimeZone"
       defaultRegexp=defaultTimeZoneRegexp}}
   </div>
 
@@ -39,17 +39,6 @@
           <li>
             {{#if hasBlock}}
               {{yield day this}}
-            {{else}}
-              <ul class="occurrences">
-                {{#each day.occurrences as |occurrence|}}
-                  <li>
-                    {{as-calendar/occurrence
-                      model=occurrence
-                      timeSlotHeight=timeSlotHeight
-                      timeSlotDuration=timeSlotDuration}}
-                  </li>
-                {{/each}}
-              </ul>
             {{/if}}
           </li>
         {{/each}}

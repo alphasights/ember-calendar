@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import ComponentCalendar from 'ember-calendar/models/component-calendar';
+import moment from 'moment';
 
 export default Ember.Component.extend({
   classNameBindings: [':as-calendar'],
@@ -8,6 +9,8 @@ export default Ember.Component.extend({
   dayEndingTime: '22:00',
   dayStartingTime: '8:00',
   defaultTimeZoneRegexp: /New York|London|Dubai|Hong Kong/,
+  defaultOccurrenceTitle: 'New event',
+  defaultOccurrenceDuration: '1:00',
   isEditing: true,
   model: null,
   occurrences: null,
@@ -21,17 +24,17 @@ export default Ember.Component.extend({
     this.set('model', ComponentCalendar.create({ component: this }));
   }.on('init'),
 
-  addOccurrence: function(occurrence) {
-    this.sendAction('onAddOccurrence', occurrence);
-  },
-
-  removeOccurrence: function(occurrence) {
-    this.sendAction('onRemoveOccurrence', occurrence);
-  },
-
   actions: {
-    onChangeTimetableTimeZone: function(timeZone) {
+    changeTimeZone: function(timeZone) {
       this.set('timeZone', timeZone);
+    },
+
+    addOccurrence: function(time) {
+      this.sendAction('onAddOccurrence', Ember.Object.create({
+        title: this.get('defaultOccurrenceTitle'),
+        startsAt: time,
+        endsAt: moment(time).add(moment.duration(this.get('defaultOccurrenceDuration')))
+      }));
     }
   }
 });

@@ -42,7 +42,7 @@ export default Ember.Component.extend({
   }),
 
   actions: {
-    onSelectOption: function(option) {
+    selectOption: function(option) {
       this.sendAction('onChangeValue', option.get('value'));
     }
   }

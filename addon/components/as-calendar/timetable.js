@@ -38,9 +38,26 @@ export default Ember.Component.extend({
                        this.get('timeSlotHeight')}px;`).htmlSafe();
   }),
 
+  selectTime: Ember.on('click', function(event) {
+    var $target = this.$(event.target);
+
+    if ($target.parent().hasClass('days')) {
+      var dayIndex = $target.index();
+      var day = this.get('days').objectAt(dayIndex);
+
+      var timeSlotIndex = Math.floor(event.offsetY / this.get('timeSlotHeight'));
+      var timeSlotOffset = timeSlotIndex * this.get('timeSlotDuration').as('minutes');
+
+      var time = moment(day.get('startingTime')).add(timeSlotOffset, 'minutes').toString();
+
+      this.sendAction('onSelectTime', time);
+    }
+  }),
+
   actions: {
-    onChangeTimeZone: function() {
+    changeTimeZone: function() {
       this.sendAction('onChangeTimeZone', ...arguments);
     }
   }
 });
+
