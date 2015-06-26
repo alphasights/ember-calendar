@@ -1,7 +1,5 @@
 import Ember from 'ember';
 import ComponentCalendar from 'ember-calendar/models/component-calendar';
-import Occurrence from 'ember-calendar/models/occurrence';
-import moment from 'moment';
 
 export default Ember.Component.extend({
   classNameBindings: [':as-calendar'],
@@ -32,18 +30,11 @@ export default Ember.Component.extend({
     },
 
     addOccurrence: function(time) {
-      var occurrence = Occurrence.create({
-        calendar: this.get('model'),
-        startingTime: time,
-        title: this.get('defaultOccurrenceTitle'),
-        duration: moment.duration(this.get('defaultOccurrenceDuration'))
+      var occurrence = this.get('model').createOccurrence({
+        startsAt: time.toDate()
       });
 
-      this.sendAction('onAddOccurrence', Ember.Object.create({
-        title: occurrence.get('title'),
-        startsAt: occurrence.get('startingTime').toDate(),
-        endsAt: occurrence.get('endingTime').toDate()
-      }));
+      this.sendAction('onAddOccurrence', occurrence.get('content'));
     }
   }
 });

@@ -2,6 +2,7 @@ import Ember from 'ember';
 import moment from 'moment';
 import TimeSlot from './time-slot';
 import Day from './day';
+import OccurrenceProxy from './occurrence-proxy';
 
 export default Ember.Object.extend({
   dayEndingTime: null,
@@ -61,6 +62,20 @@ export default Ember.Object.extend({
       this.goToCurrentWeek();
     }
   }),
+
+  createOccurrence: function(options) {
+    var content = Ember.merge({
+      endsAt: moment(options.startsAt)
+        .add(this.get('defaultOccurrenceDuration')),
+
+      title: this.get('defaultOccurrenceTitle')
+    }, options);
+
+    return OccurrenceProxy.create({
+      calendar: this,
+      content: Ember.Object.create(content)
+    });
+  },
 
   navigateWeek: function(index) {
     this.set('week', moment(this.get('week')).add(index, 'weeks'));

@@ -11,6 +11,14 @@ export default Calendar.extend({
   dayEndingTime: computedDuration('component.dayEndingTime'),
   timeSlotDuration: computedDuration('component.timeSlotDuration'),
 
+  defaultOccurrenceTitle: Ember.computed.oneWay(
+    'component.defaultOccurrenceTitle'
+  ),
+
+  defaultOccurrenceDuration: computedDuration(
+    'component.defaultOccurrenceDuration'
+  ),
+
   occurrences: Ember.computed('component.occurrences.[]', function() {
     return this.get('component.occurrences').map((occurrence) => {
       return OccurrenceProxy.create({ calendar: this, content: occurrence });
