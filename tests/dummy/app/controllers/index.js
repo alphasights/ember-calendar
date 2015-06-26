@@ -22,6 +22,10 @@ export default Ember.Controller.extend({
         startsAt: occurrence.get('startsAt'),
         endsAt: occurrence.get('endsAt')
       }));
+    },
+
+    calendarUpdateOccurrence: function(occurrence, properties) {
+      occurrence.setProperties(properties);
     }
   }
 });

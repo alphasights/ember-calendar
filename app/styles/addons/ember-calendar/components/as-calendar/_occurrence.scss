@@ -7,9 +7,23 @@
   left: 0;
   right: 0;
 
+  > div {
+    height: 100%;
+    position: relative;
+  }
+
   h1 {
     color: $white;
     font-size: .9rem;
     font-weight: $font-weight-extrabold;
+  }
+
+  .resize-handle {
+    bottom: 0;
+    cursor: ns-resize;
+    height: rem-calc(8);
+    left: 0;
+    position: absolute;
+    right: 0;
   }
 }

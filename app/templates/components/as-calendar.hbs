@@ -16,8 +16,10 @@
       <li>
         {{as-calendar/occurrence
           model=occurrence
+          day=day
           timeSlotHeight=timeSlotHeight
-          timeSlotDuration=modelTimeSlotDuration}}
+          timeSlotDuration=modelTimeSlotDuration
+          onUpdateOccurrence="updateOccurrence"}}
       </li>
     {{/each}}
   </ul>

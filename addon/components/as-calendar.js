@@ -35,6 +35,10 @@ export default Ember.Component.extend({
       });
 
       this.sendAction('onAddOccurrence', occurrence.get('content'));
+    },
+
+    updateOccurrence: function() {
+      this.sendAction('onUpdateOccurrence', ...arguments);
     }
   }
 });

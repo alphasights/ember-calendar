@@ -19,11 +19,6 @@ var Day = Ember.Object.extend({
 
       return startingDate >= this.get('startingTime').toDate() &&
              startingDate <= this.get('_endingTime').toDate();
-    }).map((occurrence) => {
-      return Ember.ObjectProxy.create({
-        content: occurrence,
-        day: this
-      });
     });
   }),
 

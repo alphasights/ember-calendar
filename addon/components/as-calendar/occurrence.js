@@ -6,18 +6,44 @@ export default Ember.Component.extend({
   tagName: 'section',
 
   model: null,
+  day: null,
   timeSlotDuration: null,
   timeSlotHeight: null,
   title: Ember.computed.oneWay('model.title'),
+  content: Ember.computed.oneWay('model.content'),
 
   titleStyle: Ember.computed('timeSlotHeight', function() {
     return `line-height: ${this.get('timeSlotHeight')}px;`.htmlSafe();
   }),
 
+  setupInteractions: function() {
+    interact(this.$()[0])
+      .resizable({
+        edges: {
+          bottom: '.resize-handle'
+        }
+      })
+      .on('resizemove', (event) => {
+        Ember.run(() => {
+          this.resizeMove(event);
+        });
+      });
+  }.on('didInsertElement'),
+
+  resizeMove: function(event) {
+    var newDuration = moment.duration(
+      Math.floor(event.rect.height / this.get('timeSlotHeight')) *
+      this.get('timeSlotDuration')
+    );
+
+    this.sendAction('onUpdateOccurrence', this.get('content'), {
+      endsAt: moment(this.get('_startingTime')).add(newDuration).toDate()
+    });
+  },
+
   _duration: Ember.computed.oneWay('model.duration'),
   _startingTime: Ember.computed.oneWay('model.startingTime'),
-  _day: Ember.computed.oneWay('model.day'),
-  _dayStartingTime: Ember.computed.oneWay('_day.startingTime'),
+  _dayStartingTime: Ember.computed.oneWay('day.startingTime'),
 
   _occupiedTimeSlots: Ember.computed(
     '_duration',
