@@ -18,7 +18,21 @@ export default Ember.Component.extend({
     return this.$().width() / this.get('days.length');
   }).volatile(),
 
-  selectTime: Ember.on('click', function(event) {
+  storeMousedownEvent: Ember.on('mouseDown', function(event) {
+    this.set('_mouseDownEvent', event);
+  }),
+
+  handleMouseUp: Ember.on('mouseUp', function(event) {
+    var mouseDownEvent = this.get('_mouseDownEvent');
+
+    if (event.pageX === mouseDownEvent.pageX && event.pageY === mouseDownEvent.pageY) {
+      this.selectTime(event);
+    }
+
+    this.set('_mouseDownEvent', null);
+  }),
+
+  selectTime: function(event) {
     var offset = this.$().offset();
     var offsetX = event.pageX - offset.left;
     var offsetY = event.pageY - offset.top;
@@ -29,7 +43,9 @@ export default Ember.Component.extend({
 
     this.sendAction('onSelectTime',
       moment(day.get('value')).add(timeSlot.get('time')));
-  }),
+  },
+
+  _mouseDownEvent: null,
 
   _style: Ember.computed(
   'timeSlotHeight',
