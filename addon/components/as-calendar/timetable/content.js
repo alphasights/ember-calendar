@@ -18,14 +18,16 @@ export default Ember.Component.extend({
     return this.$().width() / this.get('days.length');
   }).volatile(),
 
-  storeMousedownEvent: Ember.on('mouseDown', function(event) {
+  handleMouseDown: Ember.on('mouseDown', function(event) {
     this.set('_mouseDownEvent', event);
   }),
 
   handleMouseUp: Ember.on('mouseUp', function(event) {
     var mouseDownEvent = this.get('_mouseDownEvent');
 
-    if (event.pageX === mouseDownEvent.pageX && event.pageY === mouseDownEvent.pageY) {
+    if (event.pageX === mouseDownEvent.pageX &&
+        event.pageY === mouseDownEvent.pageY &&
+        $(event.target).parent().hasClass('days')) {
       this.selectTime(event);
     }
 
