@@ -18,7 +18,7 @@ var Day = Ember.Object.extend({
       var startingDate = occurrence.get('startingTime').toDate();
 
       return startingDate >= this.get('startingTime').toDate() &&
-             startingDate <= this.get('_endingTime').toDate();
+             startingDate <= this.get('endingTime').toDate();
     });
   }),
 
@@ -29,7 +29,7 @@ var Day = Ember.Object.extend({
       .add(this.get('_timeSlots.firstObject.time'));
   }),
 
-  _endingTime: Ember.computed(
+  endingTime: Ember.computed(
     'value',
     '_timeSlots.lastObject.time', function() {
     return moment(this.get('value'))
