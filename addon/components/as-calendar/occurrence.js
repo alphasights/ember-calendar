@@ -10,6 +10,7 @@ export default Ember.Component.extend({
   day: null,
   timeSlotDuration: null,
   timeSlotHeight: null,
+  timeSlotWidth: null,
   title: Ember.computed.oneWay('model.title'),
   content: Ember.computed.oneWay('model.content'),
 
@@ -41,10 +42,6 @@ export default Ember.Component.extend({
       });
   }),
 
-  timeSlotWidth: Ember.computed(function() {
-    return this.$().closest('.content').width() / this.get('_days.length');
-  }).volatile(),
-
   resizeStart: function() {
     this.get('_calendar').createOccurrencePreview(this.get('model'));
   },
@@ -52,16 +49,15 @@ export default Ember.Component.extend({
   resizeMove: function(event) {
     var newDuration = moment.duration(
       Math.floor(event.rect.height / this.get('timeSlotHeight')) *
-      this.get('timeSlotDuration').as('ms')
+        this.get('timeSlotDuration').as('ms')
     );
 
-    var endsAt = moment(this.get('_startingTime')).add(newDuration);
+    var changes = {
+      endsAt: moment(this.get('_startingTime')).add(newDuration).toDate()
+    };
 
-    if (endsAt.toDate() <= this.get('_dayEndingTime').toDate() &&
-        newDuration.as('ms') >= this.get('timeSlotDuration').as('ms')) {
-      this.sendAction('onUpdateOccurrence', this.get('_preview.content'), {
-        endsAt: endsAt.toDate()
-      });
+    if (this._validateChanges(changes)) {
+      this.sendAction('onUpdateOccurrence', this.get('_preview.content'), changes);
     }
   },
 
@@ -94,12 +90,15 @@ export default Ember.Component.extend({
     );
 
     var startsAt = moment(this.get('_startingTime')).add(verticalOffset).add(horizontalOffset);
-    var endsAt = moment(startsAt).add(this.get('_preview.duration'));
 
-    this.sendAction('onUpdateOccurrence', this.get('_preview.content'), {
+    var changes = {
       startsAt: startsAt.toDate(),
-      endsAt: endsAt.toDate()
-    });
+      endsAt: moment(startsAt).add(this.get('_duration')).toDate()
+    };
+
+    if (this._validateChanges(changes)) {
+      this.sendAction('onUpdateOccurrence', this.get('_preview.content'), changes);
+    }
   },
 
   dragEnd: function() {
@@ -145,5 +144,24 @@ export default Ember.Component.extend({
   _style: Ember.computed('_height', '_top', function() {
     return `top: ${this.get('_top')}px;
             height: ${this.get('_height')}px;`.htmlSafe();
-  })
+  }),
+
+  _validateChanges: function(changes) {
+    var copy = this.get('_preview').copy();
+
+    copy.get('content').setProperties(changes);
+
+    console.log(changes);
+
+    console.log(copy.get('day.startingTime').toDate());
+    console.log(copy.get('day.endingTime').toDate());
+
+    var result = copy.get('startingTime') >= copy.get('day.startingTime') &&
+      copy.get('endingTime') <= copy.get('day.endingTime') &&
+      copy.get('duration') >= this.get('timeSlotDuration');
+
+    console.log(result);
+
+    return result;
+  }
 });

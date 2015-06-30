@@ -10,7 +10,7 @@
   timeSlotHeight=timeSlotHeight
   defaultTimeZoneRegexp=defaultTimeZoneRegexp
   onSelectTime="addOccurrence"
-  onChangeTimeZone="changeTimeZone" as |day|}}
+  onChangeTimeZone="changeTimeZone" as |day content|}}
   <ul class="occurrences">
     {{#each day.occurrences as |occurrence|}}
       <li>
@@ -18,6 +18,7 @@
           model=occurrence
           day=day
           timeSlotHeight=timeSlotHeight
+          timeSlotWidth=content.timeSlotWidth
           timeSlotDuration=modelTimeSlotDuration
           onUpdateOccurrence="updateOccurrence"}}
       </li>
@@ -29,6 +30,7 @@
           model=day.occurrencePreview
           day=day
           timeSlotHeight=timeSlotHeight
+          timeSlotWidth=content.timeSlotWidth
           timeSlotDuration=modelTimeSlotDuration
           onUpdateOccurrence="updateOccurrence"}}
       </li>
