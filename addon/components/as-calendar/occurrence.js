@@ -152,9 +152,6 @@ export default Ember.Component.extend({
 
     copy.get('content').setProperties(changes);
 
-    console.log(copy.get('endingTime').toDate());
-    console.log(copy.get('day.endingTime').toDate());
-
     return copy.get('startingTime').toDate() >= copy.get('day.startingTime').toDate() &&
            copy.get('endingTime').toDate() <= copy.get('day.endingTime').toDate() &&
            copy.get('duration') >= this.get('timeSlotDuration');
