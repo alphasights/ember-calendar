@@ -51,9 +51,9 @@ var Day = Ember.Object.extend({
 
   endingTime: Ember.computed(
     'value',
-    '_timeSlots.lastObject.time', function() {
+    '_timeSlots.lastObject.endingTime', function() {
     return moment(this.get('value'))
-      .add(this.get('_timeSlots.lastObject.time'));
+      .add(this.get('_timeSlots.lastObject.endingTime'));
   }),
 
   _week: Ember.computed.oneWay('calendar.week'),

@@ -78,20 +78,6 @@ export default Ember.Object.extend({
     });
   },
 
-  createOccurrencePreview: function(occurrence) {
-    this.set('occurrencePreview', OccurrenceProxy.create({
-      content: Ember.Object.create({
-        startsAt: occurrence.get('content.startsAt'),
-        endsAt: occurrence.get('content.endsAt'),
-        title: occurrence.get('content.title')
-      })
-    }));
-  },
-
-  clearOccurrencePreview: function() {
-    this.set('occurrencePreview', null);
-  },
-
   navigateWeek: function(index) {
     this.set('week', moment(this.get('week')).add(index, 'weeks'));
   },
