@@ -7,10 +7,10 @@ export default Ember.Component.extend({
   tagName: 'section',
 
   model: null,
-  day: null,
   timeSlotDuration: null,
   timeSlotHeight: null,
   timeSlotWidth: null,
+  referenceElement: null,
   title: Ember.computed.oneWay('model.title'),
   content: Ember.computed.oneWay('model.content'),
 
@@ -43,13 +43,13 @@ export default Ember.Component.extend({
   }),
 
   resizeStart: function() {
-    this.get('_calendar').createOccurrencePreview(this.get('model'));
+    this.set('_calendar.occurrencePreview', this.get('model').copy());
   },
 
   resizeMove: function(event) {
     var newDuration = moment.duration(
       Math.floor(event.rect.height / this.get('timeSlotHeight')) *
-        this.get('timeSlotDuration').as('ms')
+      this.get('timeSlotDuration').as('ms')
     );
 
     var changes = {
@@ -66,18 +66,18 @@ export default Ember.Component.extend({
       endsAt: this.get('_preview.content.endsAt')
     });
 
-    this.get('_calendar').clearOccurrencePreview();
+    this.set('_calendar.occurrencePreview', null);
   },
 
   dragStart: function() {
-    this.get('_calendar').createOccurrencePreview(this.get('model'));
+    this.set('_calendar.occurrencePreview', this.get('model').copy());
     this.set('_dragDy', 0);
   },
 
   dragMove: function(event) {
     this.set('_dragDy', this.get('_dragDy') + event.dy);
 
-    var offsetX = event.pageX - this.$().closest('.content').offset().left;
+    var offsetX = event.pageX - Ember.$(this.get('referenceElement')).offset().left;
 
     var verticalOffset = moment.duration(
       Math.floor(this.get('_dragDy') / this.get('timeSlotHeight')) * this.get('timeSlotDuration')
@@ -85,7 +85,7 @@ export default Ember.Component.extend({
 
     var horizontalOffset = moment.duration(
       Math.floor(offsetX / this.get('timeSlotWidth')) -
-      this.get('_days').indexOf(this.get('day')),
+      this.get('_day.offset'),
       'days'
     );
 
@@ -107,7 +107,7 @@ export default Ember.Component.extend({
       endsAt: this.get('_preview.content.endsAt')
     });
 
-    this.get('_calendar').clearOccurrencePreview();
+    this.set('_calendar.occurrencePreview', null);
     this.set('_dragDy', null);
   },
 
@@ -116,8 +116,9 @@ export default Ember.Component.extend({
   _days: Ember.computed.oneWay('_calendar.days'),
   _duration: Ember.computed.oneWay('model.duration'),
   _startingTime: Ember.computed.oneWay('model.startingTime'),
-  _dayStartingTime: Ember.computed.oneWay('day.startingTime'),
-  _dayEndingTime: Ember.computed.oneWay('day.endingTime'),
+  _day: Ember.computed.oneWay('model.day'),
+  _dayStartingTime: Ember.computed.oneWay('_day.startingTime'),
+  _dayEndingTime: Ember.computed.oneWay('_day.endingTime'),
   _preview: Ember.computed.oneWay('_calendar.occurrencePreview'),
 
   _occupiedTimeSlots: Ember.computed(
@@ -151,16 +152,9 @@ export default Ember.Component.extend({
 
     copy.get('content').setProperties(changes);
 
-    console.log(changes);
-
-    console.log(copy.get('day.startingTime').toDate());
-    console.log(copy.get('day.endingTime').toDate());
-
-    var result = copy.get('startingTime') >= copy.get('day.startingTime') &&
-      copy.get('endingTime') <= copy.get('day.endingTime') &&
-      copy.get('duration') >= this.get('timeSlotDuration');
-
-    console.log(result);
+    return copy.get('startingTime') >= copy.get('day.startingTime') &&
+           copy.get('endingTime') <= copy.get('day.endingTime') &&
+           copy.get('duration') >= this.get('timeSlotDuration');
 
     return result;
   }

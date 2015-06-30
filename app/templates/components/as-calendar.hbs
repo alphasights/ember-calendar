@@ -16,9 +16,9 @@
       <li>
         {{as-calendar/occurrence
           model=occurrence
-          day=day
           timeSlotHeight=timeSlotHeight
           timeSlotWidth=content.timeSlotWidth
+          referenceElement=content.element
           timeSlotDuration=modelTimeSlotDuration
           onUpdateOccurrence="updateOccurrence"}}
       </li>
@@ -28,9 +28,9 @@
       <li>
         {{as-calendar/occurrence
           model=day.occurrencePreview
-          day=day
           timeSlotHeight=timeSlotHeight
           timeSlotWidth=content.timeSlotWidth
+          referenceElement=content.element
           timeSlotDuration=modelTimeSlotDuration
           onUpdateOccurrence="updateOccurrence"}}
       </li>
