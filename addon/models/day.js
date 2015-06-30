@@ -22,6 +22,26 @@ var Day = Ember.Object.extend({
     });
   }),
 
+  occurrencePreview: Ember.computed(
+    'calendar.occurrencePreview.startingTime',
+    'startingTime',
+    'endingTime', function() {
+    var occurrencePreview = this.get('calendar.occurrencePreview');
+
+    if (occurrencePreview != null) {
+      var startingDate = occurrencePreview.get('startingTime').toDate();
+
+      if (startingDate >= this.get('startingTime').toDate() &&
+          startingDate <= this.get('endingTime').toDate()) {
+        return occurrencePreview;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }),
+
   startingTime: Ember.computed(
     'value',
     '_timeSlots.firstObject.time', function() {

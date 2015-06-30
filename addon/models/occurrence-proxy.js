@@ -5,14 +5,13 @@ import computedMoment from 'ember-calendar/macros/computed-moment';
 export default Ember.Object.extend({
   calendar: null,
   content: null,
+  endingTime: computedMoment('content.endsAt'),
   startingTime: computedMoment('content.startsAt'),
   title: Ember.computed.oneWay('content.title'),
 
-  duration: Ember.computed('startingTime', '_endingTime', function() {
+  duration: Ember.computed('startingTime', 'endingTime', function() {
     return moment.duration(
-      this.get('_endingTime').diff(this.get('startingTime'))
+      this.get('endingTime').diff(this.get('startingTime'))
     );
-  }),
-
-  _endingTime: computedMoment('content.endsAt')
+  })
 });

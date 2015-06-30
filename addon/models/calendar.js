@@ -11,6 +11,7 @@ export default Ember.Object.extend({
   startingDate: null,
   timeSlotDuration: null,
   timeZone: null,
+  occurrencePreview: null,
 
   isInCurrentWeek: Ember.computed('week', '_currentWeek', function() {
     return this.get('week').isSame(this.get('_currentWeek'));
@@ -75,6 +76,20 @@ export default Ember.Object.extend({
       calendar: this,
       content: Ember.Object.create(content)
     });
+  },
+
+  createOccurrencePreview: function(occurrence) {
+    this.set('occurrencePreview', OccurrenceProxy.create({
+      content: Ember.Object.create({
+        startsAt: occurrence.get('content.startsAt'),
+        endsAt: occurrence.get('content.endsAt'),
+        title: occurrence.get('content.title')
+      })
+    }));
+  },
+
+  clearOccurrencePreview: function() {
+    this.set('occurrencePreview', null);
   },
 
   navigateWeek: function(index) {

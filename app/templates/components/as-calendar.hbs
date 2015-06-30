@@ -22,5 +22,16 @@
           onUpdateOccurrence="updateOccurrence"}}
       </li>
     {{/each}}
+
+    {{#if day.occurrencePreview}}
+      <li>
+        {{as-calendar/occurrence
+          model=day.occurrencePreview
+          day=day
+          timeSlotHeight=timeSlotHeight
+          timeSlotDuration=modelTimeSlotDuration
+          onUpdateOccurrence="updateOccurrence"}}
+      </li>
+    {{/if}}
   </ul>
 {{/as-calendar/timetable}}
