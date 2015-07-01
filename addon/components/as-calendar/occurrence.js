@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import moment from 'moment';
+import interact from 'interact';
 
 export default Ember.Component.extend({
   attributeBindings: ['_style:style'],
