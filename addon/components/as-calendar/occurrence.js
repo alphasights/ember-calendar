@@ -70,8 +70,16 @@ export default Ember.Component.extend({
   },
 
   dragStart: function() {
+    var $this = this.$();
+    var $referenceElement = Ember.$(this.get('referenceElement'));
+
     this.set('_calendar.occurrencePreview', this.get('model').copy());
     this.set('_dragDy', 0);
+    this.set('_dragTopDistance', $referenceElement.offset().top - $this.offset().top);
+
+    this.set('_dragBottomDistance',
+             ($referenceElement.offset().top + $referenceElement.height()) -
+             ($this.offset().top + $this.height()));
   },
 
   dragMove: function(event) {
@@ -79,8 +87,13 @@ export default Ember.Component.extend({
 
     var offsetX = event.pageX - Ember.$(this.get('referenceElement')).offset().left;
 
+    var verticalDrag = Math.min(
+      Math.max(this.get('_dragDy'), this.get('_dragTopDistance')),
+      this.get('_dragBottomDistance')
+    );
+
     var verticalOffset = moment.duration(
-      Math.floor(this.get('_dragDy') / this.get('timeSlotHeight')) * this.get('timeSlotDuration')
+      Math.floor(verticalDrag / this.get('timeSlotHeight')) * this.get('timeSlotDuration')
     );
 
     var horizontalOffset = moment.duration(
