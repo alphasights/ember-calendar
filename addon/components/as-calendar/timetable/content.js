@@ -9,7 +9,6 @@ export default Ember.Component.extend({
   model: null,
   timeSlotDuration: Ember.computed.oneWay('model.timeSlotDuration'),
   timeSlots: Ember.computed.oneWay('model.timeSlots'),
-  referenceElement: Ember.Binding.oneWay('element'),
 
   timeSlotStyle: Ember.computed('timeSlotHeight', function() {
     return `height: ${this.get('timeSlotHeight')}px`.htmlSafe();
