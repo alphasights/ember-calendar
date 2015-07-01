@@ -36,16 +36,13 @@ export default Ember.Object.extend({
 
   week: Ember.computed('startingDate', 'timeZone', {
     get() {
-      var startingDate = this.get('startingDate');
       var timeZone = this.get('timeZone');
+      var startingDate = this.get('startingDate');
 
       return moment(startingDate)
-        .startOf('week')
-        .utc()
-        .tz(this.get('timeZone'))
-        .subtract(startingDate.getTimezoneOffset() -
-                  moment.tz.zone(timeZone)
-                    .offset(startingDate.getTime()), 'minutes');
+              .utc()
+              .add(moment.tz.zone(timeZone).offset(startingDate.valueOf()), 'minutes')
+              .tz(timeZone);
     },
 
     set(_, value) {
@@ -83,6 +80,6 @@ export default Ember.Object.extend({
   },
 
   goToCurrentWeek: function() {
-    this.set('week', moment(this.get('_currentWeek')));
+    this.set('week', this.get('_currentWeek'));
   }
 });
