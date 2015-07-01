@@ -15,10 +15,10 @@ var Day = Ember.Object.extend({
     'startingTime',
     'endingTime', function() {
     return this.get('calendar.occurrences').filter((occurrence) => {
-      var startingDate = occurrence.get('startingTime').toDate();
+      var startingTime = occurrence.get('startingTime');
 
-      return startingDate >= this.get('startingTime').toDate() &&
-             startingDate <= this.get('endingTime').toDate();
+      return startingTime >= this.get('startingTime') &&
+             startingTime <= this.get('endingTime');
     });
   }),
 
@@ -29,10 +29,10 @@ var Day = Ember.Object.extend({
     var occurrencePreview = this.get('calendar.occurrencePreview');
 
     if (occurrencePreview != null) {
-      var startingDate = occurrencePreview.get('startingTime').toDate();
+      var startingTime = occurrencePreview.get('startingTime');
 
-      if (startingDate >= this.get('startingTime').toDate() &&
-          startingDate <= this.get('endingTime').toDate()) {
+      if (startingTime >= this.get('startingTime') &&
+          startingTime <= this.get('endingTime')) {
         return occurrencePreview;
       } else {
         return null;

@@ -148,13 +148,13 @@ export default Ember.Component.extend({
   }),
 
   _validateChanges: function(changes) {
-    var copy = this.get('_preview').copy();
+    var newPreview = this.get('_preview').copy();
 
-    copy.get('content').setProperties(changes);
+    newPreview.get('content').setProperties(changes);
 
-    return copy.get('startingTime').toDate() >= copy.get('day.startingTime').toDate() &&
-           copy.get('endingTime').toDate() <= copy.get('day.endingTime').toDate() &&
-           copy.get('duration') >= this.get('timeSlotDuration');
+    return newPreview.get('startingTime') >= newPreview.get('day.startingTime') &&
+           newPreview.get('endingTime') <= newPreview.get('day.endingTime') &&
+           newPreview.get('duration') >= this.get('timeSlotDuration');
 
     return result;
   }
