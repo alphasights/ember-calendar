@@ -155,7 +155,5 @@ export default Ember.Component.extend({
     return newPreview.get('startingTime') >= newPreview.get('day.startingTime') &&
            newPreview.get('endingTime') <= newPreview.get('day.endingTime') &&
            newPreview.get('duration') >= this.get('timeSlotDuration');
-
-    return result;
   }
 });
