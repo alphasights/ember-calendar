@@ -23,17 +23,24 @@ test('Add an occurrence', function(assert) {
       onAddOccurrence="calendarAddOccurrence"}}
   `);
 
-  this.on('calendarAddOccurrence', function(occurrence) {
-    debugger;
+  assert.equal(this.$('.as-calendar-occurrence').length, 0);
+
+  this.on('calendarAddOccurrence', (occurrence) => {
     this.get('occurrences').pushObject(occurrence);
   });
 
   run(() => {
-    var e = new jQuery.Event("click");
-    e.pageX = 10;
-    e.pageY = 10;
-    $('.as-calendar-timetable-content').trigger(e);
-    debugger;
+    var $target = $('ul.days li:first');
+
+    var mousedown = new $.Event("mousedown");
+    mousedown.pageX = $target.offset().left;
+    mousedown.pageY = $target.offset().top;
+    $target.trigger(mousedown);
+
+    var mouseup = new $.Event("mouseup");
+    mouseup.pageX = $target.offset().left;
+    mouseup.pageY = $target.offset().top;
+    $target.trigger(mouseup);
   });
 
   assert.equal(this.$('.as-calendar-occurrence').length, 1,

@@ -9,13 +9,18 @@ export default Ember.Component.extend({
   model: null,
   timeSlotDuration: Ember.computed.oneWay('model.timeSlotDuration'),
   timeSlots: Ember.computed.oneWay('model.timeSlots'),
+  referenceElement: Ember.Binding.oneWay('element'),
 
   timeSlotStyle: Ember.computed('timeSlotHeight', function() {
     return `height: ${this.get('timeSlotHeight')}px`.htmlSafe();
   }),
 
   timeSlotWidth: Ember.computed(function() {
-    return this.$().width() / this.get('days.length');
+    if (this.$() != null) {
+      return this.$().width() / this.get('days.length');
+    } else {
+      return 0;
+    }
   }).volatile(),
 
   handleMouseDown: Ember.on('mouseDown', function(event) {
