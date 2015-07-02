@@ -24,7 +24,7 @@ module.exports = {
       exports: { 'interact': ['default'] }
     });
 
-    if (app.env === 'test') {
+    if (app.env === 'test' || app.env === 'development') {
       app.import(path.join(app.bowerDirectory, 'jquery-simulate/jquery.simulate.js'));
     }
   }
