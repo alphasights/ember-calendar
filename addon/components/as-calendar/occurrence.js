@@ -10,7 +10,7 @@ export default Ember.Component.extend({
   model: null,
   timeSlotDuration: null,
   timeSlotHeight: null,
-  timeSlotWidth: null,
+  dayWidth: null,
   referenceElement: null,
   title: Ember.computed.oneWay('model.title'),
   content: Ember.computed.oneWay('model.content'),
@@ -98,7 +98,7 @@ export default Ember.Component.extend({
     );
 
     var horizontalOffset = moment.duration(
-      Math.floor(offsetX / this.get('timeSlotWidth')) -
+      Math.floor(offsetX / this.get('dayWidth')) -
       this.get('_day.offset'),
       'days'
     );

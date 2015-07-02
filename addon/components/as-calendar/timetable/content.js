@@ -14,12 +14,8 @@ export default Ember.Component.extend({
     return `height: ${this.get('timeSlotHeight')}px`.htmlSafe();
   }),
 
-  timeSlotWidth: Ember.computed(function() {
-    if (this.$() != null) {
-      return this.$().width() / this.get('days.length');
-    } else {
-      return 0;
-    }
+  dayWidth: Ember.computed(function() {
+    return this.$().width() / this.get('days.length');
   }).volatile(),
 
   handleMouseDown: Ember.on('mouseDown', function(event) {
@@ -42,7 +38,7 @@ export default Ember.Component.extend({
     var offset = this.$().offset();
     var offsetX = event.pageX - offset.left;
     var offsetY = event.pageY - offset.top;
-    var dayIndex = Math.floor(offsetX / this.get('timeSlotWidth'));
+    var dayIndex = Math.floor(offsetX / this.get('dayWidth'));
     var timeSlotIndex = Math.floor(offsetY / this.get('timeSlotHeight'));
     var day = this.get('days').objectAt(dayIndex);
     var timeSlot = this.get('timeSlots').objectAt(timeSlotIndex);
