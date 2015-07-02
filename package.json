@@ -19,7 +19,6 @@
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.0.2",
-    "ember-browserify": "^1.0.1",
     "ember-cli": "0.2.7",
     "ember-cli-app-version": "0.3.3",
     "ember-cli-autoprefixer": "^0.3.0",
@@ -34,7 +33,6 @@
     "ember-disable-proxy-controllers": "^0.7.0",
     "ember-export-application-global": "^1.0.2",
     "ember-try": "0.0.4",
-    "interact.js": "^1.2.4",
     "ember-cli-paint": "^1.8.20",
     "ember-moment": "^1.1.1",
     "ember-rl-dropdown": "^0.2.3"

@@ -49,8 +49,8 @@ export default Ember.Component.extend({
 
   selectTime: function(event) {
     var offset = this.$().offset();
-    var offsetX = event.pageX - offset.left;
-    var offsetY = event.pageY - offset.top;
+    var offsetX = event.pageX - Math.floor(offset.left);
+    var offsetY = event.pageY - Math.floor(offset.top);
     var dayIndex = Math.floor(offsetX / this.get('dayWidth'));
     var timeSlotIndex = Math.floor(offsetY / this.get('timeSlotHeight'));
     var day = this.get('days').objectAt(dayIndex);

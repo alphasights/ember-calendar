@@ -8,59 +8,40 @@ momentInitializer();
 
 moduleForComponent('as-calendar', 'AsCalendarComponent', { integration: true });
 
-var triggerAtPoint = function(target, name, point) {
-  var event = new $.Event(name);
-
-  event.pageX = point.x;
-  event.pageY = point.y;
-
-  target.trigger(event);
+var timeSlotHeight = function() {
+  return $('.as-calendar-timetable-content').find('.time-slots > li:first').height();
 };
 
-var getPoint = function(options) {
+var dayWidth = function() {
+  return $('.as-calendar-timetable-content').find('.days > li:first').width();
+};
+
+var pointForTime = function(options) {
   var $target = $('.as-calendar-timetable-content');
-  var offsetX = options.day * ($target.find('.days > li:first').width());
-  var offsetY = options.timeSlot * ($target.find('.time-slots > li:first').height());
+  var offsetX = options.day * dayWidth();
+  var offsetY = options.timeSlot * timeSlotHeight();
 
   return {
-    x: $target.offset().left + offsetX,
-    y: $target.offset().top + offsetY
+    clientX: $target.offset().left + offsetX - $(document).scrollLeft(),
+    clientY: $target.offset().top + offsetY - $(document).scrollTop()
   };
 };
 
 var selectTime = function(options) {
   Ember.run(() => {
     var $target = $('.as-calendar-timetable-content');
-    var point = getPoint(options);
+    var point = pointForTime(options);
 
-    triggerAtPoint($target, 'mousedown', point);
-    triggerAtPoint($target, 'mouseup', point);
+    $target.simulate('mousedown', point);
+    $target.simulate('mouseup', point);
   });
 };
 
-var resizeEvent = function(event) {
+var resizeOccurrence = function(occurrence, options) {
   Ember.run(() => {
-    var interactable = interact(event);
-
-    interactable.fire({
-      type: 'resizestart',
-      target: event
-    });
-
-    interactable.fire({
-      type: 'resizemove',
-      target: event,
-      rect: {
-        height: 80
-      }
-    });
-
-    interactable.fire({
-      type: 'resizeend',
-      target: event,
-      rect: {
-        height: 80
-      }
+    occurrence.find('.resize-handle').simulate('drag', {
+      dx: 0,
+      dy: options.timeSlots * timeSlotHeight()
     });
   });
 };
@@ -121,7 +102,7 @@ test('Resize an occurrence', function(assert) {
     'it adds the occurrence to the calendar'
   );
 
-  resizeEvent(this.$('.as-calendar-occurrence')[0]);
+  resizeOccurrence(this.$('.as-calendar-occurrence'), { timeSlots: 2 });
 
   assert.equal(this.$('.as-calendar-occurrence').height(), 80,
     'it resizes the occurrence');
