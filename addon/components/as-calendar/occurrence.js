@@ -10,8 +10,9 @@ export default Ember.Component.extend({
   model: null,
   timeSlotDuration: null,
   timeSlotHeight: null,
-  dayWidth: null,
-  referenceElement: null,
+  timetable: null,
+  dayWidth: Ember.computed.oneWay('timetable.contentComponent.dayWidth'),
+  referenceElement: Ember.computed.oneWay('timetable.contentComponent.element'),
   title: Ember.computed.oneWay('model.title'),
   content: Ember.computed.oneWay('model.content'),
 

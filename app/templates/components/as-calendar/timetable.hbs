@@ -30,8 +30,9 @@
     {{#as-calendar/timetable/content
       timeSlotHeight=timeSlotHeight
       model=model
-      onSelectTime="selectTime" as |day content|}}
-      {{yield day content this}}
+      timetable=this
+      onSelectTime="selectTime" as |day|}}
+      {{yield day this}}
     {{/as-calendar/timetable/content}}
   </div>
 </div>

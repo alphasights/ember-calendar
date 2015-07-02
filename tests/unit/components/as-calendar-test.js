@@ -1,6 +1,7 @@
 import hbs from 'htmlbars-inline-precompile';
 import { test, moduleForComponent } from 'ember-qunit';
 import Ember from 'ember';
+import moment from 'moment';
 import { initialize as momentInitializer } from 'dummy/initializers/ember-moment';
 
 momentInitializer();
@@ -33,7 +34,11 @@ var selectTime = function(options) {
 };
 
 test('Add an occurrence', function(assert) {
-  this.set('occurrences', Ember.A());
+  this.set('occurrences', Ember.A([Ember.Object.create({
+    startsAt: moment().startOf('day').add(10, 'hours'),
+    endsAt: moment().startOf('day').add(12, 'hours'),
+    title: 'Awesome Event'
+  })]));
 
   this.on('calendarAddOccurrence', (occurrence) => {
     this.get('occurrences').pushObject(occurrence);
@@ -49,11 +54,17 @@ test('Add an occurrence', function(assert) {
       onAddOccurrence="calendarAddOccurrence"}}
   `);
 
-  assert.equal(this.$('.as-calendar-occurrence').length, 0);
+  assert.equal(this.$('.as-calendar-occurrence').length, 1,
+    'it shows an empty calendar'
+  );
 
   selectTime({ day: 0, timeSlot: 0 });
 
-  assert.equal(this.$('.as-calendar-occurrence').length, 1,
+  assert.equal(this.$('.as-calendar-occurrence').length, 2,
     'it adds the occurrence to the calendar'
   );
+});
+
+test('Resize an occurrence', function(assert) {
+  assert.expect(0);
 });

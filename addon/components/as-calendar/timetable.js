@@ -8,6 +8,7 @@ export default Ember.Component.extend({
   model: null,
   timeSlotHeight: null,
   timeSlots: Ember.computed.oneWay('model.timeSlots'),
+  contentComponent: null,
 
   labeledTimeSlots: Ember.computed('timeSlots.[]', function() {
     return this.get('timeSlots').filter(function(_, index) {

@@ -9,13 +9,22 @@ export default Ember.Component.extend({
   model: null,
   timeSlotDuration: Ember.computed.oneWay('model.timeSlotDuration'),
   timeSlots: Ember.computed.oneWay('model.timeSlots'),
+  timetable: null,
 
   timeSlotStyle: Ember.computed('timeSlotHeight', function() {
     return `height: ${this.get('timeSlotHeight')}px`.htmlSafe();
   }),
 
+  setWasInserted: Ember.on('didInsertElement', function() {
+    this.set('_wasInserted', true);
+  }),
+
   dayWidth: Ember.computed(function() {
-    return this.$().width() / this.get('days.length');
+    if (this.get('_wasInserted')) {
+      return this.$().width() / this.get('days.length');
+    } else {
+      return 0;
+    }
   }).volatile(),
 
   handleMouseDown: Ember.on('mouseDown', function(event) {
@@ -27,11 +36,15 @@ export default Ember.Component.extend({
 
     if (event.pageX === mouseDownEvent.pageX &&
         event.pageY === mouseDownEvent.pageY &&
-        Ember.$(event.target).closest('.as-calendar-occurrence').length == 0) {
+        Ember.$(event.target).closest('.as-calendar-occurrence').length === 0) {
       this.selectTime(event);
     }
 
     this.set('_mouseDownEvent', null);
+  }),
+
+  registerWithParent: Ember.on('init', function() {
+    this.set('timetable.contentComponent', this);
   }),
 
   selectTime: function(event) {
@@ -48,6 +61,7 @@ export default Ember.Component.extend({
   },
 
   _mouseDownEvent: null,
+  _wasInserted: false,
 
   _style: Ember.computed(
   'timeSlotHeight',
