@@ -27,7 +27,7 @@ export default Ember.Component.extend({
 
     if (event.pageX === mouseDownEvent.pageX &&
         event.pageY === mouseDownEvent.pageY &&
-        Ember.$(event.target).parent().hasClass('days')) {
+        Ember.$(event.target).closest('.as-calendar-occurrence').length == 0) {
       this.selectTime(event);
     }
 

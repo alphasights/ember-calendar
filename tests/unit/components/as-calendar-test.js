@@ -1,17 +1,43 @@
 import hbs from 'htmlbars-inline-precompile';
 import { test, moduleForComponent } from 'ember-qunit';
 import Ember from 'ember';
-import moment from 'moment';
 import { initialize as momentInitializer } from 'dummy/initializers/ember-moment';
-var run = Ember.run;
 
 momentInitializer();
 
 moduleForComponent('as-calendar', 'AsCalendarComponent', { integration: true });
 
+var triggerAtPoint = function(target, name, point) {
+  var event = new $.Event(name);
+
+  event.pageX = point.x;
+  event.pageY = point.y;
+
+  target.trigger(event);
+};
+
+var selectTime = function(options) {
+  Ember.run(() => {
+    var $target = $('.as-calendar-timetable-content');
+    var offsetX = options.day * ($target.find('.days > li:first').width());
+    var offsetY = options.timeSlot * ($target.find('.time-slots > li:first').height());
+
+    var point = {
+      x: $target.offset().left + offsetX,
+      y: $target.offset().top + offsetY
+    };
+
+    triggerAtPoint($target, 'mousedown', point);
+    triggerAtPoint($target, 'mouseup', point);
+  });
+};
+
 test('Add an occurrence', function(assert) {
-  this.set('occurrences', []);
-  this.set('calendarAddOccurrence', 'calendarAddOccurrence');
+  this.set('occurrences', Ember.A());
+
+  this.on('calendarAddOccurrence', (occurrence) => {
+    this.get('occurrences').pushObject(occurrence);
+  });
 
   this.render(hbs`
     {{as-calendar
@@ -25,23 +51,7 @@ test('Add an occurrence', function(assert) {
 
   assert.equal(this.$('.as-calendar-occurrence').length, 0);
 
-  this.on('calendarAddOccurrence', (occurrence) => {
-    this.get('occurrences').pushObject(occurrence);
-  });
-
-  run(() => {
-    var $target = $('ul.days li:first');
-
-    var mousedown = new $.Event("mousedown");
-    mousedown.pageX = $target.offset().left;
-    mousedown.pageY = $target.offset().top;
-    $target.trigger(mousedown);
-
-    var mouseup = new $.Event("mouseup");
-    mouseup.pageX = $target.offset().left;
-    mouseup.pageY = $target.offset().top;
-    $target.trigger(mouseup);
-  });
+  selectTime({ day: 0, timeSlot: 0 });
 
   assert.equal(this.$('.as-calendar-occurrence').length, 1,
     'it adds the occurrence to the calendar'
