@@ -14,7 +14,7 @@
   <ul class="occurrences">
     {{#each day.occurrences as |occurrence|}}
       <li>
-        {{as-calendar/occurrence
+        {{as-calendar/timetable/occurrence
           model=occurrence
           timeSlotHeight=timeSlotHeight
           timetable=timetable
@@ -28,9 +28,7 @@
         {{as-calendar/occurrence
           model=day.occurrencePreview
           timeSlotHeight=timeSlotHeight
-          timetable=timetable
-          timeSlotDuration=modelTimeSlotDuration
-          onUpdateOccurrence="updateOccurrence"}}
+          timeSlotDuration=modelTimeSlotDuration}}
       </li>
     {{/if}}
   </ul>

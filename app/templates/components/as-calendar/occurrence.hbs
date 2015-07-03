@@ -1,4 +1,7 @@
 <div>
   <h1 style={{titleStyle}}>{{title}}</h1>
-  <div class="resize-handle"></div>
+
+  {{#if occurrenceTemplateName}}
+    {{partial occurrenceTemplateName}}
+  {{/if}}
 </div>
