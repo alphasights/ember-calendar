@@ -15,9 +15,8 @@ var timeSlotHeight = function() {
 };
 
 var dayWidth = function() {
-  return $('.as-calendar-timetable-content')
-    .find('.days > li:first')
-    .width();
+  var $content = $('.as-calendar-timetable-content');
+  return $content.width() / $content.find('.days > li').length;
 };
 
 var pointForTime = function(options) {
@@ -45,6 +44,15 @@ var resizeOccurrence = function(occurrence, options) {
   Ember.run(() => {
     occurrence.find('.resize-handle').simulate('drag', {
       dx: 0,
+      dy: options.timeSlots * timeSlotHeight()
+    });
+  });
+};
+
+var dragOccurrence = function(occurrence, options) {
+  Ember.run(() => {
+    occurrence.simulate('drag', {
+      dx: options.days * dayWidth(),
       dy: options.timeSlots * timeSlotHeight()
     });
   });
@@ -121,6 +129,53 @@ test('Resize an occurrence', function(assert) {
 
   assert.equal($('.as-calendar-occurrence').height(), timeSlotHeight() * 3,
     'it resizes the occurrence');
+});
+
+test('Drag an occurrence', function(assert) {
+  this.set('occurrences', Ember.A());
+
+  this.on('calendarAddOccurrence', (occurrence) => {
+    this.get('occurrences').pushObject(occurrence);
+  });
+
+  this.on('calendarUpdateOccurrence', (occurrence, properties) => {
+    occurrence.setProperties(properties);
+  });
+
+  this.render(hbs`
+    {{as-calendar
+      title="Ember Calendar"
+      occurrences=occurrences
+      dayStartingTime="9:00"
+      dayEndingTime="18:00"
+      timeSlotDuration="00:30"
+      onAddOccurrence="calendarAddOccurrence"
+      onUpdateOccurrence="calendarUpdateOccurrence"}}
+  `);
+
+  selectTime({ day: 0, timeSlot: 0 });
+
+  assert.equal(this.$('.as-calendar-occurrence').length, 1,
+    'it adds the occurrence to the calendar'
+  );
+
+  dragOccurrence(this.$('.as-calendar-occurrence'), { days: 2, timeSlots: 4 });
+
+  var $occurrence = this.$('.as-calendar-occurrence');
+  var dayOffset = Math.floor($occurrence.offset().left -
+    this.$('.as-calendar-timetable-content').offset().left);
+  var timeSlotOffset = Math.floor($occurrence.offset().top -
+    this.$('.as-calendar-timetable-content').offset().top);
+
+  assert.equal(dayOffset, Math.floor(dayWidth()) * 2,
+    'it drags the occurrence to the correct day'
+  );
+  assert.equal(timeSlotOffset, timeSlotHeight() * 4,
+    'it drags the occurrence to the correct timeslot'
+  );
+  assert.equal($occurrence.height(), timeSlotHeight() * 2,
+    'it keeps the duration of the occurrence'
+  );
 });
 
 test('Change time zone', function(assert) {
