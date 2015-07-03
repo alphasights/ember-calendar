@@ -57,7 +57,7 @@ var selectTimeZone = function(name) {
 
   Ember.run(() => {
     $(`.as-calendar-time-zone-option:contains('${name}')`).click();
-  })
+  });
 };
 
 test('Add an occurrence', function(assert) {
