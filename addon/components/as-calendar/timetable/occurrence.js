@@ -50,12 +50,12 @@ export default OccurrenceComponent.extend({
     };
 
     if (this._validateChanges(changes)) {
-      this.sendAction('onUpdateOccurrence', this.get('_preview.content'), changes);
+      this.sendAction('onUpdate', this.get('_preview.content'), changes);
     }
   },
 
   resizeEnd: function() {
-    this.sendAction('onUpdateOccurrence', this.get('content'), {
+    this.sendAction('onUpdate', this.get('content'), {
       endsAt: this.get('_preview.content.endsAt')
     });
 
@@ -103,12 +103,12 @@ export default OccurrenceComponent.extend({
     };
 
     if (this._validateChanges(changes)) {
-      this.sendAction('onUpdateOccurrence', this.get('_preview.content'), changes);
+      this.sendAction('onUpdate', this.get('_preview.content'), changes);
     }
   },
 
   dragEnd: function() {
-    this.sendAction('onUpdateOccurrence', this.get('content'), {
+    this.sendAction('onUpdate', this.get('content'), {
       startsAt: this.get('_preview.content.startsAt'),
       endsAt: this.get('_preview.content.endsAt')
     });
