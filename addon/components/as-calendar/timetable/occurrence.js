@@ -89,12 +89,19 @@ export default OccurrenceComponent.extend({
   },
 
   _dragMove: function(event) {
+    var $referenceElement = Ember.$(this.get('referenceElement'));
+
+    var offsetX = this._clamp(
+      event.pageX - $referenceElement.offset().left,
+      0,
+      $referenceElement.width() - 1
+    );
+
     this.set('_dragVerticalOffset', this.get('_dragVerticalOffset') + event.dy);
 
-    var offsetX = event.pageX - Ember.$(this.get('referenceElement')).offset().left;
-
-    var verticalDrag = Math.min(
-      Math.max(this.get('_dragVerticalOffset'), this.get('_dragTopDistance')),
+    var verticalDrag = this._clamp(
+      this.get('_dragVerticalOffset'),
+      this.get('_dragTopDistance'),
       this.get('_dragBottomDistance')
     );
 
@@ -128,6 +135,8 @@ export default OccurrenceComponent.extend({
 
     this.set('_calendar.occurrencePreview', null);
     this.set('_dragVerticalOffset', null);
+    this.set('_dragTopDistance', null);
+    this.set('_dragBottomDistance', null);
   },
 
   _validateChanges: function(changes) {
@@ -138,5 +147,9 @@ export default OccurrenceComponent.extend({
     return newPreview.get('startingTime') >= newPreview.get('day.startingTime') &&
            newPreview.get('endingTime') <= newPreview.get('day.endingTime') &&
            newPreview.get('duration') >= this.get('timeSlotDuration');
+  },
+
+  _clamp: function(number, min, max) {
+    return Math.max(min, Math.min(number, max));
   }
 });
