@@ -26,6 +26,10 @@ export default Ember.Controller.extend({
 
     calendarUpdateOccurrence: function(occurrence, properties) {
       occurrence.setProperties(properties);
+    },
+
+    calendarRemoveOccurrence: function(occurrence) {
+      this.get('occurrences').removeObject(occurrence);
     }
   }
 });

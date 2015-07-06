@@ -11,6 +11,12 @@ export default OccurrenceComponent.extend({
   referenceElement: Ember.computed.oneWay('timetable.referenceElement'),
   occurrenceTemplateName: 'components/as-calendar/timetable/occurrence',
 
+  actions: {
+    delete: function() {
+      this.sendAction('onRemove', this.get('model.content'));
+    }
+  },
+
   _calendar: Ember.computed.oneWay('model.calendar'),
   _dayEndingTime: Ember.computed.oneWay('day.endingTime'),
   _dragBottomDistance: null,

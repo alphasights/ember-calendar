@@ -96,6 +96,44 @@ test('Add an occurrence', function(assert) {
   );
 });
 
+test('Remove an occurrence', function(assert) {
+  this.set('occurrences', Ember.A());
+
+  this.on('calendarAddOccurrence', (occurrence) => {
+    this.get('occurrences').pushObject(occurrence);
+  });
+
+  this.on('calendarRemoveOccurrence', (occurrence) => {
+    this.get('occurrences').removeObject(occurrence);
+  });
+
+  this.render(hbs`
+    {{as-calendar
+      title="Ember Calendar"
+      occurrences=occurrences
+      dayStartingTime="9:00"
+      dayEndingTime="18:00"
+      timeSlotDuration="00:30"
+      onAddOccurrence="calendarAddOccurrence"
+      onRemoveOccurrence="calendarRemoveOccurrence"}}
+  `);
+
+  selectTime({ day: 0, timeSlot: 0 });
+
+  assert.equal($('.as-calendar-occurrence').length, 1,
+    'it adds the occurrence to the calendar'
+  );
+
+  Ember.run(() => {
+    $('.as-calendar-occurrence .delete').click();
+  });
+
+  assert.equal($('.as-calendar-occurrence').length, 0,
+    'it removes the occurrence from the calendar'
+  );
+});
+
+
 test('Resize an occurrence', function(assert) {
   this.set('occurrences', Ember.A());
 

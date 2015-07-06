@@ -40,6 +40,10 @@ export default Ember.Component.extend({
 
     updateOccurrence: function() {
       this.sendAction('onUpdateOccurrence', ...arguments);
+    },
+
+    removeOccurrence: function() {
+      this.sendAction('onRemoveOccurrence', ...arguments);
     }
   }
 });
