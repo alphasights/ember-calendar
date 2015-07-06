@@ -1,3 +1,7 @@
 .as-calendar {
   background: $white;
+
+  .as-calendar-occurrence.preview {
+    opacity: .7;
+  }
 }
