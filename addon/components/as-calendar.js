@@ -1,3 +1,4 @@
+import jstz from 'jstz';
 import Ember from 'ember';
 import ComponentCalendar from 'ember-calendar/models/component-calendar';
 
@@ -17,12 +18,12 @@ export default Ember.Component.extend({
   startingDate: null,
   timeSlotDuration: '00:30',
   timeSlotHeight: 20,
-  timeZone: 'UTC',
+  timeZone: jstz.determine().name(),
   title: null,
 
-  initializeModel: function() {
+  initializeModel: Ember.on('init', function() {
     this.set('model', ComponentCalendar.create({ component: this }));
-  }.on('init'),
+  }),
 
   actions: {
     changeTimeZone: function(timeZone) {
