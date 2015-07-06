@@ -3,8 +3,8 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   attributeBindings: ['_style:style'],
   classNameBindings: [':as-calendar-occurrence'],
-  tagName: 'article',
   layoutName: 'components/as-calendar/occurrence',
+  tagName: 'article',
 
   model: null,
   timeSlotDuration: null,

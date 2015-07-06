@@ -1,8 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  tagName: 'section',
   classNameBindings: [':as-calendar-timetable'],
+  tagName: 'section',
 
   days: Ember.computed.oneWay('model.days'),
   model: null,

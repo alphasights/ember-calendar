@@ -11,35 +11,42 @@ export default OccurrenceComponent.extend({
   referenceElement: Ember.computed.oneWay('timetable.referenceElement'),
   occurrenceTemplateName: 'components/as-calendar/timetable/occurrence',
 
-  setupInteractions: Ember.on('didInsertElement', function() {
+  _calendar: Ember.computed.oneWay('model.calendar'),
+  _dayEndingTime: Ember.computed.oneWay('day.endingTime'),
+  _dragBottomDistance: null,
+  _dragTopDistance: null,
+  _dragVerticalOffset: null,
+  _preview: Ember.computed.oneWay('_calendar.occurrencePreview'),
+
+  _setupInteractions: Ember.on('didInsertElement', function() {
     interact(this.$()[0])
       .resizable({ edges: { bottom: '.resize-handle' } })
       .draggable({})
       .on('resizestart', (event) => {
-        Ember.run(this, this.resizeStart, event);
+        Ember.run(this, this._resizeStart, event);
       })
       .on('resizemove', (event) => {
-        Ember.run(this, this.resizeMove, event);
+        Ember.run(this, this._resizeMove, event);
       })
       .on('resizeend', (event) => {
-        Ember.run(this, this.resizeEnd, event);
+        Ember.run(this, this._resizeEnd, event);
       })
       .on('dragstart', (event) => {
-        Ember.run(this, this.dragStart, event);
+        Ember.run(this, this._dragStart, event);
       })
       .on('dragmove', (event) => {
-        Ember.run(this, this.dragMove, event);
+        Ember.run(this, this._dragMove, event);
       })
       .on('dragend', (event) => {
-        Ember.run(this, this.dragEnd, event);
+        Ember.run(this, this._dragEnd, event);
       });
   }),
 
-  resizeStart: function() {
+  _resizeStart: function() {
     this.set('_calendar.occurrencePreview', this.get('model').copy());
   },
 
-  resizeMove: function(event) {
+  _resizeMove: function(event) {
     var newDuration = moment.duration(
       Math.floor(event.rect.height / this.get('timeSlotHeight')) *
       this.get('timeSlotDuration').as('ms')
@@ -54,7 +61,7 @@ export default OccurrenceComponent.extend({
     }
   },
 
-  resizeEnd: function() {
+  _resizeEnd: function() {
     this.sendAction('onUpdate', this.get('content'), {
       endsAt: this.get('_preview.content.endsAt')
     });
@@ -62,12 +69,12 @@ export default OccurrenceComponent.extend({
     this.set('_calendar.occurrencePreview', null);
   },
 
-  dragStart: function() {
+  _dragStart: function() {
     var $this = this.$();
     var $referenceElement = Ember.$(this.get('referenceElement'));
 
     this.set('_calendar.occurrencePreview', this.get('model').copy());
-    this.set('_dragDy', 0);
+    this.set('_dragVerticalOffset', 0);
     this.set('_dragTopDistance', $referenceElement.offset().top - $this.offset().top);
 
     this.set('_dragBottomDistance',
@@ -75,13 +82,13 @@ export default OccurrenceComponent.extend({
              ($this.offset().top + $this.height()));
   },
 
-  dragMove: function(event) {
-    this.set('_dragDy', this.get('_dragDy') + event.dy);
+  _dragMove: function(event) {
+    this.set('_dragVerticalOffset', this.get('_dragVerticalOffset') + event.dy);
 
     var offsetX = event.pageX - Ember.$(this.get('referenceElement')).offset().left;
 
     var verticalDrag = Math.min(
-      Math.max(this.get('_dragDy'), this.get('_dragTopDistance')),
+      Math.max(this.get('_dragVerticalOffset'), this.get('_dragTopDistance')),
       this.get('_dragBottomDistance')
     );
 
@@ -107,20 +114,15 @@ export default OccurrenceComponent.extend({
     }
   },
 
-  dragEnd: function() {
+  _dragEnd: function() {
     this.sendAction('onUpdate', this.get('content'), {
       startsAt: this.get('_preview.content.startsAt'),
       endsAt: this.get('_preview.content.endsAt')
     });
 
     this.set('_calendar.occurrencePreview', null);
-    this.set('_dragDy', null);
+    this.set('_dragVerticalOffset', null);
   },
-
-  _dragDy: null,
-  _calendar: Ember.computed.oneWay('model.calendar'),
-  _dayEndingTime: Ember.computed.oneWay('day.endingTime'),
-  _preview: Ember.computed.oneWay('_calendar.occurrencePreview'),
 
   _validateChanges: function(changes) {
     var newPreview = this.get('_preview').copy();

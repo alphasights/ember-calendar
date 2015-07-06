@@ -15,10 +15,6 @@ export default Ember.Component.extend({
     return `height: ${this.get('timeSlotHeight')}px`.htmlSafe();
   }),
 
-  setWasInserted: Ember.on('didInsertElement', function() {
-    this.set('_wasInserted', true);
-  }),
-
   dayWidth: Ember.computed(function() {
     if (this.get('_wasInserted')) {
       return this.$().width() / this.get('days.length');
@@ -27,27 +23,41 @@ export default Ember.Component.extend({
     }
   }).volatile(),
 
-  handleMouseDown: Ember.on('mouseDown', function(event) {
+  _mouseDownEvent: null,
+  _wasInserted: false,
+
+  _style: Ember.computed(
+  'timeSlotHeight',
+  'timeSlots.length', function() {
+    return (`height: ${this.get('timeSlots.length') *
+                       this.get('timeSlotHeight')}px;`).htmlSafe();
+  }),
+
+  _setWasInserted: Ember.on('didInsertElement', function() {
+    this.set('_wasInserted', true);
+  }),
+
+  _handleMouseDown: Ember.on('mouseDown', function(event) {
     this.set('_mouseDownEvent', event);
   }),
 
-  handleMouseUp: Ember.on('mouseUp', function(event) {
+  _handleMouseUp: Ember.on('mouseUp', function(event) {
     var mouseDownEvent = this.get('_mouseDownEvent');
 
     if (event.pageX === mouseDownEvent.pageX &&
         event.pageY === mouseDownEvent.pageY &&
         Ember.$(event.target).closest('.as-calendar-occurrence').length === 0) {
-      this.selectTime(event);
+      this._selectTime(event);
     }
 
     this.set('_mouseDownEvent', null);
   }),
 
-  registerWithParent: Ember.on('init', function() {
+  _registerWithParent: Ember.on('init', function() {
     this.set('timetable.contentComponent', this);
   }),
 
-  selectTime: function(event) {
+  _selectTime: function(event) {
     var offset = this.$().offset();
     var offsetX = event.pageX - Math.floor(offset.left);
     var offsetY = event.pageY - Math.floor(offset.top);
@@ -59,14 +69,4 @@ export default Ember.Component.extend({
     this.sendAction('onSelectTime',
       moment(day.get('value')).add(timeSlot.get('time')));
   },
-
-  _mouseDownEvent: null,
-  _wasInserted: false,
-
-  _style: Ember.computed(
-  'timeSlotHeight',
-  'timeSlots.length', function() {
-    return (`height: ${this.get('timeSlots.length') *
-                       this.get('timeSlotHeight')}px;`).htmlSafe();
-  })
 });

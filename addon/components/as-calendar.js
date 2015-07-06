@@ -21,7 +21,7 @@ export default Ember.Component.extend({
   timeZone: jstz.determine().name(),
   title: null,
 
-  initializeModel: Ember.on('init', function() {
+  _initializeModel: Ember.on('init', function() {
     this.set('model', ComponentCalendar.create({ component: this }));
   }),
 
