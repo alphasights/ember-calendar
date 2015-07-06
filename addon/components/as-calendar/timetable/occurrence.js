@@ -7,8 +7,8 @@ export default OccurrenceComponent.extend({
   classNameBindings: [':as-calendar-timetable-occurrence'],
 
   timetable: null,
-  dayWidth: Ember.computed.oneWay('timetable.contentComponent.dayWidth'),
-  referenceElement: Ember.computed.oneWay('timetable.contentComponent.element'),
+  dayWidth: Ember.computed.oneWay('timetable.dayWidth'),
+  referenceElement: Ember.computed.oneWay('timetable.referenceElement'),
   occurrenceTemplateName: 'components/as-calendar/timetable/occurrence',
 
   setupInteractions: Ember.on('didInsertElement', function() {

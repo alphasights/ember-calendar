@@ -9,6 +9,8 @@ export default Ember.Component.extend({
   timeSlotHeight: null,
   timeSlots: Ember.computed.oneWay('model.timeSlots'),
   contentComponent: null,
+  dayWidth: Ember.computed.oneWay('contentComponent.dayWidth'),
+  referenceElement: Ember.computed.oneWay('contentComponent.element'),
 
   labeledTimeSlots: Ember.computed('timeSlots.[]', function() {
     return this.get('timeSlots').filter(function(_, index) {
