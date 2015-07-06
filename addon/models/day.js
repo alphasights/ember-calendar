@@ -56,6 +56,10 @@ var Day = Ember.Object.extend({
       .add(this.get('_timeSlots.lastObject.endingTime'));
   }),
 
+  isToday: Ember.computed('value', function() {
+    return this.get('value').isSame(moment(), 'day');
+  }),
+
   _week: Ember.computed.oneWay('calendar.week'),
   _timeSlots: Ember.computed.oneWay('calendar.timeSlots')
 });

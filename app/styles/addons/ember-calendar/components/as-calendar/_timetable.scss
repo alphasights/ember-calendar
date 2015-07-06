@@ -68,10 +68,18 @@
     width: 100%;
   }
 
+  .day-labels > ul > li.today {
+    color: $anchor-font-color;
+  }
+
   .days > li {
     border-right: 1px solid $global-section-border-color;
     height: 100%;
     position: relative;
+
+    &.today {
+      background-color: rgba(242, 248, 254, .4);
+    }
   }
 
   .time-slots > li {

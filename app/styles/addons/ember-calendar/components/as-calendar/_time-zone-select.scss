@@ -4,8 +4,11 @@
   .rl-dropdown-toggle {
     background-color: transparent;
     border: 0;
-    color: $anchor-font-color;
     margin: 0;
+
+    &:hover {
+      color: $anchor-font-color;
+    }
 
     i {
       @include icon(caret-down);
@@ -33,10 +36,6 @@
     text-align: left;
     top: 100%;
     z-index: $dropdown-z-index;
-
-    &:before {
-      @include dropdown-triangle(12px, $white, 'bottom');
-    }
 
     .search,
     .results {
