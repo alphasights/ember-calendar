@@ -7,6 +7,7 @@ export default OccurrenceComponent.extend({
   classNameBindings: [':as-calendar-timetable-occurrence'],
 
   timetable: null,
+  isInteracting: false,
   dayWidth: Ember.computed.oneWay('timetable.dayWidth'),
   referenceElement: Ember.computed.oneWay('timetable.referenceElement'),
   occurrenceTemplateName: 'components/as-calendar/timetable/occurrence',
@@ -24,7 +25,7 @@ export default OccurrenceComponent.extend({
   _dragVerticalOffset: null,
   _preview: Ember.computed.oneWay('_calendar.occurrencePreview'),
 
-  _setupInteractions: Ember.on('didInsertElement', function() {
+  _setupInteractable: Ember.on('didInsertElement', function() {
     interact(this.$()[0])
       .resizable({ edges: { bottom: '.resize-handle' } })
       .draggable({})
@@ -45,10 +46,18 @@ export default OccurrenceComponent.extend({
       })
       .on('dragend', (event) => {
         Ember.run(this, this._dragEnd, event);
+      })
+      .on('mouseup', (event) => {
+        Ember.run(this, this._mouseUp, event);
       });
   }),
 
+  _teardownInteractable: Ember.on('willDestroyElement', function() {
+    interact(this.$()[0]).off();
+  }),
+
   _resizeStart: function() {
+    this.set('isInteracting', true);
     this.set('_calendar.occurrencePreview', this.get('model').copy());
   },
 
@@ -72,6 +81,7 @@ export default OccurrenceComponent.extend({
       endsAt: this.get('_preview.content.endsAt')
     });
 
+    this.set('isInteracting', false);
     this.set('_calendar.occurrencePreview', null);
   },
 
@@ -79,6 +89,7 @@ export default OccurrenceComponent.extend({
     var $this = this.$();
     var $referenceElement = Ember.$(this.get('referenceElement'));
 
+    this.set('isInteracting', true);
     this.set('_calendar.occurrencePreview', this.get('model').copy());
     this.set('_dragVerticalOffset', 0);
     this.set('_dragTopDistance', $referenceElement.offset().top - $this.offset().top);
@@ -133,10 +144,15 @@ export default OccurrenceComponent.extend({
       endsAt: this.get('_preview.content.endsAt')
     });
 
+    this.set('isInteracting', false);
     this.set('_calendar.occurrencePreview', null);
     this.set('_dragVerticalOffset', null);
     this.set('_dragTopDistance', null);
     this.set('_dragBottomDistance', null);
+  },
+
+  _mouseUp: function() {
+    Ember.$(document.documentElement).css('cursor', '');
   },
 
   _validateChanges: function(changes) {
