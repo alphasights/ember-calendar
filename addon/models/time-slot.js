@@ -11,12 +11,7 @@ var TimeSlot = Ember.Object.extend({
   }),
 
   day: Ember.computed('timeZone', function() {
-    var startOfDay = moment().utc().startOf('day');
-    var timeZone = this.get('timeZone');
-
-    return startOfDay
-      .add(moment.tz.zone(timeZone).offset(startOfDay.valueOf()), 'minutes')
-      .tz(timeZone);
+    return moment().tz(this.get('timeZone')).startOf('day');
   }),
 
   value: Ember.computed('day', 'time', function() {
