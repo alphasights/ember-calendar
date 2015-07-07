@@ -1,7 +1,7 @@
 {{#rl-dropdown-container dropdownExpanded=showResults}}
   {{#rl-dropdown-toggle}}
     <span>{{selectedOptionAbbreviation}}</span>
-    <i></i>
+    <i class={{if showResults "active"}}></i>
   {{/rl-dropdown-toggle}}
 
   {{#rl-dropdown closeOnChildClick=".results"}}

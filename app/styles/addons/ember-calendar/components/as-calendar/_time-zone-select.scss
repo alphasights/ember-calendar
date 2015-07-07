@@ -12,6 +12,11 @@
 
     i {
       @include icon(caret-down);
+      transition: transform 200ms ease;
+
+      &.active {
+        transform: rotate(180deg);
+      }
     }
 
     span {
