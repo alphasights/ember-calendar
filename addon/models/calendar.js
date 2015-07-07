@@ -2,6 +2,7 @@ import Ember from 'ember';
 import moment from 'moment';
 import TimeSlot from './time-slot';
 import Day from './day';
+import OccurrenceProxy from './occurrence-proxy';
 
 export default Ember.Object.extend({
   dayEndingTime: null,
@@ -10,6 +11,7 @@ export default Ember.Object.extend({
   startingDate: null,
   timeSlotDuration: null,
   timeZone: null,
+  occurrencePreview: null,
 
   isInCurrentWeek: Ember.computed('week', '_currentWeek', function() {
     return this.get('week').isSame(this.get('_currentWeek'));
@@ -32,41 +34,39 @@ export default Ember.Object.extend({
     return Day.buildWeek({ calendar: this });
   }),
 
-  week: Ember.computed('startingDate', 'timeZone', {
-    get() {
-      var startingDate = this.get('startingDate');
-      var timeZone = this.get('timeZone');
-
-      return moment(startingDate)
-        .startOf('week')
-        .utc()
-        .tz(this.get('timeZone'))
-        .subtract(startingDate.getTimezoneOffset() -
-                  moment.tz.zone(timeZone)
-                    .offset(startingDate.getTime()), 'minutes');
-    },
-
-    set(_, value) {
-      this.set('startingDate', value.toDate());
-      return value;
-    }
+  week: Ember.computed('startingTime', 'timeZone', function() {
+    return moment(this.get('startingTime')).tz(this.get('timeZone')).startOf('isoWeek');
   }),
 
   _currentWeek: Ember.computed('timeZone', function() {
-    return moment().tz(this.get('timeZone')).startOf('week').utc();
+    return moment().tz(this.get('timeZone')).startOf('isoWeek');
   }),
 
   initializeCalendar: Ember.on('init', function() {
-    if (this.get('startingDate') == null) {
+    if (this.get('startingTime') == null) {
       this.goToCurrentWeek();
     }
   }),
 
+  createOccurrence: function(options) {
+    var content = Ember.merge({
+      endsAt: moment(options.startsAt)
+        .add(this.get('defaultOccurrenceDuration')),
+
+      title: this.get('defaultOccurrenceTitle')
+    }, options);
+
+    return OccurrenceProxy.create({
+      calendar: this,
+      content: Ember.Object.create(content)
+    });
+  },
+
   navigateWeek: function(index) {
-    this.set('week', moment(this.get('week')).add(index, 'weeks'));
+    this.set('startingTime', moment(this.get('startingTime')).add(index, 'weeks'));
   },
 
   goToCurrentWeek: function() {
-    this.set('week', moment(this.get('_currentWeek')));
+    this.set('startingTime', moment());
   }
 });

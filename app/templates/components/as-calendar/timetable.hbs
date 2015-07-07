@@ -2,14 +2,14 @@
   <div class="time-zone">
     {{as-calendar/time-zone-select
       value=timeZone
-      onChangeValue="onChangeTimeZone"
+      onChangeValue="changeTimeZone"
       defaultRegexp=defaultTimeZoneRegexp}}
   </div>
 
   <div class="day-labels">
     <ul>
       {{#each days as |day|}}
-        <li>{{moment day.value "ddd D MMM"}}</li>
+        <li class={{if day.isToday "today"}}>{{moment day.value "ddd D MMM"}}</li>
       {{/each}}
     </ul>
   </div>
@@ -27,33 +27,12 @@
   </div>
 
   <div class="content">
-    <div style={{contentStyle}}>
-      <ul class="time-slots">
-        {{#each timeSlots as |timeSlot|}}
-          <li style={{timeSlotStyle}}></li>
-        {{/each}}
-      </ul>
-
-      <ul class="days">
-        {{#each days as |day|}}
-          <li>
-            {{#if hasBlock}}
-              {{yield day this}}
-            {{else}}
-              <ul class="occurrences">
-                {{#each day.occurrences as |occurrence|}}
-                  <li>
-                    {{as-calendar/occurrence
-                      model=occurrence
-                      timeSlotHeight=timeSlotHeight
-                      timeSlotDuration=timeSlotDuration}}
-                  </li>
-                {{/each}}
-              </ul>
-            {{/if}}
-          </li>
-        {{/each}}
-      </ul>
-    </div>
+    {{#as-calendar/timetable/content
+      timeSlotHeight=timeSlotHeight
+      model=model
+      timetable=this
+      onSelectTime="selectTime" as |day|}}
+      {{yield day this}}
+    {{/as-calendar/timetable/content}}
   </div>
 </div>

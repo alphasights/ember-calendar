@@ -6,24 +6,27 @@ var TimeSlot = Ember.Object.extend({
   time: null,
   timeZone: null,
 
+  endingTime: Ember.computed('time', 'duration', function() {
+    return moment.duration(this.get('time')).add(this.get('duration'));
+  }),
+
   day: Ember.computed('timeZone', function() {
-    return moment().utc().tz(this.get('timeZone')).startOf('day');
+    return moment().tz(this.get('timeZone')).startOf('day');
   }),
 
   value: Ember.computed('day', 'time', function() {
     return moment(this.get('day')).add(this.get('time'));
   }),
 
-  endingValue: Ember.computed('value', 'duration', function() {
-    return moment(this.get('value')).add(this.get('duration'));
+  endingValue: Ember.computed('day', 'endingTime', function() {
+    return moment(this.get('day')).add(this.get('endingTime'));
   }),
 
-  isValidInRange: function(startingTime, endingTime) {
+  isInRange: function(startingTime, endingTime) {
     var value = this.get('value');
     var day = this.get('day');
 
-    return value.isSame(this.get('day'), 'day') &&
-           value >= moment(day).add(startingTime) &&
+    return value >= moment(day).add(startingTime) &&
            this.get('endingValue') <= moment(day).add(endingTime);
   },
 
@@ -48,7 +51,7 @@ TimeSlot.reopenClass({
       duration: options.duration
     });
 
-    while (currentTimeSlot.isValidInRange(
+    while (currentTimeSlot.isInRange(
       options.startingTime,
       options.endingTime
     )) {

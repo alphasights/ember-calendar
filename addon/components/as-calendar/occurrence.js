@@ -3,12 +3,15 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   attributeBindings: ['_style:style'],
   classNameBindings: [':as-calendar-occurrence'],
-  tagName: 'section',
+  layoutName: 'components/as-calendar/occurrence',
+  tagName: 'article',
 
   model: null,
   timeSlotDuration: null,
   timeSlotHeight: null,
   title: Ember.computed.oneWay('model.title'),
+  content: Ember.computed.oneWay('model.content'),
+  day: Ember.computed.oneWay('model.day'),
 
   titleStyle: Ember.computed('timeSlotHeight', function() {
     return `line-height: ${this.get('timeSlotHeight')}px;`.htmlSafe();
@@ -16,8 +19,7 @@ export default Ember.Component.extend({
 
   _duration: Ember.computed.oneWay('model.duration'),
   _startingTime: Ember.computed.oneWay('model.startingTime'),
-  _day: Ember.computed.oneWay('model.day'),
-  _dayStartingTime: Ember.computed.oneWay('_day.startingTime'),
+  _dayStartingTime: Ember.computed.oneWay('day.startingTime'),
 
   _occupiedTimeSlots: Ember.computed(
     '_duration',

@@ -1,0 +1,11 @@
+<ul class="time-slots">
+  {{#each timeSlots as |timeSlot|}}
+    <li style={{timeSlotStyle}}></li>
+  {{/each}}
+</ul>
+
+<ul class="days">
+  {{#each days as |day|}}
+    <li class={{if day.isToday "today"}}>{{yield day this}}</li>
+  {{/each}}
+</ul>
