@@ -16,8 +16,8 @@ module.exports = {
   afterInstall: function() {
     return this.addPackagesToProject([
       { name: 'ember-cli-paint' },
-      { name: 'ember-cli-lodash' },
-      { name: 'ember-moment' }
+      { name: 'ember-moment' },
+      { name: 'liquid-fire' }
     ]);
   }
 };
