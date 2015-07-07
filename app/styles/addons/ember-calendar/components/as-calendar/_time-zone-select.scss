@@ -1,6 +1,12 @@
 .as-calendar-time-zone-select {
   position: relative;
 
+  &.open {
+    .rl-dropdown-toggle i {
+      transform: rotate(180deg);
+    }
+  }
+
   .rl-dropdown-toggle {
     background-color: transparent;
     border: 0;
@@ -12,11 +18,8 @@
 
     i {
       @include icon(caret-down);
-      transition: transform 200ms ease;
 
-      &.active {
-        transform: rotate(180deg);
-      }
+      transition: transform 200ms ease;
     }
 
     span {

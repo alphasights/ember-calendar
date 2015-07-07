@@ -34,8 +34,8 @@ export default Ember.Object.extend({
     return Day.buildWeek({ calendar: this });
   }),
 
-  week: Ember.computed('startingDate', 'timeZone', function() {
-    return moment(this.get('startingDate')).tz(this.get('timeZone')).startOf('isoWeek');
+  week: Ember.computed('startingTime', 'timeZone', function() {
+    return moment(this.get('startingTime')).tz(this.get('timeZone')).startOf('isoWeek');
   }),
 
   _currentWeek: Ember.computed('timeZone', function() {
@@ -43,7 +43,7 @@ export default Ember.Object.extend({
   }),
 
   initializeCalendar: Ember.on('init', function() {
-    if (this.get('startingDate') == null) {
+    if (this.get('startingTime') == null) {
       this.goToCurrentWeek();
     }
   }),
@@ -63,10 +63,10 @@ export default Ember.Object.extend({
   },
 
   navigateWeek: function(index) {
-    this.set('startingDate', moment(this.get('startingDate')).add(index, 'weeks'));
+    this.set('startingTime', moment(this.get('startingTime')).add(index, 'weeks'));
   },
 
   goToCurrentWeek: function() {
-    this.set('startingDate', new Date());
+    this.set('startingTime', moment());
   }
 });

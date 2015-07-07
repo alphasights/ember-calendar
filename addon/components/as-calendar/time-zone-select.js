@@ -3,7 +3,7 @@ import Ember from 'ember';
 import TimeZoneOption from 'ember-calendar/models/time-zone-option';
 
 export default Ember.Component.extend({
-  classNameBindings: [':as-calendar-time-zone-select'],
+  classNameBindings: [':as-calendar-time-zone-select', 'showResults:open'],
   tagName: 'section',
 
   defaultRegexp: null,
