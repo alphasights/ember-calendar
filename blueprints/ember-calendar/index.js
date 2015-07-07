@@ -2,17 +2,22 @@
 'use strict';
 
 module.exports = {
+  normalizeEntityName: function() {},
+
+  beforeInstall: function() {
+    return this.addBowerPackagesToProject([
+      { name: 'moment-timezone' },
+      { name: 'jquery-simulate' },
+      { name: 'interact' },
+      { name: 'lodash' }
+    ]);
+  },
+
   afterInstall: function() {
-    this.addPackagesToProject([
+    return this.addPackagesToProject([
       { name: 'ember-cli-paint' },
       { name: 'ember-cli-lodash' },
       { name: 'ember-moment' }
-    ]);
-
-    this.addBowerPackagesToProject([
-      { name: 'moment-timezone' },
-      { name: 'interact' },
-      { name: 'lodash' }
     ]);
   }
 };
