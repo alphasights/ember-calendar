@@ -1,6 +1,6 @@
 # Ember-calendar
 
-This README outlines the details of collaborating on this Ember addon.
+[![](https://circleci.com/gh/alphasights/ember-calendar.svg?style=shield&circle-token=6fa581b50c5f8496cf26768394cf6c1d43dfb98e)](https://circleci.com/gh/alphasights/ember-calendar)
 
 ## Installation
 
