@@ -6,14 +6,16 @@
 
   {{#rl-dropdown closeOnChildClick=".results"}}
     {{#liquid-if showResults use="crossFade" containerless=true}}
-      <div class="search">
-        <div class="icon"><i></i></div>
+      {{#if searchEnabled}}
+        <div class="search">
+          <div class="icon"><i></i></div>
 
-        {{input type="text"
-          value=query
-          click=onSearchClick
-          placeholder="Search for more timezones"}}
-      </div>
+          {{input type="text"
+            value=query
+            click=onSearchClick
+            placeholder="Search for more timezones"}}
+        </div>
+      {{/if}}
 
       <div class="results">
         <ul>

@@ -2,37 +2,38 @@
   {{yield model this}}
 {{else}}
   {{as-calendar/header title=title model=model}}
+
+  {{#as-calendar/timetable
+    model=model
+    timeZone=timeZone
+    timeZoneOptions=timeZoneOptions
+    timeZoneSearchEnabled=timeZoneSearchEnabled
+    timeSlotHeight=timeSlotHeight
+    defaultTimeZoneQuery=defaultTimeZoneQuery
+    onSelectTime="addOccurrence"
+    onChangeTimeZone="changeTimeZone" as |day timetable|}}
+    <ul class="occurrences">
+      {{#each day.occurrences as |occurrence|}}
+        <li>
+          {{as-calendar/timetable/occurrence
+            model=occurrence
+            timeSlotHeight=timeSlotHeight
+            timetable=timetable
+            timeSlotDuration=modelTimeSlotDuration
+            onUpdate="updateOccurrence"
+            onRemove="removeOccurrence"}}
+        </li>
+      {{/each}}
+
+      {{#if day.occurrencePreview}}
+        <li>
+          {{as-calendar/occurrence
+            class="preview"
+            model=day.occurrencePreview
+            timeSlotHeight=timeSlotHeight
+            timeSlotDuration=modelTimeSlotDuration}}
+        </li>
+      {{/if}}
+    </ul>
+  {{/as-calendar/timetable}}
 {{/if}}
-
-{{#as-calendar/timetable
-  model=model
-  timeZone=timeZone
-  timeZoneOptions=timeZoneOptions
-  timeSlotHeight=timeSlotHeight
-  defaultTimeZoneRegexp=defaultTimeZoneRegexp
-  onSelectTime="addOccurrence"
-  onChangeTimeZone="changeTimeZone" as |day timetable|}}
-  <ul class="occurrences">
-    {{#each day.occurrences as |occurrence|}}
-      <li>
-        {{as-calendar/timetable/occurrence
-          model=occurrence
-          timeSlotHeight=timeSlotHeight
-          timetable=timetable
-          timeSlotDuration=modelTimeSlotDuration
-          onUpdate="updateOccurrence"
-          onRemove="removeOccurrence"}}
-      </li>
-    {{/each}}
-
-    {{#if day.occurrencePreview}}
-      <li>
-        {{as-calendar/occurrence
-          class="preview"
-          model=day.occurrencePreview
-          timeSlotHeight=timeSlotHeight
-          timeSlotDuration=modelTimeSlotDuration}}
-      </li>
-    {{/if}}
-  </ul>
-{{/as-calendar/timetable}}
