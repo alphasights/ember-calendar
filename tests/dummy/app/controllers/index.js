@@ -2,25 +2,34 @@ import Ember from 'ember';
 import moment from 'moment';
 
 export default Ember.Controller.extend({
-  selections: Ember.A(),
+  selections: null,
+  occurrences: null,
 
-  occurrences: Ember.A([Ember.Object.create({
-    title: 'Some event',
-    startsAt: moment().utc().startOf('day').add(10, 'hours').toDate(),
-    endsAt: moment().utc().startOf('day').add(12, 'hours').toDate()
-  })]),
+  _initializeDefaults: Ember.on('init', function() {
+    if (this.get('selections') == null) {
+      this.set('selections', Ember.A());
+    }
+
+    if (this.get('occurrences') == null) {
+      this.set('occurrences', Ember.A());
+    }
+  }),
 
   actions: {
-    onCalendarAddSelection: function() {
-
+    calendarAddOccurrence: function(occurrence) {
+      this.get('occurrences').pushObject(Ember.Object.create({
+        title: occurrence.get('title'),
+        startsAt: occurrence.get('startsAt'),
+        endsAt: occurrence.get('endsAt')
+      }));
     },
 
-    onCalendarRemoveSelection: function() {
-
+    calendarUpdateOccurrence: function(occurrence, properties) {
+      occurrence.setProperties(properties);
     },
 
-    onCalendarDayToggleSelection: function() {
-
+    calendarRemoveOccurrence: function(occurrence) {
+      this.get('occurrences').removeObject(occurrence);
     }
   }
 });

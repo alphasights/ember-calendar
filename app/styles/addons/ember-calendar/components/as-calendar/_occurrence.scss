@@ -2,10 +2,15 @@
   background-color: rgba($alert-color, .8);
   border-left: 2px solid darken($alert-color, 5%);
   color: $white;
+  left: 0;
   padding: 0 $column-gutter / 4;
   position: absolute;
-  left: 0;
   right: 0;
+
+  > div {
+    height: 100%;
+    position: relative;
+  }
 
   h1 {
     color: $white;

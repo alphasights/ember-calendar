@@ -1,18 +1,25 @@
 .as-calendar-timetable {
-  .header.columns, > .content-wrapper {
+  .header.columns,
+  > .content-wrapper {
     @extend %grid-row;
   }
 
-  .header.rows, .time-zone {
+  .header.rows,
+  .time-zone {
     @extend %grid-column-1;
   }
 
-  .day-labels, > .content-wrapper > .content {
+  .day-labels,
+  > .content-wrapper > .content {
     @extend %grid-column-11;
   }
 
-  .header.rows, .time-zone, .day-labels, > .content-wrapper > .content {
-    &, &:last-child {
+  .header.rows,
+  .time-zone,
+  .day-labels,
+  > .content-wrapper > .content {
+    &,
+    &:last-child {
       padding: 0;
     }
   }
@@ -52,7 +59,8 @@
     }
   }
 
-  .days, .time-slots {
+  .days,
+  .time-slots {
     height: 100%;
     left: 0;
     position: absolute;
@@ -60,10 +68,18 @@
     width: 100%;
   }
 
+  .day-labels > ul > .today {
+    color: $anchor-font-color;
+  }
+
   .days > li {
     border-right: 1px solid $global-section-border-color;
     height: 100%;
     position: relative;
+
+    &.today {
+      background-color: rgba(242, 248, 254, .4);
+    }
   }
 
   .time-slots > li {

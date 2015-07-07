@@ -1,1 +1,7 @@
-<h1 style={{titleStyle}}>{{title}}</h1>
+<div>
+  <h1 style={{titleStyle}}>{{title}}</h1>
+
+  {{#if occurrenceTemplateName}}
+    {{partial occurrenceTemplateName}}
+  {{/if}}
+</div>

@@ -4,9 +4,34 @@
   {{as-calendar/header title=title model=model}}
 {{/if}}
 
-{{as-calendar/timetable
+{{#as-calendar/timetable
   model=model
   timeZone=timeZone
   timeSlotHeight=timeSlotHeight
   defaultTimeZoneRegexp=defaultTimeZoneRegexp
-  onChangeTimeZone="onChangeTimetableTimeZone"}}
+  onSelectTime="addOccurrence"
+  onChangeTimeZone="changeTimeZone" as |day timetable|}}
+  <ul class="occurrences">
+    {{#each day.occurrences as |occurrence|}}
+      <li>
+        {{as-calendar/timetable/occurrence
+          model=occurrence
+          timeSlotHeight=timeSlotHeight
+          timetable=timetable
+          timeSlotDuration=modelTimeSlotDuration
+          onUpdate="updateOccurrence"
+          onRemove="removeOccurrence"}}
+      </li>
+    {{/each}}
+
+    {{#if day.occurrencePreview}}
+      <li>
+        {{as-calendar/occurrence
+          class="preview"
+          model=day.occurrencePreview
+          timeSlotHeight=timeSlotHeight
+          timeSlotDuration=modelTimeSlotDuration}}
+      </li>
+    {{/if}}
+  </ul>
+{{/as-calendar/timetable}}

@@ -1,14 +1,16 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  tagName: 'section',
   classNameBindings: [':as-calendar-timetable'],
+  tagName: 'section',
 
   days: Ember.computed.oneWay('model.days'),
   model: null,
   timeSlotHeight: null,
   timeSlots: Ember.computed.oneWay('model.timeSlots'),
-  timeSlotDuration: Ember.computed.oneWay('model.timeSlotDuration'),
+  contentComponent: null,
+  dayWidth: Ember.computed.oneWay('contentComponent.dayWidth'),
+  referenceElement: Ember.computed.oneWay('contentComponent.element'),
 
   labeledTimeSlots: Ember.computed('timeSlots.[]', function() {
     return this.get('timeSlots').filter(function(_, index) {
@@ -27,19 +29,12 @@ export default Ember.Component.extend({
     return (`height: ${2 * this.get('timeSlotHeight')}px;`).htmlSafe();
   }),
 
-  timeSlotStyle: Ember.computed('timeSlotHeight', function() {
-    return `height: ${this.get('timeSlotHeight')}px`.htmlSafe();
-  }),
-
-  contentStyle: Ember.computed(
-  'timeSlotHeight',
-  'timeSlots.length', function() {
-    return (`height: ${this.get('timeSlots.length') *
-                       this.get('timeSlotHeight')}px;`).htmlSafe();
-  }),
-
   actions: {
-    onChangeTimeZone: function() {
+    selectTime: function() {
+      this.sendAction('onSelectTime', ...arguments);
+    },
+
+    changeTimeZone: function() {
       this.sendAction('onChangeTimeZone', ...arguments);
     }
   }

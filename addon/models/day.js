@@ -15,16 +15,31 @@ var Day = Ember.Object.extend({
     'startingTime',
     'endingTime', function() {
     return this.get('calendar.occurrences').filter((occurrence) => {
-      var startingDate = occurrence.get('startingTime').toDate();
+      var startingTime = occurrence.get('startingTime');
 
-      return startingDate >= this.get('startingTime').toDate() &&
-             startingDate <= this.get('_endingTime').toDate();
-    }).map((occurrence) => {
-      return Ember.ObjectProxy.create({
-        content: occurrence,
-        day: this
-      });
+      return startingTime >= this.get('startingTime') &&
+             startingTime <= this.get('endingTime');
     });
+  }),
+
+  occurrencePreview: Ember.computed(
+    'calendar.occurrencePreview.startingTime',
+    'startingTime',
+    'endingTime', function() {
+    var occurrencePreview = this.get('calendar.occurrencePreview');
+
+    if (occurrencePreview != null) {
+      var startingTime = occurrencePreview.get('startingTime');
+
+      if (startingTime >= this.get('startingTime') &&
+          startingTime <= this.get('endingTime')) {
+        return occurrencePreview;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
   }),
 
   startingTime: Ember.computed(
@@ -34,11 +49,15 @@ var Day = Ember.Object.extend({
       .add(this.get('_timeSlots.firstObject.time'));
   }),
 
-  _endingTime: Ember.computed(
+  endingTime: Ember.computed(
     'value',
-    '_timeSlots.lastObject.time', function() {
+    '_timeSlots.lastObject.endingTime', function() {
     return moment(this.get('value'))
-      .add(this.get('_timeSlots.lastObject.time'));
+      .add(this.get('_timeSlots.lastObject.endingTime'));
+  }),
+
+  isToday: Ember.computed('value', function() {
+    return this.get('value').isSame(moment(), 'day');
   }),
 
   _week: Ember.computed.oneWay('calendar.week'),

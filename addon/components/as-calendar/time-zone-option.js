@@ -3,9 +3,9 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   classNameBindings: [':as-calendar-time-zone-option', 'isSelected:selected'],
 
+  description: Ember.computed.oneWay('option.description'),
   option: null,
   selectedOption: null,
-  description: Ember.computed.oneWay('option.description'),
 
   isSelected: Ember.computed(
     'selectedOption.value',
