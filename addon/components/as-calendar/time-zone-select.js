@@ -10,6 +10,7 @@ export default Ember.Component.extend({
   showResults: false,
   query: '',
   value: null,
+  options: null,
 
   selectedOptionAbbreviation: Ember.computed.oneWay(
     'selectedOption.abbreviation'
@@ -35,10 +36,14 @@ export default Ember.Component.extend({
     return TimeZoneOption.create({ value: this.get('value') });
   }),
 
-  _options: Ember.computed(function() {
-    return moment.tz.names().map(function(timeZoneName) {
-      return TimeZoneOption.create({ value: timeZoneName });
-    });
+  _options: Ember.computed('options', function() {
+    if (Ember.isPresent(this.get('options'))) {
+      return this.get('options');
+    } else {
+      return moment.tz.names().map(function(timeZoneName) {
+        return TimeZoneOption.create({ value: timeZoneName });
+      });
+    }
   }),
 
   actions: {
