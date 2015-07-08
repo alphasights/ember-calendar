@@ -200,12 +200,14 @@ test('Drag an occurrence', function(assert) {
   dragOccurrence(this.$('.as-calendar-occurrence'), { days: 2, timeSlots: 4 });
 
   var $occurrence = this.$('.as-calendar-occurrence');
+
   var dayOffset = Math.floor($occurrence.offset().left -
     this.$('.as-calendar-timetable-content').offset().left);
+
   var timeSlotOffset = Math.floor($occurrence.offset().top -
     this.$('.as-calendar-timetable-content').offset().top);
 
-  assert.equal(dayOffset, Math.floor(dayWidth()) * 2,
+  assert.equal(dayOffset, Math.floor(dayWidth() * 2),
     'it drags the occurrence to the correct day'
   );
   assert.equal(timeSlotOffset, timeSlotHeight() * 4,
