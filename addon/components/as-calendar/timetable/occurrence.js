@@ -8,12 +8,15 @@ export default OccurrenceComponent.extend({
 
   timetable: null,
   isInteracting: false,
+  isDraggable: true,
+  isResizable: true,
+  isRemovable: true,
   dayWidth: Ember.computed.oneWay('timetable.dayWidth'),
   referenceElement: Ember.computed.oneWay('timetable.referenceElement'),
   occurrenceTemplateName: 'components/as-calendar/timetable/occurrence',
 
   actions: {
-    delete: function() {
+    remove: function() {
       this.sendAction('onRemove', this.get('model.content'));
     }
   },
@@ -26,30 +29,43 @@ export default OccurrenceComponent.extend({
   _preview: Ember.computed.oneWay('_calendar.occurrencePreview'),
 
   _setupInteractable: Ember.on('didInsertElement', function() {
-    interact(this.$()[0])
-      .resizable({ edges: { bottom: '.resize-handle' } })
-      .draggable({})
-      .on('resizestart', (event) => {
-        Ember.run(this, this._resizeStart, event);
-      })
-      .on('resizemove', (event) => {
-        Ember.run(this, this._resizeMove, event);
-      })
-      .on('resizeend', (event) => {
-        Ember.run(this, this._resizeEnd, event);
-      })
-      .on('dragstart', (event) => {
-        Ember.run(this, this._dragStart, event);
-      })
-      .on('dragmove', (event) => {
-        Ember.run(this, this._dragMove, event);
-      })
-      .on('dragend', (event) => {
-        Ember.run(this, this._dragEnd, event);
-      })
-      .on('mouseup', (event) => {
-        Ember.run(this, this._mouseUp, event);
+    var interactable = interact(this.$()[0]).on('mouseup', (event) => {
+      Ember.run(this, this._mouseUp, event);
+    });
+
+    if (this.get('isResizable')) {
+      interactable.resizable({
+        edges: { bottom: '.resize-handle' },
+
+        onstart: (event) => {
+          Ember.run(this, this._resizeStart, event);
+        },
+
+        onmove: (event) => {
+          Ember.run(this, this._resizeMove, event);
+        },
+
+        onend: (event) => {
+          Ember.run(this, this._resizeEnd, event);
+        },
       });
+    }
+
+    if (this.get('isDraggable')) {
+      interactable.draggable({
+        onstart: (event) => {
+          Ember.run(this, this._dragStart, event);
+        },
+
+        onmove: (event) => {
+          Ember.run(this, this._dragMove, event);
+        },
+
+        onend: (event) => {
+          Ember.run(this, this._dragEnd, event);
+        },
+      });
+    }
   }),
 
   _teardownInteractable: Ember.on('willDestroyElement', function() {

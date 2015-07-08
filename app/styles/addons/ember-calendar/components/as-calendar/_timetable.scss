@@ -80,6 +80,10 @@
     &.today {
       background-color: rgba(242, 248, 254, .4);
     }
+
+    &:last-child {
+      border-right: 0;
+    }
   }
 
   .time-slots > li {

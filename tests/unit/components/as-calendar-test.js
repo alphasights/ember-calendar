@@ -125,7 +125,7 @@ test('Remove an occurrence', function(assert) {
   );
 
   Ember.run(() => {
-    $('.as-calendar-occurrence .delete').click();
+    $('.as-calendar-occurrence .remove').click();
   });
 
   assert.equal($('.as-calendar-occurrence').length, 0,
