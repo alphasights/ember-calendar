@@ -6,39 +6,56 @@ export default Ember.Component.extend({
   classNameBindings: [':as-calendar-time-zone-select', 'showResults:open'],
   tagName: 'section',
 
-  defaultRegexp: null,
+  defaultQuery: '',
   showResults: false,
   query: '',
   value: null,
+  options: null,
+  searchEnabled: true,
 
   selectedOptionAbbreviation: Ember.computed.oneWay(
     'selectedOption.abbreviation'
   ),
 
-  arrangedOptions: Ember.computed('_options.[]', 'query', function() {
-    var query = this.get('query');
-    var regexp;
+  arrangedOptions: Ember.computed(
+    '_options.@each.{description,value}',
+    'selectedOption.value',
+    'searchEnabled',
+    '_query', function() {
+    if (this.get('searchEnabled')) {
+      var regexp = new RegExp(this.get('_query'), 'i');
 
-    if (query.length > 1) {
-      regexp = new RegExp(query, 'i');
+      return this.get('_options').filter((option) => {
+        return option.get('description').match(regexp) ||
+               option.get('value') === this.get('selectedOption.value');
+      });
     } else {
-      regexp = this.get('defaultRegexp');
+      return this.get('_options');
     }
-
-    return this.get('_options').filter((option) => {
-      return option.get('description').match(regexp) ||
-             option.get('value') === this.get('selectedOption.value');
-    });
   }),
 
   selectedOption: Ember.computed('value', function() {
     return TimeZoneOption.create({ value: this.get('value') });
   }),
 
-  _options: Ember.computed(function() {
-    return moment.tz.names().map(function(timeZoneName) {
-      return TimeZoneOption.create({ value: timeZoneName });
-    });
+  _query: Ember.computed('query', 'defaultQuery', function() {
+    var query = this.get('query');
+
+    if (Ember.isEmpty(query)) {
+       return this.get('defaultQuery');
+    } else {
+      return query;
+    }
+  }),
+
+  _options: Ember.computed('options', function() {
+    if (Ember.isPresent(this.get('options'))) {
+      return this.get('options');
+    } else {
+      return moment.tz.names().map(function(timeZoneName) {
+        return TimeZoneOption.create({ value: timeZoneName });
+      });
+    }
   }),
 
   actions: {

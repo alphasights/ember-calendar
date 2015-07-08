@@ -2,8 +2,10 @@
   <div class="time-zone">
     {{as-calendar/time-zone-select
       value=timeZone
-      onChangeValue="changeTimeZone"
-      defaultRegexp=defaultTimeZoneRegexp}}
+      options=timeZoneOptions
+      defaultQuery=defaultTimeZoneQuery
+      searchEnabled=timeZoneSearchEnabled
+      onChangeValue="changeTimeZone"}}
   </div>
 
   <div class="day-labels">
