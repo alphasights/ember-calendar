@@ -9,12 +9,12 @@
   }
 
   &:hover {
-    .delete {
+    .remove {
       opacity: 1;
     }
   }
 
-  .delete {
+  .remove {
     @include single-transition(color, 150ms);
     @include single-transition(opacity, 150ms);
     @include icon(times);

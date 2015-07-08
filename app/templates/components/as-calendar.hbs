@@ -1,20 +1,22 @@
-{{#if hasBlock}}
-  {{yield model this}}
-{{else}}
+{{#if showHeader}}
   {{as-calendar/header title=title model=model}}
+{{/if}}
 
-  {{#as-calendar/timetable
-    model=model
-    timeZone=timeZone
-    timeZoneOptions=timeZoneOptions
-    timeZoneSearchEnabled=timeZoneSearchEnabled
-    timeSlotHeight=timeSlotHeight
-    defaultTimeZoneQuery=defaultTimeZoneQuery
-    onSelectTime="addOccurrence"
-    onChangeTimeZone="changeTimeZone" as |day timetable|}}
-    <ul class="occurrences">
-      {{#each day.occurrences as |occurrence|}}
-        <li>
+{{#as-calendar/timetable
+  model=model
+  timeZone=timeZone
+  timeZoneOptions=timeZoneOptions
+  timeZoneSearchEnabled=timeZoneSearchEnabled
+  timeSlotHeight=timeSlotHeight
+  defaultTimeZoneQuery=defaultTimeZoneQuery
+  onSelectTime="addOccurrence"
+  onChangeTimeZone="changeTimeZone" as |day timetable|}}
+  <ul class="occurrences">
+    {{#each day.occurrences as |occurrence|}}
+      <li>
+        {{#if hasBlock}}
+          {{yield occurrence timetable this}}
+        {{else}}
           {{as-calendar/timetable/occurrence
             model=occurrence
             timeSlotHeight=timeSlotHeight
@@ -22,18 +24,18 @@
             timeSlotDuration=modelTimeSlotDuration
             onUpdate="updateOccurrence"
             onRemove="removeOccurrence"}}
-        </li>
-      {{/each}}
+        {{/if}}
+      </li>
+    {{/each}}
 
-      {{#if day.occurrencePreview}}
-        <li>
-          {{as-calendar/occurrence
-            class="preview"
-            model=day.occurrencePreview
-            timeSlotHeight=timeSlotHeight
-            timeSlotDuration=modelTimeSlotDuration}}
-        </li>
-      {{/if}}
-    </ul>
-  {{/as-calendar/timetable}}
-{{/if}}
+    {{#if day.occurrencePreview}}
+      <li>
+        {{as-calendar/occurrence
+          class="preview"
+          model=day.occurrencePreview
+          timeSlotHeight=timeSlotHeight
+          timeSlotDuration=modelTimeSlotDuration}}
+      </li>
+    {{/if}}
+  </ul>
+{{/as-calendar/timetable}}

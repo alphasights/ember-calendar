@@ -92,7 +92,7 @@
       margin: 0;
       max-height: $dropdown-search-results-height;
       overflow-x: hidden;
-      overflow-y: scroll;
+      overflow-y: auto;
       padding: 0;
 
       > ul {
