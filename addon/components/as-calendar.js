@@ -1,8 +1,9 @@
 import jstz from 'jstz';
 import Ember from 'ember';
 import ComponentCalendar from 'ember-calendar/models/component-calendar';
+import InboundActionsMixin from 'ember-component-inbound-actions/inbound-actions';
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(InboundActionsMixin, {
   classNameBindings: [':as-calendar'],
   tagName: 'section',
 
@@ -11,15 +12,16 @@ export default Ember.Component.extend({
   defaultOccurrenceDuration: '1:00',
   defaultOccurrenceTitle: 'New event',
   defaultTimeZoneQuery: '',
-  timeZoneSearchEnabled: true,
   isEditing: true,
   model: null,
   modelTimeSlotDuration: Ember.computed.oneWay('model.timeSlotDuration'),
   occurrences: null,
+  showHeader: true,
   startingDate: null,
   timeSlotDuration: '00:30',
   timeSlotHeight: 20,
   timeZone: jstz.determine().name(),
+  timeZoneSearchEnabled: true,
   title: null,
 
   _initializeModel: Ember.on('init', function() {

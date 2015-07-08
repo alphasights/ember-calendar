@@ -6,6 +6,8 @@
 
 <ul class="days">
   {{#each days as |day|}}
-    <li class={{if day.isToday "today"}}>{{yield day this}}</li>
+    <li class={{if day.isToday "today"}}>
+      {{yield day this}}
+    </li>
   {{/each}}
 </ul>
