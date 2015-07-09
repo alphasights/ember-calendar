@@ -3,7 +3,14 @@ import { test, moduleForComponent } from 'ember-qunit';
 import Ember from 'ember';
 import moment from 'moment';
 import { initialize as momentInitializer } from 'dummy/initializers/ember-moment';
-import calendarPage from '../../helpers/calendar-page';
+import {
+  timeSlotHeight,
+  dayWidth,
+  selectTime,
+  resizeOccurrence,
+  dragOccurrence,
+  selectTimeZone
+} from '../../helpers/calendar-test-helpers';
 
 momentInitializer();
 
@@ -30,7 +37,7 @@ test('Add an occurrence', function(assert) {
     'it shows an empty calendar'
   );
 
-  calendarPage.selectTime({ day: 0, timeSlot: 0 });
+  selectTime({ day: 0, timeSlot: 0 });
 
   assert.equal($('.as-calendar-occurrence').length, 1,
     'it adds the occurrence to the calendar'
@@ -59,7 +66,7 @@ test('Remove an occurrence', function(assert) {
       onRemoveOccurrence="calendarRemoveOccurrence"}}
   `);
 
-  calendarPage.selectTime({ day: 0, timeSlot: 0 });
+  selectTime({ day: 0, timeSlot: 0 });
 
   assert.equal($('.as-calendar-occurrence').length, 1,
     'it adds the occurrence to the calendar'
@@ -98,15 +105,15 @@ test('Resize an occurrence', function(assert) {
       onUpdateOccurrence="calendarUpdateOccurrence"}}
   `);
 
-  calendarPage.selectTime({ day: 0, timeSlot: 0 });
+  selectTime({ day: 0, timeSlot: 0 });
 
   assert.equal($('.as-calendar-occurrence').length, 1,
     'it adds the occurrence to the calendar'
   );
 
-  calendarPage.resizeOccurrence($('.as-calendar-occurrence'), { timeSlots: 2 });
+  resizeOccurrence($('.as-calendar-occurrence'), { timeSlots: 2 });
 
-  assert.equal($('.as-calendar-occurrence').height(), calendarPage.timeSlotHeight() * 3,
+  assert.equal($('.as-calendar-occurrence').height(), timeSlotHeight() * 3,
     'it resizes the occurrence');
 });
 
@@ -132,13 +139,13 @@ test('Drag an occurrence', function(assert) {
       onUpdateOccurrence="calendarUpdateOccurrence"}}
   `);
 
-  calendarPage.selectTime({ day: 0, timeSlot: 0 });
+  selectTime({ day: 0, timeSlot: 0 });
 
   assert.equal(this.$('.as-calendar-occurrence').length, 1,
     'it adds the occurrence to the calendar'
   );
 
-  calendarPage.dragOccurrence(this.$('.as-calendar-occurrence'), { days: 2, timeSlots: 4 });
+  dragOccurrence(this.$('.as-calendar-occurrence'), { days: 2, timeSlots: 4 });
 
   var $occurrence = this.$('.as-calendar-occurrence');
 
@@ -148,13 +155,13 @@ test('Drag an occurrence', function(assert) {
   var timeSlotOffset = Math.floor($occurrence.offset().top -
     this.$('.as-calendar-timetable-content').offset().top);
 
-  assert.equal(dayOffset, Math.floor(calendarPage.dayWidth() * 2),
+  assert.equal(dayOffset, Math.floor(dayWidth() * 2),
     'it drags the occurrence to the correct day'
   );
-  assert.equal(timeSlotOffset, calendarPage.timeSlotHeight() * 4,
+  assert.equal(timeSlotOffset, timeSlotHeight() * 4,
     'it drags the occurrence to the correct timeslot'
   );
-  assert.equal($occurrence.height(), calendarPage.timeSlotHeight() * 2,
+  assert.equal($occurrence.height(), timeSlotHeight() * 2,
     'it keeps the duration of the occurrence'
   );
 });
@@ -186,8 +193,8 @@ test('Change time zone', function(assert) {
   assert.equal($('.as-calendar-occurrence').position().top, 0,
     'it shows the occurrence in the UTC time zone');
 
-  calendarPage.selectTimeZone('London');
+  selectTimeZone('London');
 
-  assert.equal($('.as-calendar-occurrence').position().top, calendarPage.timeSlotHeight() * 2,
+  assert.equal($('.as-calendar-occurrence').position().top, timeSlotHeight() * 2,
     'it shows the occurrence in the London time zone');
 });
