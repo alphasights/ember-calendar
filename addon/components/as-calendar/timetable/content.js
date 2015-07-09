@@ -23,7 +23,6 @@ export default Ember.Component.extend({
     }
   }).volatile(),
 
-  _mouseDownEvent: null,
   _wasInserted: false,
 
   _style: Ember.computed(
@@ -37,27 +36,11 @@ export default Ember.Component.extend({
     this.set('_wasInserted', true);
   }),
 
-  _handleMouseDown: Ember.on('mouseDown', function(event) {
-    this.set('_mouseDownEvent', event);
-  }),
-
-  _handleMouseUp: Ember.on('mouseUp', function(event) {
-    var mouseDownEvent = this.get('_mouseDownEvent');
-
-    if (event.pageX === mouseDownEvent.pageX &&
-        event.pageY === mouseDownEvent.pageY &&
-        Ember.$(event.target).closest('.as-calendar-occurrence').length === 0) {
-      this._selectTime(event);
-    }
-
-    this.set('_mouseDownEvent', null);
-  }),
-
   _registerWithParent: Ember.on('init', function() {
     this.set('timetable.contentComponent', this);
   }),
 
-  _selectTime: function(event) {
+  _selectTime: Ember.on('click', function(event) {
     var offset = this.$().offset();
     var offsetX = event.pageX - Math.floor(offset.left);
     var offsetY = event.pageY - Math.floor(offset.top);
@@ -68,5 +51,5 @@ export default Ember.Component.extend({
 
     this.sendAction('onSelectTime',
       moment(day.get('value')).add(timeSlot.get('time')));
-  },
+  })
 });
