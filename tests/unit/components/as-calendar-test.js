@@ -23,10 +23,14 @@ var pointForTime = function(options) {
   var $target = $('.as-calendar-timetable-content');
   var offsetX = options.day * dayWidth();
   var offsetY = options.timeSlot * timeSlotHeight();
+  var pageX = $target.offset().left + offsetX;
+  var pageY = $target.offset().top + offsetY;
 
   return {
-    clientX: $target.offset().left + offsetX - $(document).scrollLeft(),
-    clientY: $target.offset().top + offsetY - $(document).scrollTop()
+    pageX: pageX,
+    pageY: pageY,
+    clientX: pageX - $(document).scrollLeft(),
+    clientY: pageY - $(document).scrollTop()
   };
 };
 
@@ -34,9 +38,12 @@ var selectTime = function(options) {
   Ember.run(() => {
     var $target = $('.as-calendar-timetable-content');
     var point = pointForTime(options);
+    var event = $.Event('click');
 
-    $target.simulate('mousedown', point);
-    $target.simulate('mouseup', point);
+    event.pageX = point.pageX;
+    event.pageY = point.pageY;
+
+    $target.trigger(event);
   });
 };
 

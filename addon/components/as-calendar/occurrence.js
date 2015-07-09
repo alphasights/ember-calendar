@@ -45,5 +45,9 @@ export default Ember.Component.extend({
   _style: Ember.computed('_height', '_top', function() {
     return `top: ${this.get('_top')}px;
             height: ${this.get('_height')}px;`.htmlSafe();
-  })
+  }),
+
+  _stopPropagation: Ember.on('click', function(event) {
+    event.stopPropagation();
+  }),
 });
