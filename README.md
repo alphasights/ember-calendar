@@ -108,7 +108,7 @@ example, you can customize the appearance of the occurrences by passing a block:
   dayEndingTime="21:30"
   timeSlotDuration="00:30"
   timeZoneOptions=timeZoneOptions
-  timeZoneSearchEnabled=false
+  showTimeZoneSearch=false
   timeZone=timeZone
   onAddOccurrence="calendarAddOccurrence" as |occurrence timetable calendar|}}
   {{#if occurrence.content.isEditable}}
@@ -117,7 +117,7 @@ example, you can customize the appearance of the occurrences by passing a block:
       model=occurrence
       timeSlotHeight=calendar.timeSlotHeight
       timetable=timetable
-      timeSlotDuration=calendar.modelTimeSlotDuration
+      timeSlotDuration=calendar.timeSlotDuration
       isResizable=false
       onUpdate="calendarUpdateOccurrence"
       onRemove="calendarRemoveOccurrence"}}
@@ -125,7 +125,7 @@ example, you can customize the appearance of the occurrences by passing a block:
     {{as-calendar/occurrence
       model=occurrence
       timeSlotHeight=calendar.timeSlotHeight
-      timeSlotDuration=calendar.modelTimeSlotDuration}}
+      timeSlotDuration=calendar.timeSlotDuration}}
   {{/if}}
 {{/as-calendar}}
 ```
@@ -136,7 +136,7 @@ or just a static occurrence (`as-calendar/occurrence`). Furthermore, the nested
 components try to assume as less as possible about their ancestors, so we pass
 in most of their attributes manually.
 
-You can customize the timeslots by passing these options:
+You can customize the time slots by passing these options:
 
 * `dayStartingTime`
 * `dayEndingTime`
@@ -150,7 +150,7 @@ In addition, you can customize the timezone handling using these options:
 * `timeZone`
 * `timeZoneOptions`
 * `defaultTimeZoneQuery`
-* `timeZoneSearchEnabled`
+* `showTimeZoneSearch`
 
 ## Developing
 

@@ -14,14 +14,13 @@ export default Ember.Component.extend(InboundActionsMixin, {
   defaultTimeZoneQuery: '',
   isEditing: true,
   model: null,
-  modelTimeSlotDuration: Ember.computed.oneWay('model.timeSlotDuration'),
   occurrences: null,
   showHeader: true,
+  showTimeZoneSearch: true,
   startingDate: null,
   timeSlotDuration: '00:30',
   timeSlotHeight: 20,
   timeZone: jstz.determine().name(),
-  timeZoneSearchEnabled: true,
   title: null,
 
   _initializeModel: Ember.on('init', function() {

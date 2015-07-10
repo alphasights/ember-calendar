@@ -15,12 +15,6 @@ export default OccurrenceComponent.extend({
   referenceElement: Ember.computed.oneWay('timetable.referenceElement'),
   occurrenceTemplateName: 'components/as-calendar/timetable/occurrence',
 
-  actions: {
-    remove: function() {
-      this.sendAction('onRemove', this.get('model.content'));
-    }
-  },
-
   _calendar: Ember.computed.oneWay('model.calendar'),
   _dayEndingTime: Ember.computed.oneWay('day.endingTime'),
   _dragBottomDistance: null,
@@ -80,7 +74,7 @@ export default OccurrenceComponent.extend({
   _resizeMove: function(event) {
     var newDuration = moment.duration(
       Math.floor(event.rect.height / this.get('timeSlotHeight')) *
-      this.get('timeSlotDuration').as('ms')
+      this.get('computedTimeSlotDuration').as('ms')
     );
 
     var changes = {
@@ -140,7 +134,7 @@ export default OccurrenceComponent.extend({
     );
 
     return moment.duration(
-      Math.floor(verticalDrag / this.get('timeSlotHeight')) * this.get('timeSlotDuration')
+      Math.floor(verticalDrag / this.get('timeSlotHeight')) * this.get('computedTimeSlotDuration')
     );
   },
 
@@ -184,10 +178,16 @@ export default OccurrenceComponent.extend({
 
     return newPreview.get('startingTime') >= newPreview.get('day.startingTime') &&
            newPreview.get('endingTime') <= newPreview.get('day.endingTime') &&
-           newPreview.get('duration') >= this.get('timeSlotDuration');
+           newPreview.get('duration') >= this.get('computedTimeSlotDuration');
   },
 
   _clamp: function(number, min, max) {
     return Math.max(min, Math.min(number, max));
+  },
+
+  actions: {
+    remove: function() {
+      this.sendAction('onRemove', this.get('model.content'));
+    }
   }
 });

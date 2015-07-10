@@ -11,7 +11,7 @@ export default Ember.Component.extend({
   query: '',
   value: null,
   options: null,
-  searchEnabled: true,
+  showSearch: true,
 
   selectedOptionAbbreviation: Ember.computed.oneWay(
     'selectedOption.abbreviation'
@@ -20,9 +20,9 @@ export default Ember.Component.extend({
   arrangedOptions: Ember.computed(
     '_options.@each.{description,value}',
     'selectedOption.value',
-    'searchEnabled',
+    'showSearch',
     '_query', function() {
-    if (this.get('searchEnabled')) {
+    if (this.get('showSearch')) {
       var regexp = new RegExp(this.get('_query'), 'i');
 
       return this.get('_options').filter((option) => {

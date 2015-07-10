@@ -1,5 +1,9 @@
 <div>
-  <h1 style={{titleStyle}}>{{title}}</h1>
+  {{#if hasBlock}}
+    {{yield}}
+  {{else}}
+    <h1 style={{titleStyle}}>{{title}}</h1>
+  {{/if}}
 
   {{#if occurrenceTemplateName}}
     {{partial occurrenceTemplateName}}
