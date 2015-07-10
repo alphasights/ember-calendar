@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import computedDuration from 'ember-calendar/macros/computed-duration';
 
 export default Ember.Component.extend({
   attributeBindings: ['_style:style'],
@@ -12,6 +13,7 @@ export default Ember.Component.extend({
   title: Ember.computed.oneWay('model.title'),
   content: Ember.computed.oneWay('model.content'),
   day: Ember.computed.oneWay('model.day'),
+  computedTimeSlotDuration: computedDuration('timeSlotDuration'),
 
   titleStyle: Ember.computed('timeSlotHeight', function() {
     return `line-height: ${this.get('timeSlotHeight')}px;`.htmlSafe();
@@ -23,9 +25,9 @@ export default Ember.Component.extend({
 
   _occupiedTimeSlots: Ember.computed(
     '_duration',
-    'timeSlotDuration', function() {
+    'computedTimeSlotDuration', function() {
       return this.get('_duration').as('ms') /
-             this.get('timeSlotDuration').as('ms');
+             this.get('computedTimeSlotDuration').as('ms');
   }),
 
   _height: Ember.computed('_occupiedTimeSlots', function() {
@@ -35,10 +37,10 @@ export default Ember.Component.extend({
   _top: Ember.computed(
     '_startingTime',
     '_dayStartingTime',
-    'timeSlotDuration',
+    'computedTimeSlotDuration',
     'timeSlotHeight', function() {
     return (this.get('_startingTime').diff(this.get('_dayStartingTime')) /
-            this.get('timeSlotDuration').as('ms')) *
+            this.get('computedTimeSlotDuration').as('ms')) *
             this.get('timeSlotHeight');
   }),
 
