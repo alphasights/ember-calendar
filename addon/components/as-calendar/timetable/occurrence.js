@@ -15,12 +15,6 @@ export default OccurrenceComponent.extend({
   referenceElement: Ember.computed.oneWay('timetable.referenceElement'),
   occurrenceTemplateName: 'components/as-calendar/timetable/occurrence',
 
-  actions: {
-    remove: function() {
-      this.sendAction('onRemove', this.get('model.content'));
-    }
-  },
-
   _calendar: Ember.computed.oneWay('model.calendar'),
   _dayEndingTime: Ember.computed.oneWay('day.endingTime'),
   _dragBottomDistance: null,
@@ -80,7 +74,7 @@ export default OccurrenceComponent.extend({
   _resizeMove: function(event) {
     var newDuration = moment.duration(
       Math.floor(event.rect.height / this.get('timeSlotHeight')) *
-      this.get('timeSlotDuration').as('ms')
+      this.get('computedTimeSlotDuration').as('ms')
     );
 
     var changes = {
@@ -116,33 +110,11 @@ export default OccurrenceComponent.extend({
   },
 
   _dragMove: function(event) {
-    var $referenceElement = Ember.$(this.get('referenceElement'));
-
-    var offsetX = this._clamp(
-      event.pageX - $referenceElement.offset().left,
-      0,
-      $referenceElement.width() - 1
-    );
-
     this.set('_dragVerticalOffset', this.get('_dragVerticalOffset') + event.dy);
 
-    var verticalDrag = this._clamp(
-      this.get('_dragVerticalOffset'),
-      this.get('_dragTopDistance'),
-      this.get('_dragBottomDistance')
-    );
-
-    var verticalOffset = moment.duration(
-      Math.floor(verticalDrag / this.get('timeSlotHeight')) * this.get('timeSlotDuration')
-    );
-
-    var horizontalOffset = moment.duration(
-      Math.floor(offsetX / this.get('dayWidth')) -
-      this.get('day.offset'),
-      'days'
-    );
-
-    var startsAt = moment(this.get('_startingTime')).add(verticalOffset).add(horizontalOffset);
+    var startsAt = moment(this.get('_startingTime'))
+      .add(this._dragVerticalTime())
+      .add(this._dragHorizontalTime(event));
 
     var changes = {
       startsAt: startsAt.toDate(),
@@ -171,6 +143,43 @@ export default OccurrenceComponent.extend({
     Ember.$(document.documentElement).css('cursor', '');
   },
 
+  _dragVerticalTime: function() {
+    return moment.duration(
+      Math.floor(
+        this._normalizedDragVerticalOffset() /
+        this.get('timeSlotHeight')
+      ) * this.get('computedTimeSlotDuration')
+    );
+  },
+
+  _dragHorizontalTime: function(event) {
+    return moment.duration(
+      Math.floor(
+        this._normalizedDragHorizontalOffset(event) /
+        this.get('dayWidth')
+      ) - this.get('day.offset'),
+      'days'
+    );
+  },
+
+  _normalizedDragVerticalOffset: function() {
+    return this._clamp(
+      this.get('_dragVerticalOffset'),
+      this.get('_dragTopDistance'),
+      this.get('_dragBottomDistance')
+    );
+  },
+
+  _normalizedDragHorizontalOffset: function(event) {
+    var $referenceElement = Ember.$(this.get('referenceElement'));
+
+    return this._clamp(
+      event.pageX - $referenceElement.offset().left,
+      0,
+      $referenceElement.width() - 1
+    );
+  },
+
   _validateChanges: function(changes) {
     var newPreview = this.get('_preview').copy();
 
@@ -178,10 +187,16 @@ export default OccurrenceComponent.extend({
 
     return newPreview.get('startingTime') >= newPreview.get('day.startingTime') &&
            newPreview.get('endingTime') <= newPreview.get('day.endingTime') &&
-           newPreview.get('duration') >= this.get('timeSlotDuration');
+           newPreview.get('duration') >= this.get('computedTimeSlotDuration');
   },
 
   _clamp: function(number, min, max) {
     return Math.max(min, Math.min(number, max));
+  },
+
+  actions: {
+    remove: function() {
+      this.sendAction('onRemove', this.get('model.content'));
+    }
   }
 });

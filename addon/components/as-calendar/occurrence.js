@@ -13,6 +13,7 @@ export default Ember.Component.extend({
   title: Ember.computed.oneWay('model.title'),
   content: Ember.computed.oneWay('model.content'),
   day: Ember.computed.oneWay('model.day'),
+  computedTimeSlotDuration: computedDuration('timeSlotDuration'),
 
   titleStyle: Ember.computed('timeSlotHeight', function() {
     return `line-height: ${this.get('timeSlotHeight')}px;`.htmlSafe();
@@ -21,13 +22,12 @@ export default Ember.Component.extend({
   _duration: Ember.computed.oneWay('model.duration'),
   _startingTime: Ember.computed.oneWay('model.startingTime'),
   _dayStartingTime: Ember.computed.oneWay('day.startingTime'),
-  _timeSlotDuration: computedDuration('timeSlotDuration'),
 
   _occupiedTimeSlots: Ember.computed(
     '_duration',
-    '_timeSlotDuration', function() {
+    'computedTimeSlotDuration', function() {
       return this.get('_duration').as('ms') /
-             this.get('_timeSlotDuration').as('ms');
+             this.get('computedTimeSlotDuration').as('ms');
   }),
 
   _height: Ember.computed('_occupiedTimeSlots', function() {
@@ -37,10 +37,10 @@ export default Ember.Component.extend({
   _top: Ember.computed(
     '_startingTime',
     '_dayStartingTime',
-    '_timeSlotDuration',
+    'computedTimeSlotDuration',
     'timeSlotHeight', function() {
     return (this.get('_startingTime').diff(this.get('_dayStartingTime')) /
-            this.get('_timeSlotDuration').as('ms')) *
+            this.get('computedTimeSlotDuration').as('ms')) *
             this.get('timeSlotHeight');
   }),
 
