@@ -8,9 +8,9 @@ Climate](https://codeclimate.com/github/alphasights/ember-calendar/badges/gpa.sv
 An awesome Ember calendar, designed with composability and reusability in mind.
 
 ![Calendar in
-action](https://raw.githubusercontent.com/alphasights/ember-calendar/images/calendar.png)
+action](https://raw.githubusercontent.com/alphasights/ember-calendar/develop/images/calendar.png)
 
-![Calendar with timezones](https://raw.githubusercontent.com/alphasights/ember-calendar/images/calendar-timezones.png)
+![Calendar with timezones](https://raw.githubusercontent.com/alphasights/ember-calendar/develop/images/calendar-timezones.png)
 
 ## Features
 
