@@ -10,7 +10,7 @@ import {
   resizeOccurrence,
   dragOccurrence,
   selectTimeZone
-} from '../../helpers/calendar-test-helpers';
+} from 'ember-calendar/test-helpers/all';
 
 momentInitializer();
 
