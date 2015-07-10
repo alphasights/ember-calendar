@@ -110,33 +110,11 @@ export default OccurrenceComponent.extend({
   },
 
   _dragMove: function(event) {
-    var $referenceElement = Ember.$(this.get('referenceElement'));
-
-    var offsetX = this._clamp(
-      event.pageX - $referenceElement.offset().left,
-      0,
-      $referenceElement.width() - 1
-    );
-
     this.set('_dragVerticalOffset', this.get('_dragVerticalOffset') + event.dy);
 
-    var verticalDrag = this._clamp(
-      this.get('_dragVerticalOffset'),
-      this.get('_dragTopDistance'),
-      this.get('_dragBottomDistance')
-    );
-
-    var verticalOffset = moment.duration(
-      Math.floor(verticalDrag / this.get('timeSlotHeight')) * this.get('computedTimeSlotDuration')
-    );
-
-    var horizontalOffset = moment.duration(
-      Math.floor(offsetX / this.get('dayWidth')) -
-      this.get('day.offset'),
-      'days'
-    );
-
-    var startsAt = moment(this.get('_startingTime')).add(verticalOffset).add(horizontalOffset);
+    var dragTimeSlotOffset = this._dragTimeSlotOffset(event);
+    var dragDayOffset = this._dragDayOffset(event);
+    var startsAt = moment(this.get('_startingTime')).add(dragTimeSlotOffset).add(dragDayOffset);
 
     var changes = {
       startsAt: startsAt.toDate(),
@@ -146,6 +124,34 @@ export default OccurrenceComponent.extend({
     if (this._validateChanges(changes)) {
       this.sendAction('onUpdate', this.get('_preview.content'), changes);
     }
+  },
+
+  _dragTimeSlotOffset: function() {
+    var verticalDrag = this._clamp(
+      this.get('_dragVerticalOffset'),
+      this.get('_dragTopDistance'),
+      this.get('_dragBottomDistance')
+    );
+
+    return moment.duration(
+      Math.floor(verticalDrag / this.get('timeSlotHeight')) * this.get('computedTimeSlotDuration')
+    );
+  },
+
+  _dragDayOffset: function(event) {
+    var $referenceElement = Ember.$(this.get('referenceElement'));
+
+    var offsetX = this._clamp(
+      event.pageX - $referenceElement.offset().left,
+      0,
+      $referenceElement.width() - 1
+    );
+
+    return moment.duration(
+      Math.floor(offsetX / this.get('dayWidth')) -
+      this.get('day.offset'),
+      'days'
+    );
   },
 
   _dragEnd: function() {
