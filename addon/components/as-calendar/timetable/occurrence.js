@@ -110,11 +110,33 @@ export default OccurrenceComponent.extend({
   },
 
   _dragMove: function(event) {
+    var $referenceElement = Ember.$(this.get('referenceElement'));
+
+    var offsetX = this._clamp(
+      event.pageX - $referenceElement.offset().left,
+      0,
+      $referenceElement.width() - 1
+    );
+
     this.set('_dragVerticalOffset', this.get('_dragVerticalOffset') + event.dy);
 
-    var startsAt = moment(this.get('_startingTime'))
-      .add(this._dragVerticalTime())
-      .add(this._dragHorizontalTime(event));
+    var verticalDrag = this._clamp(
+      this.get('_dragVerticalOffset'),
+      this.get('_dragTopDistance'),
+      this.get('_dragBottomDistance')
+    );
+
+    var verticalOffset = moment.duration(
+      Math.floor(verticalDrag / this.get('timeSlotHeight')) * this.get('computedTimeSlotDuration')
+    );
+
+    var horizontalOffset = moment.duration(
+      Math.floor(offsetX / this.get('dayWidth')) -
+      this.get('day.offset'),
+      'days'
+    );
+
+    var startsAt = moment(this.get('_startingTime')).add(verticalOffset).add(horizontalOffset);
 
     var changes = {
       startsAt: startsAt.toDate(),
@@ -141,43 +163,6 @@ export default OccurrenceComponent.extend({
 
   _mouseUp: function() {
     Ember.$(document.documentElement).css('cursor', '');
-  },
-
-  _dragVerticalTime: function() {
-    return moment.duration(
-      Math.floor(
-        this._normalizedDragVerticalOffset() /
-        this.get('timeSlotHeight')
-      ) * this.get('computedTimeSlotDuration')
-    );
-  },
-
-  _dragHorizontalTime: function(event) {
-    return moment.duration(
-      Math.floor(
-        this._normalizedDragHorizontalOffset(event) /
-        this.get('dayWidth')
-      ) - this.get('day.offset'),
-      'days'
-    );
-  },
-
-  _normalizedDragVerticalOffset: function() {
-    return this._clamp(
-      this.get('_dragVerticalOffset'),
-      this.get('_dragTopDistance'),
-      this.get('_dragBottomDistance')
-    );
-  },
-
-  _normalizedDragHorizontalOffset: function(event) {
-    var $referenceElement = Ember.$(this.get('referenceElement'));
-
-    return this._clamp(
-      event.pageX - $referenceElement.offset().left,
-      0,
-      $referenceElement.width() - 1
-    );
   },
 
   _validateChanges: function(changes) {

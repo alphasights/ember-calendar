@@ -108,7 +108,7 @@ example, you can customize the appearance of the occurrences by passing a block:
   dayEndingTime="21:30"
   timeSlotDuration="00:30"
   timeZoneOptions=timeZoneOptions
-  timeZoneSearchEnabled=false
+  showTimeZoneSearch=false
   timeZone=timeZone
   onAddOccurrence="calendarAddOccurrence" as |occurrence timetable calendar|}}
   {{#if occurrence.content.isEditable}}
@@ -150,7 +150,7 @@ In addition, you can customize the timezone handling using these options:
 * `timeZone`
 * `timeZoneOptions`
 * `defaultTimeZoneQuery`
-* `timeZoneSearchEnabled`
+* `showTimeZoneSearch`
 
 ## Developing
 
