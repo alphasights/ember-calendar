@@ -1,18 +1,18 @@
 import Ember from 'ember';
 
 var timeSlotHeight = function() {
-  return $('.as-calendar-timetable-content')
+  return Ember.$('.as-calendar-timetable-content')
     .find('.time-slots > li:first')
     .height();
 };
 
 var dayWidth = function() {
-  var $content = $('.as-calendar-timetable-content');
+  var $content = Ember.$('.as-calendar-timetable-content');
   return $content.width() / $content.find('.days > li').length;
 };
 
 var pointForTime = function(options) {
-  var $target = $('.as-calendar-timetable-content');
+  var $target = Ember.$('.as-calendar-timetable-content');
   var offsetX = options.day * dayWidth();
   var offsetY = options.timeSlot * timeSlotHeight();
   var pageX = $target.offset().left + offsetX;
@@ -21,16 +21,16 @@ var pointForTime = function(options) {
   return {
     pageX: pageX,
     pageY: pageY,
-    clientX: pageX - $(document).scrollLeft(),
-    clientY: pageY - $(document).scrollTop()
+    clientX: pageX - Ember.$(document).scrollLeft(),
+    clientY: pageY - Ember.$(document).scrollTop()
   };
 };
 
 var selectTime = function(options) {
   Ember.run(() => {
-    var $target = $('.as-calendar-timetable-content');
+    var $target = Ember.$('.as-calendar-timetable-content');
     var point = pointForTime(options);
-    var event = $.Event('click');
+    var event = Ember.$.Event('click');
 
     event.pageX = point.pageX;
     event.pageY = point.pageY;
@@ -59,11 +59,11 @@ var dragOccurrence = function(occurrence, options) {
 
 var selectTimeZone = function(name) {
   Ember.run(() => {
-    $('.as-calendar-time-zone-select .rl-dropdown-toggle').click();
+    Ember.$('.as-calendar-time-zone-select .rl-dropdown-toggle').click();
   });
 
   Ember.run(() => {
-    $(`.as-calendar-time-zone-option:contains('${name}')`).click();
+    Ember.$(`.as-calendar-time-zone-option:contains('${name}')`).click();
   });
 };
 
@@ -75,3 +75,4 @@ export {
   dragOccurrence,
   selectTimeZone
 };
+
