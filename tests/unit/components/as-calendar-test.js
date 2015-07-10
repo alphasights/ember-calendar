@@ -33,13 +33,13 @@ test('Add an occurrence', function(assert) {
       onAddOccurrence="calendarAddOccurrence"}}
   `);
 
-  assert.equal($('.as-calendar-occurrence').length, 0,
+  assert.equal(Ember.$('.as-calendar-occurrence').length, 0,
     'it shows an empty calendar'
   );
 
   selectTime({ day: 0, timeSlot: 0 });
 
-  assert.equal($('.as-calendar-occurrence').length, 1,
+  assert.equal(Ember.$('.as-calendar-occurrence').length, 1,
     'it adds the occurrence to the calendar'
   );
 });
@@ -68,15 +68,15 @@ test('Remove an occurrence', function(assert) {
 
   selectTime({ day: 0, timeSlot: 0 });
 
-  assert.equal($('.as-calendar-occurrence').length, 1,
+  assert.equal(Ember.$('.as-calendar-occurrence').length, 1,
     'it adds the occurrence to the calendar'
   );
 
   Ember.run(() => {
-    $('.as-calendar-occurrence .remove').click();
+    Ember.$('.as-calendar-occurrence .remove').click();
   });
 
-  assert.equal($('.as-calendar-occurrence').length, 0,
+  assert.equal(Ember.$('.as-calendar-occurrence').length, 0,
     'it removes the occurrence from the calendar'
   );
 });
@@ -107,13 +107,13 @@ test('Resize an occurrence', function(assert) {
 
   selectTime({ day: 0, timeSlot: 0 });
 
-  assert.equal($('.as-calendar-occurrence').length, 1,
+  assert.equal(Ember.$('.as-calendar-occurrence').length, 1,
     'it adds the occurrence to the calendar'
   );
 
-  resizeOccurrence($('.as-calendar-occurrence'), { timeSlots: 2 });
+  resizeOccurrence(Ember.$('.as-calendar-occurrence'), { timeSlots: 2 });
 
-  assert.equal($('.as-calendar-occurrence').height(), timeSlotHeight() * 3,
+  assert.equal(Ember.$('.as-calendar-occurrence').height(), timeSlotHeight() * 3,
     'it resizes the occurrence');
 });
 
@@ -190,11 +190,11 @@ test('Change time zone', function(assert) {
       onAddOccurrence="calendarAddOccurrence"}}
   `);
 
-  assert.equal($('.as-calendar-occurrence').position().top, 0,
+  assert.equal(Ember.$('.as-calendar-occurrence').position().top, 0,
     'it shows the occurrence in the UTC time zone');
 
   selectTimeZone('London');
 
-  assert.equal($('.as-calendar-occurrence').position().top, timeSlotHeight() * 2,
+  assert.equal(Ember.$('.as-calendar-occurrence').position().top, timeSlotHeight() * 2,
     'it shows the occurrence in the London time zone');
 });
