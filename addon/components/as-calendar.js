@@ -14,7 +14,6 @@ export default Ember.Component.extend(InboundActionsMixin, {
   defaultTimeZoneQuery: '',
   isEditing: true,
   model: null,
-  modelTimeSlotDuration: Ember.computed.oneWay('model.timeSlotDuration'),
   occurrences: null,
   showHeader: true,
   startingDate: null,

@@ -3,5 +3,7 @@
 
   {{#if occurrenceTemplateName}}
     {{partial occurrenceTemplateName}}
+  {{else}}
+    {{yield}}
   {{/if}}
 </div>
