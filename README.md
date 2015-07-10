@@ -1,4 +1,4 @@
-# Ember Calendar
+<h1><img src="https://raw.githubusercontent.com/alphasights/ember-calendar/develop/images/logo.png" alt="Ember Calendar" width="340px"></h1>
 
 [![Npm Version](https://badge.fury.io/js/ember-calendar.svg)](http://badge.fury.io/js/ember-ember-calendar)
 [![Code
