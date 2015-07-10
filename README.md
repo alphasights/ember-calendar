@@ -89,12 +89,6 @@ export default Ember.Controller.extend({
 });
 ```
 
-```scss
-// app/styles/app.scss
-
-@import 'addons/ember-calendar/main';
-```
-
 ## Advanced Usage
 
 All the components which are used in the calendar are highly reusable. For
@@ -151,6 +145,20 @@ In addition, you can customize the timezone handling using these options:
 * `timeZoneOptions`
 * `defaultTimeZoneQuery`
 * `showTimeZoneSearch`
+
+## Styles
+
+We do not add any vendor CSS to your app by default, but you can include it if you want by doing:
+
+```scss
+// app/styles/app.scss
+
+@import 'addons/ember-calendar/main';
+```
+
+Bear in mind that the default styles require some additional packages to be installed, which you can fix by running:
+
+`ember install ember-cli-paint`
 
 ## Developing
 
