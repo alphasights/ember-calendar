@@ -1,6 +1,6 @@
-# Ember Calendar
+<h1><img src="https://raw.githubusercontent.com/alphasights/ember-calendar/develop/images/logo.png" alt="Ember Calendar" width="340px"></h1>
 
-[![Npm Version](https://badge.fury.io/js/ember-calendar.svg)](http://badge.fury.io/js/ember-ember-calendar)
+[![Npm Version](https://badge.fury.io/js/ember-calendar.svg)](http://badge.fury.io/js/ember-calendar)
 [![Code
 Climate](https://codeclimate.com/github/alphasights/ember-calendar/badges/gpa.svg)](https://codeclimate.com/github/alphasights/ember-calendar)
 [![Build Status](https://circleci.com/gh/alphasights/ember-calendar.svg?style=shield&circle-token=6fa581b50c5f8496cf26768394cf6c1d43dfb98e)](https://circleci.com/gh/alphasights/ember-calendar)
@@ -10,7 +10,7 @@ An awesome Ember calendar, designed with composability and reusability in mind.
 ![Calendar in
 action](https://raw.githubusercontent.com/alphasights/ember-calendar/develop/images/calendar.png)
 
-![Calendar with timezones](https://raw.githubusercontent.com/alphasights/ember-calendar/develop/images/calendar-timezones.png)
+[Check out the demo](https://alphasights.github.io/ember-calendar/demo)
 
 ## Features
 
@@ -156,7 +156,7 @@ We do not add any vendor CSS to your app by default, but you can include it if y
 @import 'addons/ember-calendar/main';
 ```
 
-Bear in mind that the default styles require some additional packages to be installed, which you can fix by running:
+Bear in mind that the default styles requires `ember-cli-paint`. To install it, run:
 
 `ember install ember-cli-paint`
 
