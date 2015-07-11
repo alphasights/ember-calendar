@@ -1,6 +1,7 @@
 <h1><img src="https://raw.githubusercontent.com/alphasights/ember-calendar/develop/images/logo.png" alt="Ember Calendar" width="340px"></h1>
 
 [![Npm Version](https://badge.fury.io/js/ember-calendar.svg)](http://badge.fury.io/js/ember-calendar)
+[![Ember Observer Score](http://emberobserver.com/badges/ember-calendar.svg)](http://emberobserver.com/addons/ember-calendar)
 [![Code
 Climate](https://codeclimate.com/github/alphasights/ember-calendar/badges/gpa.svg)](https://codeclimate.com/github/alphasights/ember-calendar)
 [![Build Status](https://circleci.com/gh/alphasights/ember-calendar.svg?style=shield&circle-token=6fa581b50c5f8496cf26768394cf6c1d43dfb98e)](https://circleci.com/gh/alphasights/ember-calendar)
@@ -89,12 +90,6 @@ export default Ember.Controller.extend({
 });
 ```
 
-```scss
-// app/styles/app.scss
-
-@import 'addons/ember-calendar/main';
-```
-
 ## Advanced Usage
 
 All the components which are used in the calendar are highly reusable. For
@@ -151,6 +146,20 @@ In addition, you can customize the timezone handling using these options:
 * `timeZoneOptions`
 * `defaultTimeZoneQuery`
 * `showTimeZoneSearch`
+
+## Styles
+
+We do not add any vendor CSS to your app by default, but you can include it if you want by doing:
+
+```scss
+// app/styles/app.scss
+
+@import 'addons/ember-calendar/main';
+```
+
+Bear in mind that the default styles requires `ember-cli-paint`. To install it, run:
+
+`ember install ember-cli-paint`
 
 ## Developing
 

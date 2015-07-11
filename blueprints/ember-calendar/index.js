@@ -6,6 +6,8 @@ module.exports = {
 
   beforeInstall: function() {
     return this.addBowerPackagesToProject([
+      { name: 'moment' },
+      { name: 'ember-cli-moment-shim' },
       { name: 'moment-timezone' },
       { name: 'jquery-simulate' },
       { name: 'interact' },
@@ -15,8 +17,10 @@ module.exports = {
 
   afterInstall: function() {
     return this.addPackagesToProject([
-      { name: 'ember-cli-paint' },
+      { name: 'broccoli-sass' },
+      { name: 'ember-component-inbound-actions' },
       { name: 'ember-moment' },
+      { name: 'ember-rl-dropdown' }
       { name: 'liquid-fire' }
     ]);
   }
