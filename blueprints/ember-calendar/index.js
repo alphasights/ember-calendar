@@ -20,7 +20,7 @@ module.exports = {
       { name: 'broccoli-sass' },
       { name: 'ember-component-inbound-actions' },
       { name: 'ember-moment' },
-      { name: 'ember-rl-dropdown' }
+      { name: 'ember-rl-dropdown' },
       { name: 'liquid-fire' }
     ]);
   }
