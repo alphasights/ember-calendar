@@ -157,7 +157,7 @@ We do not add any vendor CSS to your app by default, but you can include it if y
 @import 'addons/ember-calendar/main';
 ```
 
-Bear in mind that the default styles requires `ember-cli-paint`. To install it, run:
+Bear in mind that the default styles require `ember-cli-paint`. To install it, run:
 
 `ember install ember-cli-paint`
 
