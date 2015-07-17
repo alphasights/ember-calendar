@@ -33,8 +33,10 @@ module.exports = {
       type: 'vendor'
     });
 
-    if (app.env === 'test' || app.env === 'development') {
-      app.import(path.join(app.bowerDirectory, 'jquery-simulate/jquery.simulate.js'));
+    if (app.env === 'test') {
+      app.import(path.join(app.bowerDirectory, 'jquery-simulate/jquery.simulate.js'), {
+        type: 'test'
+      });
     }
   }
 };
