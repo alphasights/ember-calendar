@@ -4,5 +4,5 @@ set -e
 
 npm install -g bower
 npm install
-bower install -F
+bower install
 bundle install
