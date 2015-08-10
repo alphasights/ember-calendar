@@ -2,7 +2,6 @@ import hbs from 'htmlbars-inline-precompile';
 import { test, moduleForComponent } from 'ember-qunit';
 import Ember from 'ember';
 import moment from 'moment';
-import { initialize as momentInitializer } from 'dummy/initializers/ember-moment';
 
 import {
   timeSlotHeight,
@@ -12,8 +11,6 @@ import {
   dragOccurrence,
   selectTimeZone
 } from 'ember-calendar/test-helpers/all';
-
-momentInitializer();
 
 moduleForComponent('as-calendar', 'AsCalendarComponent', { integration: true });
 
@@ -159,7 +156,7 @@ test('Drag an occurrence', function(assert) {
   assert.equal(dayOffset, Math.floor(dayWidth() * 2),
     'it drags the occurrence to the correct day'
   );
-  
+
   assert.equal(timeSlotOffset, timeSlotHeight() * 4,
     'it drags the occurrence to the correct timeslot'
   );
