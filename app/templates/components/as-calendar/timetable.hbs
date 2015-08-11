@@ -11,7 +11,7 @@
   <div class="day-labels">
     <ul>
       {{#each days as |day|}}
-        <li class={{if day.isToday "today"}}>{{moment day.value "ddd D MMM"}}</li>
+        <li class={{if day.isToday "today"}}>{{moment-format day.value "ddd D MMM"}}</li>
       {{/each}}
     </ul>
   </div>
@@ -22,7 +22,7 @@
     <ul class="time-slot-labels" style={{timeSlotLabelListStyle}}>
       {{#each labeledTimeSlots as |timeSlot|}}
         <li style={{timeSlotLabelStyle}}>
-          {{moment timeSlot.value "h A"}}
+          {{moment-format timeSlot.value "h A"}}
         </li>
       {{/each}}
     </ul>
