@@ -1,9 +1,17 @@
-{{#unless isInteracting}}
-  {{#if isRemovable}}
-    <a {{action "remove" bubbles=false}} class="remove"></a>
+<div>
+  {{#if hasBlock}}
+    {{yield}}
+  {{else}}
+    <h1 style={{titleStyle}}>{{title}}</h1>
   {{/if}}
 
-  {{#if isResizable}}
-    <div class="resize-handle"></div>
-  {{/if}}
-{{/unless}}
+  {{#unless isInteracting}}
+    {{#if isRemovable}}
+      <a {{action "remove" bubbles=false}} class="remove"></a>
+    {{/if}}
+
+    {{#if isResizable}}
+      <div class="resize-handle"></div>
+    {{/if}}
+  {{/unless}}
+</div>
