@@ -13,7 +13,6 @@ export default OccurrenceComponent.extend({
   isRemovable: true,
   dayWidth: Ember.computed.oneWay('timetable.dayWidth'),
   referenceElement: Ember.computed.oneWay('timetable.referenceElement'),
-  occurrenceTemplateName: 'components/as-calendar/timetable/occurrence',
 
   _calendar: Ember.computed.oneWay('model.calendar'),
   _dayEndingTime: Ember.computed.oneWay('day.endingTime'),
