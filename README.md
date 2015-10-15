@@ -154,6 +154,7 @@ We do not add any vendor CSS to your app by default, but you can include it if y
 ```scss
 // app/styles/app.scss
 
+@import 'bower_components/paint/paint';
 @import 'addons/ember-calendar/main';
 ```
 

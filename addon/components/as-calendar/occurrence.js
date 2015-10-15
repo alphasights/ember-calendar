@@ -4,7 +4,6 @@ import computedDuration from 'ember-calendar/macros/computed-duration';
 export default Ember.Component.extend({
   attributeBindings: ['_style:style'],
   classNameBindings: [':as-calendar-occurrence'],
-  layoutName: 'components/as-calendar/occurrence',
   tagName: 'article',
 
   model: null,
