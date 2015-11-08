@@ -13,7 +13,7 @@
     margin: 0;
 
     &:hover {
-      color: $anchor-font-color;
+      color: color(link);
     }
 
     i {
@@ -72,7 +72,7 @@
         i {
           @include icon(search);
 
-          color: $primary-color;
+          color: color(primary);
           line-height: $dropdown-search-icon-size;
         }
       }
