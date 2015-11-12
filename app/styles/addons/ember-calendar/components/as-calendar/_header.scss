@@ -1,5 +1,5 @@
 .as-calendar-header {
-  @extend %grid-row;
+  @extend %grid-row-gutter;
 
   background-color: color(border, light);
   border-bottom: 1px solid color(border, dark);
@@ -20,10 +20,6 @@
 
     > ul {
       @extend %button-group;
-
-      > li {
-        padding: $column-gutter / 4 0;
-      }
     }
 
     .previous-week {
