@@ -29,8 +29,8 @@
 
   .rl-dropdown {
     background-clip: padding-box;
-    background-color: $dropdown-background-color;
-    border: 1px solid $dropdown-border-color;
+    background-color: dropdown-settings(background-color);
+    border: 1px solid dropdown-settings(border-color);
     border-radius: $global-radius / 2;
     box-shadow: 0 2px 3px rgba(0, 0, 0, .175);
     display: none;
@@ -43,7 +43,7 @@
     position: absolute;
     text-align: left;
     top: 100%;
-    z-index: $dropdown-z-index;
+    z-index: dropdown-settings(z-index);
 
     .search,
     .results {
@@ -52,7 +52,7 @@
 
     .search {
       cursor: auto;
-      padding: $dropdown-search-inner-padding $dropdown-search-inner-padding * 2;
+      padding: dropdown-settings(search, padding-inner) dropdown-settings(search, padding-inner) * 2;
       position: relative;
 
       &:hover {
@@ -60,37 +60,37 @@
       }
 
       .icon {
-        height: $dropdown-search-icon-size;
-        left: $dropdown-search-inner-padding;
-        margin: $dropdown-search-inner-padding * 2 0;
+        height: dropdown-settings(search, icon-size);
+        left: dropdown-settings(search, padding-inner);
+        margin: dropdown-settings(search, padding-inner) * 2 0;
         overflow: hidden;
         position: absolute;
         text-align: center;
-        top: $dropdown-search-inner-padding;
-        width: $dropdown-search-icon-size;
+        top: dropdown-settings(search, padding-inner);
+        width: dropdown-settings(search, icon-size);
 
         i {
           @include icon(search);
 
           color: color(primary);
-          line-height: $dropdown-search-icon-size;
+          line-height: dropdown-settings(search, icon-size);
         }
       }
 
       input {
         @include form-input;
 
-        height: $dropdown-search-icon-size;
-        line-height: $dropdown-search-icon-size;
-        margin: $dropdown-search-inner-padding * 2 0;
-        padding-left: $dropdown-search-icon-size;
+        height: dropdown-settings(search, icon-size);
+        line-height: dropdown-settings(search, icon-size);
+        margin: dropdown-settings(search, padding-inner) * 2 0;
+        padding-left: dropdown-settings(search, icon-size);
         width: 100%;
       }
     }
 
     .results {
       margin: 0;
-      max-height: $dropdown-search-results-height;
+      max-height: dropdown-settings(search, results-height);
       overflow-x: hidden;
       overflow-y: auto;
       padding: 0;
@@ -103,10 +103,10 @@
           @extend %dropdown-item;
 
           cursor: pointer;
-          padding: $dropdown-search-inner-padding $column-gutter / 2;
+          padding: dropdown-settings(search, padding-inner) $column-gutter / 2;
 
           &:hover {
-            background-color: $dropdown-link-hover-background-color;
+            background-color: dropdown-settings(link, hover-background-color);
           }
         }
       }
