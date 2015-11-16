@@ -31,7 +31,7 @@
   }
 
   .header {
-    color: $small-font-color;
+    color: color(text, small);
     font-weight: $font-weight-bold;
     text-align: center;
 
@@ -40,8 +40,8 @@
     }
 
     &.columns {
-      background-color: lighten($global-section-border-color, 3%);
-      border-bottom: 1px solid darken($global-section-border-color, 5%);
+      background-color: color(border, light);
+      border-bottom: 1px solid color(border, dark);
     }
   }
 
@@ -69,11 +69,11 @@
   }
 
   .day-labels > ul > .today {
-    color: $anchor-font-color;
+    color: color(link);
   }
 
   .days > li {
-    border-right: 1px solid $global-section-border-color;
+    border-right: 1px solid color(border);
     height: 100%;
     position: relative;
 
@@ -87,17 +87,17 @@
   }
 
   .time-slots > li {
-    border: 1px solid $global-section-border-color;
+    border: 1px solid color(border);
     border-bottom: 0;
     border-right: 0;
-    border-top-color: darken($global-section-border-color, 2%);
+    border-top-color: color(border, dark);
 
     &:first-child {
       border-top: 0;
     }
 
     &:nth-child(even) {
-      border-top-color: lighten($global-section-border-color, 3%);
+      border-top-color: color(border, light);
     }
   }
 

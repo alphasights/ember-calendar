@@ -1,12 +1,12 @@
 .as-calendar-header {
-  @extend %grid-row;
+  @extend %grid-row-gutter;
 
-  background-color: $ghost;
-  border-bottom: 1px solid darken($global-section-border-color, 5%);
+  background-color: color(border, light);
+  border-bottom: 1px solid color(border, dark);
 
   nav,
   h1 {
-    line-height: rem-calc(80);
+    line-height: rem(80);
   }
 
   h1 {
@@ -20,10 +20,6 @@
 
     > ul {
       @extend %button-group;
-
-      > li {
-        padding: $column-gutter / 4 0;
-      }
     }
 
     .previous-week {
@@ -32,7 +28,7 @@
 
     .current-week {
       &:disabled {
-        color: $global-section-border-color;
+        color: color(border);
       }
     }
 

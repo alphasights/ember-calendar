@@ -187,14 +187,15 @@ test('Change time zone', function(assert) {
       dayStartingTime="9:00"
       dayEndingTime="18:00"
       timeSlotDuration="00:30"
+      defaultTimeZoneQuery="Rome"
       onAddOccurrence="calendarAddOccurrence"}}
   `);
 
   assert.equal(Ember.$('.as-calendar-occurrence').position().top, 0,
     'it shows the occurrence in the UTC time zone');
 
-  selectTimeZone('London');
+  selectTimeZone('Rome');
 
   assert.equal(Ember.$('.as-calendar-occurrence').position().top, timeSlotHeight() * 2,
-    'it shows the occurrence in the London time zone');
+    'it shows the occurrence in the Rome time zone');
 });
