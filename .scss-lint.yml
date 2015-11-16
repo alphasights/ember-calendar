@@ -8,7 +8,10 @@ linters:
     enabled: true
 
   ColorKeyword:
-    enabled: true
+    enabled: false
+
+  ColorVariable:
+    enabled: false
 
   Comment:
     enabled: true
