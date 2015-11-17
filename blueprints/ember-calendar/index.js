@@ -12,10 +12,10 @@ module.exports = {
 
   afterInstall: function() {
     return this.addBowerPackagesToProject([
-      { name: 'interact', target: '1.2.4' },
+      { name: 'interact', target: '1.2.5' },
       { name: 'jquery-simulate', target: '1.0.1' },
       { name: 'lodash', target: '3.10.0' },
-      { name: 'moment', target: '2.10.2' },
+      { name: 'moment', target: '2.10.6' },
       { name: 'moment-timezone', target: '0.4.0' }
     ]);
   }
