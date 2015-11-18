@@ -11,6 +11,8 @@
     background-color: transparent;
     border: 0;
     margin: 0;
+    font-size: $base-font-size;
+    padding: 0;
 
     &:hover {
       color: color(link);

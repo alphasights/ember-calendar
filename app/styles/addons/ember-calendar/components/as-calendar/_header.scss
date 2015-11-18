@@ -2,7 +2,7 @@
   @extend %grid-row-gutter;
 
   background-color: color(border, light);
-  border-bottom: 1px solid color(border, dark);
+  border-bottom: 1px solid color(gray, gainsboro);
 
   nav,
   h1 {
