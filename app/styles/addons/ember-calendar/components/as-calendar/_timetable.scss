@@ -6,7 +6,7 @@
 
   .header.rows,
   .time-zone {
-    @extend %grid-column-1;
+    @extend %grid-column-1-collapsed;
   }
 
   .day-labels,
@@ -27,7 +27,7 @@
   .time-slot-labels > ul > li,
   .as-calendar-time-zone-select,
   .day-labels > ul > li {
-    padding: $column-gutter / 4 0;
+    padding: $column-gutter / 3 0;
   }
 
   .header {
@@ -40,8 +40,8 @@
     }
 
     &.columns {
-      background-color: color(border, light);
-      border-bottom: 1px solid color(border, dark);
+      background-color: color(gray, white-smoke);
+      border-bottom: 1px solid color(gray, gainsboro);
     }
   }
 
@@ -90,7 +90,6 @@
     border: 1px solid color(border);
     border-bottom: 0;
     border-right: 0;
-    border-top-color: color(border, dark);
 
     &:first-child {
       border-top: 0;

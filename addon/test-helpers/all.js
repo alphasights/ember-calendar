@@ -43,7 +43,7 @@ var resizeOccurrence = function(occurrence, options) {
   Ember.run(() => {
     occurrence.find('.resize-handle').simulate('drag', {
       dx: 0,
-      dy: options.timeSlots * timeSlotHeight()
+      dy: options.timeSlots * timeSlotHeight() + occurrence.height()
     });
   });
 };
@@ -52,7 +52,7 @@ var dragOccurrence = function(occurrence, options) {
   Ember.run(() => {
     occurrence.simulate('drag', {
       dx: options.days * dayWidth(),
-      dy: options.timeSlots * timeSlotHeight()
+      dy: options.timeSlots * timeSlotHeight() + occurrence.height()
     });
   });
 };

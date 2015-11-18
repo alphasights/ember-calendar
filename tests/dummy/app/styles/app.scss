@@ -3,7 +3,7 @@
 @import 'addons/ember-calendar/main';
 
 body {
-  background-color: color(iron);
+  background-color: color(gray, iron);
   cursor: inherit;
   padding: $column-gutter;
 

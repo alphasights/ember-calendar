@@ -8,6 +8,7 @@ export default Ember.Component.extend({
 
   defaultQuery: '',
   showResults: false,
+  inputQuery: '',
   query: '',
   value: null,
   options: null,
@@ -58,9 +59,17 @@ export default Ember.Component.extend({
     }
   }),
 
+  _setQuery: function (value) {
+    this.set('query', value);
+  },
+
   actions: {
     selectOption: function(option) {
       this.sendAction('onChangeValue', option.get('value'));
+    },
+
+    inputQueryChanged: function(value) {
+      Ember.run.debounce(this, this._setQuery, value, 200);
     }
   }
 });
