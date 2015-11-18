@@ -11,9 +11,9 @@
           <div class="icon"><i></i></div>
 
           {{input type="text"
-            value=query
-            click=onSearchClick
-            placeholder="Search for more.."}}
+            value=inputQuery
+            key-up="inputQueryChanged"
+            placeholder="Search timezones"}}
         </div>
       {{/if}}
 
