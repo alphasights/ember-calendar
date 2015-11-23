@@ -3,4 +3,4 @@
 set -e
 
 bin/lint
-ember test
+npm test
