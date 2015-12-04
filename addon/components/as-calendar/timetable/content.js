@@ -44,12 +44,15 @@ export default Ember.Component.extend({
     var offset = this.$().offset();
     var offsetX = event.pageX - Math.floor(offset.left);
     var offsetY = event.pageY - Math.floor(offset.top);
+
     var dayIndex = Math.floor(offsetX / this.get('dayWidth'));
     var timeSlotIndex = Math.floor(offsetY / this.get('timeSlotHeight'));
     var day = this.get('days').objectAt(dayIndex);
+
     var timeSlot = this.get('timeSlots').objectAt(timeSlotIndex);
 
-    this.sendAction('onSelectTime',
-      moment(day.get('value')).add(timeSlot.get('time')));
+    this.attrs.onSelectTime(
+      moment(day.get('value')).add(timeSlot.get('time'))
+    );
   })
 });

@@ -33,7 +33,7 @@
       timeSlotHeight=timeSlotHeight
       model=model
       timetable=this
-      onSelectTime="selectTime" as |day|}}
+      onSelectTime=(action this.attrs.onSelectTime) as |day|}}
       {{yield day this}}
     {{/as-calendar/timetable/content}}
   </div>

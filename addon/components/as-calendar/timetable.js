@@ -27,11 +27,5 @@ export default Ember.Component.extend({
 
   timeSlotLabelStyle: Ember.computed('timeSlotHeight', function() {
     return (`height: ${2 * this.get('timeSlotHeight')}px;`).htmlSafe();
-  }),
-
-  actions: {
-    selectTime: function() {
-      this.sendAction('onSelectTime', ...arguments);
-    }
-  }
+  })
 });
