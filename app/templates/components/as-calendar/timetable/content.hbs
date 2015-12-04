@@ -1,12 +1,12 @@
-<ul class="time-slots">
+<ul class="as-calendar-timetable__slots">
   {{#each timeSlots as |timeSlot|}}
-    <li style={{timeSlotStyle}}></li>
+    <li class="as-calendar-timetable__slot-item" style={{timeSlotStyle}}></li>
   {{/each}}
 </ul>
 
-<ul class="days">
+<ul class="as-calendar-timetable__days">
   {{#each days as |day|}}
-    <li class={{if day.isToday "today"}}>
+    <li class="as-calendar-timetable__day {{if day.isToday "as-calendar-timetable__day--today"}}">
       {{yield day this}}
     </li>
   {{/each}}

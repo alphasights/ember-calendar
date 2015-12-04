@@ -1,92 +1,64 @@
-.as-calendar-timetable {
-  .header.columns,
-  > .content-wrapper {
+@include bem-block(as-calendar(timetable, selector)) {
+  @include bem-element('row') {
     @extend %grid-row;
-  }
 
-  .header.rows,
-  .time-zone {
-    @extend %grid-column-1-collapsed;
-  }
-
-  .day-labels,
-  > .content-wrapper > .content {
-    @extend %grid-column-11;
-  }
-
-  .header.rows,
-  .time-zone,
-  .day-labels,
-  > .content-wrapper > .content {
-    &,
-    &:last-child {
-      padding: 0;
+    @include bem-modifier('highlighted') {
+      background-color: color(gray, white-smoke);
+      border-bottom: 1px solid color(gray, gainsboro);
+      color: color(text, small);
+      font-weight: $font-weight-bold;
+      padding: $column-gutter / 3 0;
+      text-align: center;
     }
   }
 
-  .time-slot-labels > ul > li,
-  .as-calendar-time-zone-select,
-  .day-labels > ul > li {
-    padding: $column-gutter / 3 0;
+  @include bem-element('first-column') {
+    @extend %grid-column-1-collapsed;
   }
 
-  .header {
+  @include bem-element('columns') {
+    @extend %grid-column-11;
+
+    position: relative;
+
+    @include bem-modifier('slot') {
+      border: 1px solid color(border);
+      border-bottom: 0;
+      border-right: 0;
+
+      &:first-child {
+        border-top: 0;
+        visibility: hidden;
+      }
+    }
+  }
+
+  @include bem-element('column-item' 'day') {
+    float: left;
+    height: 100%;
+    position: relative;
+    width: (100% / 7);
+
+    &:not(:last-child) {
+      border-right: 1px solid color(border);
+    }
+
+    @include bem-modifier('highlighted') {
+      color: color(link);
+    }
+  }
+
+  @include bem-element('slot-label') {
     color: color(text, small);
     font-weight: $font-weight-bold;
     text-align: center;
 
-    * {
-      white-space: nowrap;
-    }
-
-    &.columns {
-      background-color: color(gray, white-smoke);
-      border-bottom: 1px solid color(gray, gainsboro);
+    &:first-child {
+      color: transparent;
     }
   }
 
-  > .content-wrapper > .content > div {
-    position: relative;
-  }
-
-  .days,
-  .day-labels > ul {
-    @include clearfix;
-
-    > li {
-      float: left;
-      width: (100% / 7);
-    }
-  }
-
-  .days,
-  .time-slots {
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-  }
-
-  .day-labels > ul > .today {
-    color: color(link);
-  }
-
-  .days > li {
-    border-right: 1px solid color(border);
-    height: 100%;
-    position: relative;
-
-    &.today {
-      background-color: rgba(242, 248, 254, .4);
-    }
-
-    &:last-child {
-      border-right: 0;
-    }
-  }
-
-  .time-slots > li {
+  @include bem-element('slot-item') {
     border: 1px solid color(border);
     border-bottom: 0;
     border-right: 0;
@@ -100,7 +72,25 @@
     }
   }
 
-  .time-slot-labels li:first-child {
-    color: transparent;
+  @include bem-element('days') {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+
+  @include bem-element('day') {
+    border-right: 1px solid color(border);
+    height: 100%;
+    position: relative;
+
+    &:last-child {
+      border-right: 0;
+    }
+
+    @include bem-modifier('today') {
+      background-color: rgba(242, 248, 254, .4);
+    }
   }
 }
