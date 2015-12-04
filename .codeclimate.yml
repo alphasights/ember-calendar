@@ -5,5 +5,11 @@ engines:
     enabled: true
   watson:
     enabled: true
+ratings:
+  paths:
+  - "addon/**"
+  - "app/**"
+  - "blueprints/**"
+  - "**.js"
 exclude_paths:
-  - "tests/*"
+- "tests/*"
