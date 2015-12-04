@@ -10,7 +10,7 @@
   timeSlotHeight=timeSlotHeight
   defaultTimeZoneQuery=defaultTimeZoneQuery
   onSelectTime="addOccurrence"
-  onChangeTimeZone="changeTimeZone" as |day timetable|}}
+  onChangeTimeZone=(action "changeTimeZone") as |day timetable|}}
   <ul class="occurrences">
     {{#each day.occurrences as |occurrence|}}
       <li>

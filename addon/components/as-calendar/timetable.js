@@ -32,10 +32,6 @@ export default Ember.Component.extend({
   actions: {
     selectTime: function() {
       this.sendAction('onSelectTime', ...arguments);
-    },
-
-    changeTimeZone: function() {
-      this.sendAction('onChangeTimeZone', ...arguments);
     }
   }
 });
