@@ -57,9 +57,9 @@ the original object in the template, it is available as `occurrence.content`.
   dayStartingTime="9:00"
   dayEndingTime="18:00"
   timeSlotDuration="00:30"
-  onAddOccurrence="calendarAddOccurrence"
-  onUpdateOccurrence="calendarUpdateOccurrence"
-  onRemoveOccurrence="calendarRemoveOccurrence"}}
+  onAddOccurrence=(action "calendarAddOccurrence")
+  onUpdateOccurrence=(action "calendarUpdateOccurrence")
+  onRemoveOccurrence=(action "calendarRemoveOccurrence")}}
 ```
 
 ```javascript
@@ -105,7 +105,7 @@ example, you can customize the appearance of the occurrences by passing a block:
   timeZoneOptions=timeZoneOptions
   showTimeZoneSearch=false
   timeZone=timeZone
-  onAddOccurrence="calendarAddOccurrence" as |occurrence timetable calendar|}}
+  onAddOccurrence=(action "calendarAddOccurrence") as |occurrence timetable calendar|}}
   {{#if occurrence.content.isEditable}}
     {{as-calendar/timetable/occurrence
       class="selection"
@@ -114,8 +114,8 @@ example, you can customize the appearance of the occurrences by passing a block:
       timetable=timetable
       timeSlotDuration=calendar.timeSlotDuration
       isResizable=false
-      onUpdate="calendarUpdateOccurrence"
-      onRemove="calendarRemoveOccurrence"}}
+      onUpdate=(action "calendarUpdateOccurrence")
+      onRemove=(action "calendarRemoveOccurrence")}}
   {{else}}
     {{as-calendar/occurrence
       model=occurrence
