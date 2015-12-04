@@ -22,8 +22,8 @@
             timeSlotHeight=timeSlotHeight
             timetable=timetable
             timeSlotDuration=timeSlotDuration
-            onUpdate=(action "updateOccurrence")
-            onRemove=(action "removeOccurrence")}}
+            onUpdate=(action this.attrs.onUpdateOccurrence)
+            onRemove=(action this.attrs.onRemoveOccurrence)}}
         {{/if}}
       </li>
     {{/each}}

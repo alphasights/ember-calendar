@@ -12,15 +12,27 @@ import {
   selectTimeZone
 } from 'ember-calendar/test-helpers/all';
 
-moduleForComponent('as-calendar', 'AsCalendarComponent', { integration: true });
+moduleForComponent('as-calendar', 'AsCalendarComponent', {
+  integration: true,
+
+  beforeEach: function() {
+    this.set('occurrences', Ember.A());
+
+    this.on('calendarAddOccurrence', (occurrence) => {
+      this.get('occurrences').pushObject(occurrence);
+    });
+
+    this.on('calendarRemoveOccurrence', (occurrence) => {
+      this.get('occurrences').removeObject(occurrence);
+    });
+
+    this.on('calendarUpdateOccurrence', (occurrence, properties) => {
+      occurrence.setProperties(properties);
+    });
+  }
+});
 
 test('Add an occurrence', function(assert) {
-  this.set('occurrences', Ember.A());
-
-  this.on('calendarAddOccurrence', (occurrence) => {
-    this.get('occurrences').pushObject(occurrence);
-  });
-
   this.render(hbs`
     {{as-calendar
       title="Ember Calendar"
@@ -28,7 +40,9 @@ test('Add an occurrence', function(assert) {
       dayStartingTime="9:00"
       dayEndingTime="18:00"
       timeSlotDuration="00:30"
-      onAddOccurrence=(action "calendarAddOccurrence")}}
+      onAddOccurrence=(action "calendarAddOccurrence")
+      onUpdateOccurrence=(action "calendarUpdateOccurrence")
+      onRemoveOccurrence=(action "calendarRemoveOccurrence")}}
   `);
 
   assert.equal(Ember.$('.as-calendar-occurrence').length, 0,
@@ -43,16 +57,6 @@ test('Add an occurrence', function(assert) {
 });
 
 test('Remove an occurrence', function(assert) {
-  this.set('occurrences', Ember.A());
-
-  this.on('calendarAddOccurrence', (occurrence) => {
-    this.get('occurrences').pushObject(occurrence);
-  });
-
-  this.on('calendarRemoveOccurrence', (occurrence) => {
-    this.get('occurrences').removeObject(occurrence);
-  });
-
   this.render(hbs`
     {{as-calendar
       title="Ember Calendar"
@@ -61,6 +65,7 @@ test('Remove an occurrence', function(assert) {
       dayEndingTime="18:00"
       timeSlotDuration="00:30"
       onAddOccurrence=(action "calendarAddOccurrence")
+      onUpdateOccurrence=(action "calendarUpdateOccurrence")
       onRemoveOccurrence=(action "calendarRemoveOccurrence")}}
   `);
 
@@ -81,16 +86,6 @@ test('Remove an occurrence', function(assert) {
 
 
 test('Resize an occurrence', function(assert) {
-  this.set('occurrences', Ember.A());
-
-  this.on('calendarAddOccurrence', (occurrence) => {
-    this.get('occurrences').pushObject(occurrence);
-  });
-
-  this.on('calendarUpdateOccurrence', (occurrence, properties) => {
-    occurrence.setProperties(properties);
-  });
-
   this.render(hbs`
     {{as-calendar
       title="Ember Calendar"
@@ -100,7 +95,8 @@ test('Resize an occurrence', function(assert) {
       timeSlotDuration="00:30"
       defaultOccurrenceDuration="00:30"
       onAddOccurrence=(action "calendarAddOccurrence")
-      onUpdateOccurrence=(action "calendarUpdateOccurrence")}}
+      onUpdateOccurrence=(action "calendarUpdateOccurrence")
+      onRemoveOccurrence=(action "calendarRemoveOccurrence")}}
   `);
 
   selectTime({ day: 0, timeSlot: 0 });
@@ -116,16 +112,6 @@ test('Resize an occurrence', function(assert) {
 });
 
 test('Drag an occurrence', function(assert) {
-  this.set('occurrences', Ember.A());
-
-  this.on('calendarAddOccurrence', (occurrence) => {
-    this.get('occurrences').pushObject(occurrence);
-  });
-
-  this.on('calendarUpdateOccurrence', (occurrence, properties) => {
-    occurrence.setProperties(properties);
-  });
-
   this.render(hbs`
     {{as-calendar
       title="Ember Calendar"
@@ -134,7 +120,8 @@ test('Drag an occurrence', function(assert) {
       dayEndingTime="18:00"
       timeSlotDuration="00:30"
       onAddOccurrence=(action "calendarAddOccurrence")
-      onUpdateOccurrence=(action "calendarUpdateOccurrence")}}
+      onUpdateOccurrence=(action "calendarUpdateOccurrence")
+      onRemoveOccurrence=(action "calendarRemoveOccurrence")}}
   `);
 
   selectTime({ day: 0, timeSlot: 0 });
@@ -167,17 +154,13 @@ test('Drag an occurrence', function(assert) {
 });
 
 test('Change time zone', function(assert) {
-  this.set('occurrences', Ember.A([
+  this.get('occurrences').pushObject(
     Ember.Object.create({
       startsAt: moment().utc().startOf('day').add(9, 'hours'),
       endsAt: moment().utc().startOf('day').add(10, 'hours'),
       title: 'Example Occurrence'
     })
-  ]));
-
-  this.on('calendarAddOccurrence', (occurrence) => {
-    this.get('occurrences').pushObject(occurrence);
-  });
+  );
 
   this.render(hbs`
     {{as-calendar
@@ -188,7 +171,9 @@ test('Change time zone', function(assert) {
       dayEndingTime="18:00"
       timeSlotDuration="00:30"
       defaultTimeZoneQuery="Rome"
-      onAddOccurrence=(action "calendarAddOccurrence")}}
+      onAddOccurrence=(action "calendarAddOccurrence")
+      onUpdateOccurrence=(action "calendarUpdateOccurrence")
+      onRemoveOccurrence=(action "calendarRemoveOccurrence")}}
   `);
 
   assert.equal(Ember.$('.as-calendar-occurrence').position().top, 0,

@@ -38,14 +38,6 @@ export default Ember.Component.extend(InboundActionsMixin, {
       });
 
       this.attrs['onAddOccurrence'](occurrence.get('content'));
-    },
-
-    updateOccurrence: function(occurrence, properties) {
-      this.attrs['onUpdateOccurrence'](occurrence, properties);
-    },
-
-    removeOccurrence: function(occurrence) {
-      this.attrs['onRemoveOccurrence'](occurrence);
     }
   }
 });
