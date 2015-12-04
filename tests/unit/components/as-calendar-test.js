@@ -28,7 +28,7 @@ test('Add an occurrence', function(assert) {
       dayStartingTime="9:00"
       dayEndingTime="18:00"
       timeSlotDuration="00:30"
-      onAddOccurrence="calendarAddOccurrence"}}
+      onAddOccurrence=(action "calendarAddOccurrence")}}
   `);
 
   assert.equal(Ember.$('.as-calendar-occurrence').length, 0,
@@ -60,8 +60,8 @@ test('Remove an occurrence', function(assert) {
       dayStartingTime="9:00"
       dayEndingTime="18:00"
       timeSlotDuration="00:30"
-      onAddOccurrence="calendarAddOccurrence"
-      onRemoveOccurrence="calendarRemoveOccurrence"}}
+      onAddOccurrence=(action "calendarAddOccurrence")
+      onRemoveOccurrence=(action "calendarRemoveOccurrence")}}
   `);
 
   selectTime({ day: 0, timeSlot: 0 });
@@ -99,8 +99,8 @@ test('Resize an occurrence', function(assert) {
       dayEndingTime="18:00"
       timeSlotDuration="00:30"
       defaultOccurrenceDuration="00:30"
-      onAddOccurrence="calendarAddOccurrence"
-      onUpdateOccurrence="calendarUpdateOccurrence"}}
+      onAddOccurrence=(action "calendarAddOccurrence")
+      onUpdateOccurrence=(action "calendarUpdateOccurrence")}}
   `);
 
   selectTime({ day: 0, timeSlot: 0 });
@@ -133,8 +133,8 @@ test('Drag an occurrence', function(assert) {
       dayStartingTime="9:00"
       dayEndingTime="18:00"
       timeSlotDuration="00:30"
-      onAddOccurrence="calendarAddOccurrence"
-      onUpdateOccurrence="calendarUpdateOccurrence"}}
+      onAddOccurrence=(action "calendarAddOccurrence")
+      onUpdateOccurrence=(action "calendarUpdateOccurrence")}}
   `);
 
   selectTime({ day: 0, timeSlot: 0 });
@@ -188,7 +188,7 @@ test('Change time zone', function(assert) {
       dayEndingTime="18:00"
       timeSlotDuration="00:30"
       defaultTimeZoneQuery="Rome"
-      onAddOccurrence="calendarAddOccurrence"}}
+      onAddOccurrence=(action "calendarAddOccurrence")}}
   `);
 
   assert.equal(Ember.$('.as-calendar-occurrence').position().top, 0,
