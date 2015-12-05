@@ -40,7 +40,7 @@ $bem-modifier-separator: '--';
     @at-root {
       #{$selector} {
         @each $element in $elements {
-          #{$block+$bem-element-separator+$element} {
+          .#{$block+$bem-element-separator+$element} {
             @content;
           }
         }

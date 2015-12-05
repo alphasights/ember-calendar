@@ -5,9 +5,13 @@ $as-calendar: (
     selector: 'as-calendar-header',
     height: rem(80)
   ),
-  
+
   timetable: (
     selector: 'as-calendar-timetable'
+  ),
+
+  occurrence: (
+    selector: 'as-calendar-occurrence'
   )
 );
 

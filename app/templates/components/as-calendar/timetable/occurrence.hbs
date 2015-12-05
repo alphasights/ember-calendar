@@ -1,17 +1,17 @@
-<div>
+<div class="as-calendar-occurrence__container">
   {{#if hasBlock}}
     {{yield}}
   {{else}}
-    <h1 style={{titleStyle}}>{{title}}</h1>
+    <h1 class="as-calendar-occurrence__title" style={{titleStyle}}>{{title}}</h1>
   {{/if}}
 
   {{#unless isInteracting}}
     {{#if isRemovable}}
-      <a {{action "remove" bubbles=false}} class="remove"></a>
+      <a {{action "remove" bubbles=false}} class="as-calendar-occurrence__remove"></a>
     {{/if}}
 
     {{#if isResizable}}
-      <div class="resize-handle"></div>
+      <div class="as-calendar-occurrence__resize-handle"></div>
     {{/if}}
   {{/unless}}
 </div>
