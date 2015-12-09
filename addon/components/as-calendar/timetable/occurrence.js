@@ -80,13 +80,11 @@ export default OccurrenceComponent.extend({
       endsAt: moment(this.get('_startingTime')).add(newDuration).toDate()
     };
 
-    if (this._validateChanges(changes)) {
-      this.sendAction('onUpdate', this.get('_preview.content'), changes);
-    }
+    this._validateAndSavePreview(changes);
   },
 
   _resizeEnd: function() {
-    this.sendAction('onUpdate', this.get('content'), {
+    this.attrs.onUpdate(this.get('content'), {
       endsAt: this.get('_preview.content.endsAt')
     });
 
@@ -120,9 +118,7 @@ export default OccurrenceComponent.extend({
       endsAt: moment(startsAt).add(this.get('_duration')).toDate()
     };
 
-    if (this._validateChanges(changes)) {
-      this.sendAction('onUpdate', this.get('_preview.content'), changes);
-    }
+    this._validateAndSavePreview(changes);
   },
 
   _dragTimeSlotOffset: function() {
@@ -154,7 +150,7 @@ export default OccurrenceComponent.extend({
   },
 
   _dragEnd: function() {
-    this.sendAction('onUpdate', this.get('content'), {
+    this.attrs.onUpdate(this.get('content'), {
       startsAt: this.get('_preview.content.startsAt'),
       endsAt: this.get('_preview.content.endsAt')
     });
@@ -170,7 +166,13 @@ export default OccurrenceComponent.extend({
     Ember.$(document.documentElement).css('cursor', '');
   },
 
-  _validateChanges: function(changes) {
+  _validateAndSavePreview: function(changes) {
+    if (this._validatePreviewChanges(changes)) {
+      this.attrs.onUpdate(this.get('_preview.content'), changes);
+    }
+  },
+
+  _validatePreviewChanges: function(changes) {
     var newPreview = this.get('_preview').copy();
 
     newPreview.get('content').setProperties(changes);
@@ -186,7 +188,7 @@ export default OccurrenceComponent.extend({
 
   actions: {
     remove: function() {
-      this.sendAction('onRemove', this.get('model.content'));
+      this.attrs.onRemove(this.get('content'));
     }
   }
 });

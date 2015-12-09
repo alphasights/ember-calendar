@@ -5,7 +5,7 @@
       options=timeZoneOptions
       defaultQuery=defaultTimeZoneQuery
       showSearch=showTimeZoneSearch
-      onChangeValue="changeTimeZone"}}
+      onChangeTimeZone=(action this.attrs.onChangeTimeZone)}}
   </div>
 
   <div class="day-labels">
@@ -33,7 +33,7 @@
       timeSlotHeight=timeSlotHeight
       model=model
       timetable=this
-      onSelectTime="selectTime" as |day|}}
+      onSelectTime=(action this.attrs.onSelectTime) as |day|}}
       {{yield day this}}
     {{/as-calendar/timetable/content}}
   </div>

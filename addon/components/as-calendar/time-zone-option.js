@@ -13,7 +13,7 @@ export default Ember.Component.extend({
       return this.get('selectedOption.value') === this.get('option.value');
   }),
 
-  selectOption: Ember.on('click', function() {
-    this.sendAction('onSelect', this.get('option'));
+  _selectOption: Ember.on('click', function() {
+    this.attrs.onSelect(this.get('option.value'));
   })
 });

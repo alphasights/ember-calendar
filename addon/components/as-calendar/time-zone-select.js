@@ -64,10 +64,6 @@ export default Ember.Component.extend({
   },
 
   actions: {
-    selectOption: function(option) {
-      this.sendAction('onChangeValue', option.get('value'));
-    },
-
     inputQueryChanged: function(value) {
       Ember.run.debounce(this, this._setQuery, value, 200);
     }

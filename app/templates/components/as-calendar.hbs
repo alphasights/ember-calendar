@@ -9,8 +9,8 @@
   showTimeZoneSearch=showTimeZoneSearch
   timeSlotHeight=timeSlotHeight
   defaultTimeZoneQuery=defaultTimeZoneQuery
-  onSelectTime="addOccurrence"
-  onChangeTimeZone="changeTimeZone" as |day timetable|}}
+  onSelectTime=(action "addOccurrence")
+  onChangeTimeZone=(action "changeTimeZone") as |day timetable|}}
   <ul class="occurrences">
     {{#each day.occurrences as |occurrence|}}
       <li>
@@ -22,8 +22,8 @@
             timeSlotHeight=timeSlotHeight
             timetable=timetable
             timeSlotDuration=timeSlotDuration
-            onUpdate="updateOccurrence"
-            onRemove="removeOccurrence"}}
+            onUpdate=(action this.attrs.onUpdateOccurrence)
+            onRemove=(action this.attrs.onRemoveOccurrence)}}
         {{/if}}
       </li>
     {{/each}}

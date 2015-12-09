@@ -26,7 +26,7 @@
                 select=this
                 selectedOption=selectedOption
                 tagName="a"
-                onSelect="selectOption"}}
+                onSelect=(action this.attrs.onChangeTimeZone)}}
             </li>
           {{/each}}
         </ul>

@@ -37,15 +37,7 @@ export default Ember.Component.extend(InboundActionsMixin, {
         startsAt: time.toDate()
       });
 
-      this.sendAction('onAddOccurrence', occurrence.get('content'));
-    },
-
-    updateOccurrence: function() {
-      this.sendAction('onUpdateOccurrence', ...arguments);
-    },
-
-    removeOccurrence: function() {
-      this.sendAction('onRemoveOccurrence', ...arguments);
+      this.attrs['onAddOccurrence'](occurrence.get('content'));
     }
   }
 });
