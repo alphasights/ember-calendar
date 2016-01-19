@@ -76,7 +76,7 @@ test('Remove an occurrence', function(assert) {
   );
 
   Ember.run(() => {
-    Ember.$('.as-calendar-occurrence .remove').click();
+    Ember.$('.as-calendar-occurrence .as-calendar-occurrence__remove').click();
   });
 
   assert.equal(Ember.$('.as-calendar-occurrence').length, 0,
