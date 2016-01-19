@@ -38,12 +38,6 @@ $global-transition-duration: .325s;
   }
 }
 
-@mixin button-icon($icon) {
-}
-
-%button-group {
-};
-
 @mixin icon($name, $selector: '') {
   @extend .fa-#{$name};
 
@@ -54,6 +48,10 @@ $global-transition-duration: .325s;
       @include fa-icon;
     }
   }
+}
+
+@mixin button-icon($icon) {
+  @include icon($icon);
 }
 
 $colors: (
@@ -293,3 +291,6 @@ $form-input: (
   float: left;
   width: 90%;
 }
+
+%button-group {
+};
