@@ -5,6 +5,7 @@
 
 $base-font-family: "Helvetica Neue", Helvetica, sans-serif;
 $base-font-size: 14px;
+$small-font-size: 85%;
 $base-line-height: 1.5;
 $heading-line-height: 1.5;
 $font-weight-normal: 300;
@@ -229,14 +230,12 @@ $form-input: (
 
 @mixin form-input() {
   background-color: color(white);
-  border-color: form-input-settings(border-color) darken(form-input-settings(border-color), 5%);
+  border-color: form-input-settings(border-color);
   border-radius: $global-radius;
-  border: 1px solid;
+  border: 1px solid form-input-settings(border-color);
   box-shadow: 0 1px 1px form-input-settings(shadow-color);
   color: form-input-settings(text-color);
   font-size: $base-font-size;
-  height: form-input-settings(height);
-  line-height: form-input-settings(height);
   margin-bottom: 0;
   padding: 0 $base-font-size / 2;
   text-shadow: 0 1px color(white);
@@ -248,6 +247,7 @@ $form-input: (
 
   &:focus,
   > *:focus, {
+    color: color(text);
     background-color: color(white);
     outline: none;
   }
