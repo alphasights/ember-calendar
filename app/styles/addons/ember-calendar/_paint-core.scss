@@ -1,15 +1,15 @@
-$base-font-family: "Helvetica Neue", Helvetica, sans-serif;
-$base-font-size: 14px;
-$small-font-size: 85%;
-$base-line-height: 1.5;
-$heading-line-height: 1.5;
-$font-weight-normal: 300;
-$font-weight-bold: 400;
-$font-weight-extrabold: 600;
+$base-font-family: "Helvetica Neue", Helvetica, sans-serif !default;
+$base-font-size: 14px !default;
+$small-font-size: 85% !default;
+$base-line-height: 1.5 !default;
+$heading-line-height: 1.5 !default;
+$font-weight-normal: 300 !default;
+$font-weight-bold: 400 !default;
+$font-weight-extrabold: 600 !default;
 
-$column-gutter: 1.5rem;
-$global-radius: 4px;
-$global-transition-duration: .325s;
+$column-gutter: 1.5rem !default;
+$global-radius: 4px !default;
+$global-transition-duration: .325s !default;
 
 @function strip-units($value) {
   @return ($value / ($value * 0 + 1));

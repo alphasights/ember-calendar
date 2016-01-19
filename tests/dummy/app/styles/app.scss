@@ -3,16 +3,8 @@
 @import 'bower_components/fontawesome/scss/mixins';
 @import 'bower_components/fontawesome/scss/icons';
 
-@import 'paint-settings';
+@import 'addons/ember-calendar/paint-core';
 @import 'addons/ember-calendar/main';
-
-html {
-  box-sizing: border-box;
-  font-size: $base-font-size;
-}
-*, *:before, *:after {
-  box-sizing: inherit;
-}
 
 body {
   background-color: color(gray, iron);
