@@ -30,7 +30,7 @@ $global-transition-duration: .325s !default;
 @mixin clearfix {
   &::after {
     clear: both;
-    content: "";
+    content: '';
     display: table;
   }
 }
@@ -242,8 +242,8 @@ $form-input: (
 
   &:focus,
   > *:focus, {
-    color: color(text);
     background-color: color(white);
+    color: color(text);
     outline: none;
   }
 
@@ -368,8 +368,8 @@ $button-group: (
 
       &,
       button {
-        border-top-left-radius: $global-radius;
         border-bottom-left-radius: $global-radius;
+        border-top-left-radius: $global-radius;
       }
     }
 
@@ -378,8 +378,8 @@ $button-group: (
 
       &,
       button {
-        border-top-right-radius: $global-radius;
         border-bottom-right-radius: $global-radius;
+        border-top-right-radius: $global-radius;
       }
     }
   }
