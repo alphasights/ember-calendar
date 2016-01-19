@@ -1,6 +1,12 @@
 @import 'paint-settings';
-@import 'bower_components/paint/paint';
 @import 'addons/ember-calendar/main';
+
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
 
 body {
   background-color: color(gray, iron);
