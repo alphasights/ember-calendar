@@ -18,7 +18,9 @@
     @extend %button-group;
   }
 
-  @include bem-element('nav-group-item') {
+  @include bem-element('nav-group-action') {
+    @extend %button;
+
     @include bem-modifier('previous-week') {
       @include icon('caret-left');
     }
