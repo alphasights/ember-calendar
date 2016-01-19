@@ -1,11 +1,5 @@
 @include bem-block(as-calendar(occurrence, selector)) {
   @include bem-modifier('timetable') {
-    &:hover {
-      @include bem-element('remove') {
-        opacity: 1;
-      }
-    }
-
     @include bem-element('resize-handle') {
       bottom: 0;
       cursor: ns-resize;
@@ -29,6 +23,12 @@
       &:hover {
         background-color: transparent;
         color: color(alert, dark);
+      }
+    }
+
+    &:hover {
+      @include bem-element('remove') {
+        opacity: 1;
       }
     }
   }

@@ -39,12 +39,12 @@
     position: relative;
     width: (100% / 7);
 
-    &:not(:last-child) {
-      border-right: 1px solid color(border);
-    }
-
     @include bem-modifier('highlighted') {
       color: color(link);
+    }
+
+    &:not(:last-child) {
+      border-right: 1px solid color(border);
     }
   }
 
@@ -85,12 +85,12 @@
     height: 100%;
     position: relative;
 
-    &:last-child {
-      border-right: 0;
-    }
-
     @include bem-modifier('today') {
       background-color: rgba(242, 248, 254, .4);
+    }
+
+    &:last-child {
+      border-right: 0;
     }
   }
 }
