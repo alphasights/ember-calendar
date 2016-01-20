@@ -14,6 +14,26 @@ module.exports = {
     app.import(path.join(app.bowerDirectory, 'moment/moment.js'));
     app.import(path.join(app.bowerDirectory, 'moment-timezone/builds/moment-timezone-with-data.js'));
 
+    app.import(path.join(app.bowerDirectory, 'fontawesome/fonts/fontawesome-webfont.ttf'), {
+      destDir: 'fonts'
+    });
+
+    app.import(path.join(app.bowerDirectory, 'fontawesome/fonts/fontawesome-webfont.woff'), {
+      destDir: 'fonts'
+    });
+
+    app.import(path.join(app.bowerDirectory, 'fontawesome/fonts/fontawesome-webfont.woff2'), {
+      destDir: 'fonts'
+    });
+
+    app.import(path.join(app.bowerDirectory, 'fontawesome/fonts/fontawesome-webfont.svg'), {
+      destDir: 'fonts'
+    });
+
+    app.import(path.join(app.bowerDirectory, 'fontawesome/fonts/fontawesome-webfont.eot'), {
+      destDir: 'fonts'
+    });
+
     app.import('vendor/ember-calendar/lodash.js', {
       type: 'vendor',
       exports: { 'lodash': ['default'] }
