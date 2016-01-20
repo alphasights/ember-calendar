@@ -112,6 +112,11 @@ test('Resize an occurrence', function(assert) {
 });
 
 test('Drag an occurrence', function(assert) {
+  const pixelAccuracy = 5;
+  let assertAlmostEqual = function(first, second, message) {
+    assert.ok(Math.abs(first - second) < pixelAccuracy, message);
+  };
+
   this.render(hbs`
     {{as-calendar
       title="Ember Calendar"
@@ -134,21 +139,21 @@ test('Drag an occurrence', function(assert) {
 
   var $occurrence = this.$('.as-calendar-occurrence');
 
-  var dayOffset = Math.floor($occurrence.offset().left -
-    this.$('.as-calendar-timetable-content').offset().left);
+  var dayOffset = $occurrence.offset().left -
+    this.$('.as-calendar-timetable-content').offset().left;
 
-  var timeSlotOffset = Math.floor($occurrence.offset().top -
-    this.$('.as-calendar-timetable-content').offset().top);
+  var timeSlotOffset = $occurrence.offset().top -
+    this.$('.as-calendar-timetable-content').offset().top;
 
-  assert.equal(dayOffset, Math.floor(dayWidth() * 2),
+  assertAlmostEqual(dayOffset, dayWidth() * 2,
     'it drags the occurrence to the correct day'
   );
 
-  assert.equal(timeSlotOffset, timeSlotHeight() * 4,
+  assertAlmostEqual(timeSlotOffset, timeSlotHeight() * 4,
     'it drags the occurrence to the correct timeslot'
   );
 
-  assert.equal($occurrence.height(), timeSlotHeight() * 2,
+  assertAlmostEqual($occurrence.height(), timeSlotHeight() * 2,
     'it keeps the duration of the occurrence'
   );
 });
