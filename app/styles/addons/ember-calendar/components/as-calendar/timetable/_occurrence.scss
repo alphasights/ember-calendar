@@ -23,13 +23,13 @@
 
       &:hover {
         background-color: transparent;
-        color: color(alert, dark);
+        opacity: 1 !important;
       }
     }
 
     &:hover {
       @include bem-element('remove') {
-        opacity: 1;
+        opacity: .65;
       }
     }
   }
