@@ -40,7 +40,7 @@ $bem-modifier-separator: '--';
     @at-root {
       #{$selector} {
         @each $element in $elements {
-          .#{$block+$bem-element-separator+$element} {
+          .#{$block + $bem-element-separator + $element} {
             @content;
           }
         }
@@ -49,7 +49,7 @@ $bem-modifier-separator: '--';
   } @else {
     @at-root {
       @each $element in $elements {
-        #{$selector+$bem-element-separator+$element} {
+        #{$selector + $bem-element-separator + $element} {
           @content;
         }
       }
@@ -59,7 +59,7 @@ $bem-modifier-separator: '--';
 
 @mixin bem-modifier($modifier) {
   @at-root {
-    #{&}#{$bem-modifier-separator+$modifier} {
+    #{&}#{$bem-modifier-separator + $modifier} {
       @content;
     }
   }
