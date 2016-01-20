@@ -16,7 +16,7 @@
     "lodash": "3.10.0",
     "moment": "2.10.6",
     "moment-timezone": "0.4.0",
-    "paint": "0.9.5",
+    "fontawesome": "~4.5.0",
     "qunit": "1.20.0",
     "spinjs": "2.0.2",
     "modernizr": "2.8.3",

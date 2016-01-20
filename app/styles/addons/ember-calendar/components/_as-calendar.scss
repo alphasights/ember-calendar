@@ -1,8 +1,4 @@
-.as-calendar {
+@include bem-block(as-calendar(selector)) {
   background: color(white);
   border: 1px solid color(border, dark);
-
-  .as-calendar-occurrence.preview {
-    opacity: .7;
-  }
 }
