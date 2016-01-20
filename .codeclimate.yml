@@ -3,6 +3,9 @@ engines:
     enabled: true
   scss-lint:
     enabled: true
+    checks:
+      TrailingSemicolon:
+        enabled: false
   watson:
     enabled: true
 ratings:
