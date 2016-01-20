@@ -1,10 +1,15 @@
-@import 'paint-settings';
-@import 'bower_components/paint/paint';
+@import 'bower_components/fontawesome/scss/variables';
+@import 'bower_components/fontawesome/scss/path';
+@import 'bower_components/fontawesome/scss/mixins';
+@import 'bower_components/fontawesome/scss/icons';
+
+@import 'addons/ember-calendar/paint-core';
 @import 'addons/ember-calendar/main';
 
 body {
   background-color: color(gray, iron);
   cursor: inherit;
+  font-family: $base-font-family;
   padding: $column-gutter;
 
   .as-calendar {

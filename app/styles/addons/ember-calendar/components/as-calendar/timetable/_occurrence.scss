@@ -1,33 +1,36 @@
-.as-calendar-timetable-occurrence {
-  .resize-handle {
-    bottom: 0;
-    cursor: ns-resize;
-    height: rem(8);
-    left: 0;
-    position: absolute;
-    right: 0;
-  }
-
-  &:hover {
-    .remove {
-      opacity: 1;
+@include bem-block(as-calendar(occurrence, selector)) {
+  @include bem-modifier('timetable') {
+    @include bem-element('resize-handle') {
+      bottom: 0;
+      cursor: ns-resize;
+      height: rem(8);
+      left: 0;
+      position: absolute;
+      right: 0;
     }
-  }
 
-  .remove {
-    @include icon(times);
+    @include bem-element('remove') {
+      @include icon(times);
 
-    color: color(white);
-    opacity: 0;
-    position: absolute;
-    right: 0;
-    top: $column-gutter / 8;
-    transition: color $global-transition-duration / 2 linear,
-      opacity $global-transition-duration / 2 linear;
+      color: color(white);
+      cursor: pointer;
+      opacity: 0;
+      position: absolute;
+      right: 0;
+      top: $column-gutter / 8;
+      transition: color $global-transition-duration / 2 linear,
+        opacity $global-transition-duration / 2 linear;
+
+      &:hover {
+        background-color: transparent;
+        opacity: 1 !important;
+      }
+    }
 
     &:hover {
-      background-color: transparent;
-      color: color(alert, dark);
+      @include bem-element('remove') {
+        opacity: .65;
+      }
     }
   }
 }

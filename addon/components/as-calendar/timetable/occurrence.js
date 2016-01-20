@@ -4,7 +4,7 @@ import interact from 'interact';
 import OccurrenceComponent from '../occurrence';
 
 export default OccurrenceComponent.extend({
-  classNameBindings: [':as-calendar-timetable-occurrence'],
+  classNameBindings: [':as-calendar-occurrence--timetable'],
 
   timetable: null,
   isInteracting: false,
@@ -28,7 +28,7 @@ export default OccurrenceComponent.extend({
 
     if (this.get('isResizable')) {
       interactable.resizable({
-        edges: { bottom: '.resize-handle' },
+        edges: { bottom: '.as-calendar-occurrence__resize-handle' },
 
         onstart: (event) => {
           Ember.run(this, this._resizeStart, event);

@@ -2,13 +2,13 @@ import Ember from 'ember';
 
 var timeSlotHeight = function() {
   return Ember.$('.as-calendar-timetable-content')
-    .find('.time-slots > li:first')
+    .find('.as-calendar-timetable__slot-item:first')
     .height();
 };
 
 var dayWidth = function() {
   var $content = Ember.$('.as-calendar-timetable-content');
-  return $content.width() / $content.find('.days > li').length;
+  return $content.width() / $content.find('.as-calendar-timetable__day').length;
 };
 
 var pointForTime = function(options) {
@@ -41,7 +41,7 @@ var selectTime = function(options) {
 
 var resizeOccurrence = function(occurrence, options) {
   Ember.run(() => {
-    occurrence.find('.resize-handle').simulate('drag', {
+    occurrence.find('.as-calendar-occurrence__resize-handle').simulate('drag', {
       dx: 0,
       dy: options.timeSlots * timeSlotHeight() + occurrence.height()
     });
