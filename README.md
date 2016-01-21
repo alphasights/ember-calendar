@@ -163,6 +163,28 @@ We do not add any vendor CSS to your app by default, but you can include it if y
 @import 'addons/ember-calendar/main';
 ```
 
+## Build Options
+
+Font Aweseome assets are exported during a build by default which may conflict
+with assets already being exported by your project. To prevent this, add
+the following option to your ember-cli-build.js file:
+
+```js
+// ember-cli-build.js
+
+module.exports = function(defaults) {
+  var app = new EmberApp(defaults, {
+    
+    // Add options here
+    emberCalendar: {
+      includeFontAwesomeAssets: false
+    }
+  });
+
+  return app.toTree();
+};
+```
+
 ## Developing
 
 ### Setup

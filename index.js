@@ -8,31 +8,44 @@ module.exports = {
 
   included: function(app) {
     this._super.included(app);
+    
+    var options = app.options.emberCalendar || {};
+
+    if (!('includeFontAwesomeAssets' in options)) {
+      options.includeFontAwesomeAssets = true;
+    }
 
     app.import(path.join(app.bowerDirectory, 'lodash/lodash.js'));
     app.import(path.join(app.bowerDirectory, 'interact/interact.js'));
     app.import(path.join(app.bowerDirectory, 'moment/moment.js'));
     app.import(path.join(app.bowerDirectory, 'moment-timezone/builds/moment-timezone-with-data.js'));
 
-    app.import(path.join(app.bowerDirectory, 'fontawesome/fonts/fontawesome-webfont.ttf'), {
-      destDir: 'fonts'
-    });
 
-    app.import(path.join(app.bowerDirectory, 'fontawesome/fonts/fontawesome-webfont.woff'), {
-      destDir: 'fonts'
-    });
+    if (options.includeFontAwesomeAssets) {
 
-    app.import(path.join(app.bowerDirectory, 'fontawesome/fonts/fontawesome-webfont.woff2'), {
-      destDir: 'fonts'
-    });
+      app.import(path.join(app.bowerDirectory, 'fontawesome/fonts/fontawesome-webfont.ttf'), {
+        destDir: 'fonts'
+      });
 
-    app.import(path.join(app.bowerDirectory, 'fontawesome/fonts/fontawesome-webfont.svg'), {
-      destDir: 'fonts'
-    });
+      app.import(path.join(app.bowerDirectory, 'fontawesome/fonts/fontawesome-webfont.woff'), {
+        destDir: 'fonts'
+      });
 
-    app.import(path.join(app.bowerDirectory, 'fontawesome/fonts/fontawesome-webfont.eot'), {
-      destDir: 'fonts'
-    });
+      app.import(path.join(app.bowerDirectory, 'fontawesome/fonts/fontawesome-webfont.woff2'), {
+        destDir: 'fonts'
+      });
+
+      app.import(path.join(app.bowerDirectory, 'fontawesome/fonts/fontawesome-webfont.svg'), {
+        destDir: 'fonts'
+      });
+
+      app.import(path.join(app.bowerDirectory, 'fontawesome/fonts/fontawesome-webfont.eot'), {
+        destDir: 'fonts'
+      });
+    }
+
+
+
 
     app.import('vendor/ember-calendar/lodash.js', {
       type: 'vendor',
