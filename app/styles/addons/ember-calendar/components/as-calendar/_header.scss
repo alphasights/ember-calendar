@@ -13,10 +13,12 @@
   @include bem-element('title') {
     font-size: rem(30);
     font-weight: $font-weight-normal;
+    margin: 0;
     padding-left: $column-gutter;
   }
 
   @include bem-element('nav') {
+    float: right;
     text-align: right;
   }
 

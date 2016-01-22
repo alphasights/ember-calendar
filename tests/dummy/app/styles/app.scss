@@ -6,6 +6,10 @@
 @import 'addons/ember-calendar/paint-core';
 @import 'addons/ember-calendar/main';
 
+html {
+  font-size: $base-font-size;
+}
+
 body {
   background-color: color(gray, iron);
   cursor: inherit;
