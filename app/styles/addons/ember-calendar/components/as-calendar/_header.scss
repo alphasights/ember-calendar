@@ -19,6 +19,7 @@
 
   @include bem-element('nav') {
     text-align: right;
+    float: right;
   }
 
   @include bem-element('nav-group') {
