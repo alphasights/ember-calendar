@@ -167,6 +167,28 @@ There are some basic resets applied by default on `.as-calendar`, like `box-sizi
 
 If you already have those resets in your app add an `$as-calendar-global-resets: false;` before loading the `main` stylesheet.
 
+## Build Options
+
+Font Aweseome assets are exported during a build by default which may conflict
+with assets already being exported by your project. To prevent this, add
+the following option to your ember-cli-build.js file:
+
+```js
+// ember-cli-build.js
+
+module.exports = function(defaults) {
+  var app = new EmberApp(defaults, {
+
+    // Add options here
+    emberCalendar: {
+      includeFontAwesomeAssets: false
+    }
+  });
+
+  return app.toTree();
+};
+```
+
 ## Developing
 
 ### Setup
