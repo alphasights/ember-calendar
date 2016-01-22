@@ -14,6 +14,7 @@
     font-size: rem(30);
     font-weight: $font-weight-normal;
     padding-left: $column-gutter;
+    margin: 0;
   }
 
   @include bem-element('nav') {
