@@ -165,7 +165,7 @@ We do not add any vendor CSS to your app by default, but you can include it if y
 
 There are some basic resets applied by default on `.as-calendar`, like `box-sizing: border-box` and `list-style: none` for all inner `ul > li`s.
 
-If you already have those resets in your app and don't want to bloat the CSS, add an `$as-calendar-global-resets: false;` before loading the `main` stylesheet.
+If you already have those resets in your app add an `$as-calendar-global-resets: false;` before loading the `main` stylesheet.
 
 ## Developing
 
