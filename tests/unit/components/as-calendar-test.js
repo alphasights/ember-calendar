@@ -54,6 +54,14 @@ test('Add an occurrence', function(assert) {
   assert.equal(Ember.$('.as-calendar-occurrence').length, 1,
     'it adds the occurrence to the calendar'
   );
+
+  assert.ok(this.get('occurrences.firstObject').startsAt instanceof Date,
+    'startsAt is a Date'
+  );
+
+  assert.ok(this.get('occurrences.firstObject').endsAt instanceof Date,
+    'endsAt is a Date'
+  );
 });
 
 test('Remove an occurrence', function(assert) {
