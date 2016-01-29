@@ -9,7 +9,9 @@ import {
   selectTime,
   resizeOccurrence,
   dragOccurrence,
-  selectTimeZone
+  selectTimeZone,
+  selectNextWeek,
+  selectPreviousWeek
 } from 'ember-calendar/test-helpers/all';
 
 moduleForComponent('as-calendar', 'AsCalendarComponent', {
@@ -196,4 +198,29 @@ test('Change time zone', function(assert) {
 
   assert.equal(Ember.$('.as-calendar-occurrence').position().top, timeSlotHeight() * 2,
     'it shows the occurrence in the Rome time zone');
+});
+
+test('Change week', function(assert) {
+
+  var weekIndex = 0;
+
+  this.on('navigateWeek', (index) => {
+    weekIndex += index;
+  });
+
+  this.render(hbs`
+    {{as-calendar
+      title="Ember Calendar"
+      occurrences=occurrences
+      onRemoveOccurrence=(action "calendarRemoveOccurrence")
+      onNavigateWeek=(action "navigateWeek")}}
+  `);
+
+  selectNextWeek();
+
+  assert.equal(weekIndex, 1, 'it navigates to the next week');
+
+  selectPreviousWeek();
+
+  assert.equal(weekIndex, 0, 'it navigates back to the current week');
 });
