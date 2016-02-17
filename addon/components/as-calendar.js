@@ -38,6 +38,12 @@ export default Ember.Component.extend(InboundActionsMixin, {
       });
 
       this.attrs['onAddOccurrence'](occurrence.get('content'));
+    },
+
+    onNavigateWeek: function(index) {
+      if (this.attrs['onNavigateWeek']) {
+        this.attrs['onNavigateWeek'](index);
+      }
     }
   }
 });

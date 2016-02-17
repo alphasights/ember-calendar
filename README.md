@@ -105,6 +105,7 @@ example, you can customize the appearance of the occurrences by passing a block:
   timeZoneOptions=timeZoneOptions
   showTimeZoneSearch=false
   timeZone=timeZone
+  onNavigateWeek=(action "calendarNavigateWeek")
   onAddOccurrence=(action "calendarAddOccurrence") as |occurrence timetable calendar|}}
   {{#if occurrence.content.isEditable}}
     {{as-calendar/timetable/occurrence
