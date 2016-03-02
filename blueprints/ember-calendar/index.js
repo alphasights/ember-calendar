@@ -6,7 +6,7 @@ module.exports = {
 
   afterInstall: function() {
     return this.addAddonsToProject({
-      packages: [{ name: 'ember-moment', target: '4.1.0' }]
+      packages: [{ name: 'ember-moment', target: '6.0.0' }]
     }).then(() => {
       return this.addPackagesToProject([
         { name: 'broccoli-sass', target: '0.7.0' },
