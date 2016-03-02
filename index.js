@@ -8,7 +8,7 @@ module.exports = {
 
   included: function(app) {
     this._super.included(app);
-    
+
     var options = app.options.emberCalendar || {};
 
     if (!('includeFontAwesomeAssets' in options)) {
@@ -17,12 +17,8 @@ module.exports = {
 
     app.import(path.join(app.bowerDirectory, 'lodash/lodash.js'));
     app.import(path.join(app.bowerDirectory, 'interact/interact.js'));
-    app.import(path.join(app.bowerDirectory, 'moment/moment.js'));
-    app.import(path.join(app.bowerDirectory, 'moment-timezone/builds/moment-timezone-with-data.js'));
-
 
     if (options.includeFontAwesomeAssets) {
-
       app.import(path.join(app.bowerDirectory, 'fontawesome/fonts/fontawesome-webfont.ttf'), {
         destDir: 'fonts'
       });
@@ -43,9 +39,6 @@ module.exports = {
         destDir: 'fonts'
       });
     }
-
-
-
 
     app.import('vendor/ember-calendar/lodash.js', {
       type: 'vendor',

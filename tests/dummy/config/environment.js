@@ -21,6 +21,11 @@ module.exports = function(environment) {
     contentSecurityPolicy: {
       'style-src': "'self' 'unsafe-inline' https://use.fonticons.com",
       'font-src': "'self' data:"
+    },
+
+    moment: {
+      allowEmpty: true,
+      includeTimezone: 'all'
     }
   };
 
