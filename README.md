@@ -47,24 +47,6 @@ the original object in the template, it is available as `occurrence.content`.
 
 ## Basic Usage
 
-```js
-// config/environment.js
-module.exports = function(environment) {
-  var ENV = {
-    modulePrefix: 'calendar-test',
-    environment: environment,
-    baseURL: '/',
-    locationType: 'auto',
-
-    moment: {
-      includeTimezone: 'all'
-    }
-  };
-
-  return ENV;
-};
-```
-
 ```htmlbars
 {{! app/templates/index.hbs }}
 {{as-calendar
