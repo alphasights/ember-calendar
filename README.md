@@ -47,9 +47,26 @@ the original object in the template, it is available as `occurrence.content`.
 
 ## Basic Usage
 
+```js
+// config/environment.js
+module.exports = function(environment) {
+  var ENV = {
+    modulePrefix: 'calendar-test',
+    environment: environment,
+    baseURL: '/',
+    locationType: 'auto',
+
+    moment: {
+      includeTimezone: 'all'
+    }
+  };
+
+  return ENV;
+};
+```
+
 ```htmlbars
 {{! app/templates/index.hbs }}
-
 {{as-calendar
   title="Ember Calendar"
   occurrences=occurrences
@@ -64,7 +81,6 @@ the original object in the template, it is available as `occurrence.content`.
 
 ```javascript
 // app/controllers/index.js
-
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
