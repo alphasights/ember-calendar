@@ -49,7 +49,6 @@ the original object in the template, it is available as `occurrence.content`.
 
 ```htmlbars
 {{! app/templates/index.hbs }}
-
 {{as-calendar
   title="Ember Calendar"
   occurrences=occurrences
@@ -64,7 +63,6 @@ the original object in the template, it is available as `occurrence.content`.
 
 ```javascript
 // app/controllers/index.js
-
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
