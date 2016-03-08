@@ -24,7 +24,7 @@ export default Ember.Component.extend({
     'showSearch',
     '_query', function() {
     if (this.get('showSearch')) {
-      var regexp = new RegExp(this.get('_query'), 'i');
+      let regexp = new RegExp(this.get('_query'), 'i');
 
       return this.get('_options').filter((option) => {
         return option.get('description').match(regexp) ||
@@ -36,11 +36,15 @@ export default Ember.Component.extend({
   }),
 
   selectedOption: Ember.computed('value', function() {
-    return TimeZoneOption.create({ value: this.get('value') });
+    let value = this.get('value');
+
+    if (value) {
+      return TimeZoneOption.create({ value: value });
+    }
   }),
 
   _query: Ember.computed('query', 'defaultQuery', function() {
-    var query = this.get('query');
+    let query = this.get('query');
 
     if (Ember.isEmpty(query)) {
        return this.get('defaultQuery');
