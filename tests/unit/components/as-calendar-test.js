@@ -1,7 +1,6 @@
 import hbs from 'htmlbars-inline-precompile';
 import { test, moduleForComponent } from 'ember-qunit';
 import Ember from 'ember';
-import moment from 'moment';
 
 import {
   timeSlotHeight,
