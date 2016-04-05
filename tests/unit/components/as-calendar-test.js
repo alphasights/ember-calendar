@@ -169,19 +169,11 @@ test('Drag an occurrence', function(assert) {
 });
 
 test('Change time zone', function(assert) {
-  this.get('occurrences').pushObject(
-    Ember.Object.create({
-      startsAt: moment().utc().startOf('day').add(9, 'hours'),
-      endsAt: moment().utc().startOf('day').add(10, 'hours'),
-      title: 'Example Occurrence'
-    })
-  );
-
   this.render(hbs`
     {{as-calendar
       title="Ember Calendar"
       occurrences=occurrences
-      timeZone="UTC"
+      timeZone="Europe/London"
       dayStartingTime="9:00"
       dayEndingTime="18:00"
       timeSlotDuration="00:30"
@@ -190,6 +182,8 @@ test('Change time zone', function(assert) {
       onUpdateOccurrence=(action "calendarUpdateOccurrence")
       onRemoveOccurrence=(action "calendarRemoveOccurrence")}}
   `);
+
+  selectTime({ day: 0, timeSlot: 0 });
 
   assert.equal(Ember.$('.as-calendar-occurrence').position().top, 0,
     'it shows the occurrence in the UTC time zone');
