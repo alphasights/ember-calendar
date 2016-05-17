@@ -47,11 +47,6 @@
     top: 100%;
     z-index: dropdown-settings(z-index);
 
-    .search,
-    .results {
-      @extend %dropdown-item;
-    }
-
     .search {
       cursor: auto;
       padding: dropdown-settings(search, padding-inner) dropdown-settings(search, padding-inner) * 2;
@@ -101,8 +96,6 @@
         padding: 0;
 
         > li {
-          @extend %dropdown-item;
-
           cursor: pointer;
           padding: dropdown-settings(search, padding-inner) $column-gutter / 2;
 
