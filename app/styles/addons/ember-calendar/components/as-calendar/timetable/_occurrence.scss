@@ -26,11 +26,11 @@
         opacity: 1 !important;
       }
     }
+  }
 
-    &:hover {
-      @include bem-element('remove') {
-        opacity: .65;
-      }
+  &:hover {
+    @include bem-element('remove') {
+      opacity: .65;
     }
   }
 }
