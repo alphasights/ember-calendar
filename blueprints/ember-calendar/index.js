@@ -5,17 +5,18 @@ module.exports = {
   normalizeEntityName: function() {},
 
   afterInstall: function() {
+    var _this = this;
     return this.addAddonsToProject({
       packages: [{ name: 'ember-moment', target: '6.0.0' }]
-    }).then(() => {
-      return this.addPackagesToProject([
+    }).then(function() {
+      return _this.addPackagesToProject([
         { name: 'broccoli-sass', target: '0.7.0' },
         { name: 'ember-component-inbound-actions', target: '0.0.4' },
         { name: 'ember-rl-dropdown', target: '0.7.0' },
         { name: 'liquid-fire', target: '0.21.3' }
       ]);
-    }).then(() => {
-      return this.addBowerPackagesToProject([
+    }).then(function() {
+      return _this.addBowerPackagesToProject([
         { name: 'interact', target: '1.2.5' },
         { name: 'jquery-simulate', target: '1.0.1' },
         { name: 'lodash', target: '3.10.0' },

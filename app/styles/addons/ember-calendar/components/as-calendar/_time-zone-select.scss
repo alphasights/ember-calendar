@@ -49,7 +49,7 @@
 
     .search,
     .results {
-      @extend %dropdown-item;
+      @extend %dropdown-item !optional;
     }
 
     .search {
@@ -101,7 +101,7 @@
         padding: 0;
 
         > li {
-          @extend %dropdown-item;
+          @extend %dropdown-item !optional;
 
           cursor: pointer;
           padding: dropdown-settings(search, padding-inner) $column-gutter / 2;
