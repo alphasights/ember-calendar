@@ -11,7 +11,7 @@ module.exports = {
       packages: [{ name: 'ember-moment', target: '6.0.0' }]
     }).then(function() {
       return self.addPackagesToProject([
-        { name: 'broccoli-sass', target: '0.7.0' },
+        { name: 'ember-cli-sass', target: '5.3.1' },
         { name: 'ember-component-inbound-actions', target: '0.0.4' },
         { name: 'ember-rl-dropdown', target: '0.7.0' },
         { name: 'liquid-fire', target: '0.21.3' }
