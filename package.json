@@ -1,6 +1,6 @@
 {
   "name": "ember-calendar",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "description": "An awesome Ember calendar",
   "directories": {
     "doc": "doc",
