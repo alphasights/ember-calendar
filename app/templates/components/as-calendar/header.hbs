@@ -1,21 +1,51 @@
-<h1 class="as-calendar-header__title">{{title}}</h1>
+{{!--<h1 class="as-calendar-header__title">{{title}}</h1>--}}
 
 {{yield this}}
 
 <nav class="as-calendar-header__nav">
   <ul class="as-calendar-header__nav-group">
     <li class="as-calendar-header__nav-group-item">
-      <button class="as-calendar-header__nav-group-action as-calendar-header__nav-group-action--previous-week" {{action "navigateWeek" -1}}></button>
+      <button class="as-calendar-header__nav-group-type {{if (eq model.type 'day') 'as-calendar-header__nav-group-type--current'}}" {{action "changeType" "day"}}>Day</button>
     </li>
 
     <li class="as-calendar-header__nav-group-item">
-      <button disabled={{isInCurrentWeek}}
-        class="as-calendar-header__nav-group-action as-calendar-header__nav-group-action--current-week"
-        {{action "goToCurrentWeek"}}>This Week</button>
+      <button
+        class="as-calendar-header__nav-group-type {{if (eq model.type 'week') 'as-calendar-header__nav-group-type--current'}}"
+        {{action "changeType" "week"}}>Week</button>
     </li>
 
     <li class="as-calendar-header__nav-group-item">
-      <button class="as-calendar-header__nav-group-action as-calendar-header__nav-group-action--next-week" {{action "navigateWeek" 1}}></button>
+      <button class="as-calendar-header__nav-group-type {{if (eq model.type 'month') 'as-calendar-header__nav-group-type--current'}}" {{action "changeType" "month"}}>Month</button>
     </li>
   </ul>
+</nav>
+
+<nav class="as-calendar-header__nav">
+  <ul class="as-calendar-header__nav-group">
+    <li class="as-calendar-header__nav-group-item">
+      <button class="as-calendar-header__nav-group-action as-calendar-header__nav-group-action--previous" {{action "navigatePrevious"}}></button>
+    </li>
+
+    <li class="as-calendar-header__nav-group-item">
+      <button disabled={{isInCurrentPeriod}}
+        class="as-calendar-header__nav-group-action as-calendar-header__nav-group-action--current-period"
+        {{action "goToToday"}}>Today</button>
+    </li>
+
+    <li class="as-calendar-header__nav-group-item">
+      <button class="as-calendar-header__nav-group-action as-calendar-header__nav-group-action--next" {{action "navigateNext"}}></button>
+    </li>
+  </ul>
+
+  <p class="as-calendar-header__status">
+    {{#if (eq model.type 'day')}}
+      {{moment-format model.startDate "dddd D MMMM"}}
+    {{/if}}
+    {{#if (eq model.type 'week')}}
+      {{moment-format model.startDate "ddd D MMM"}} - {{moment-format model.endDate "ddd D MMM"}}
+    {{/if}}
+    {{#if (eq model.type 'month')}}
+      {{moment-format model.startDate "MMMM"}}
+    {{/if}}
+  </p>
 </nav>

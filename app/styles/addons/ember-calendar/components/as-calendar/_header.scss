@@ -17,27 +17,49 @@
     padding-left: $column-gutter;
   }
 
+  @include bem-element('status') {
+    font-size: rem(15);
+    font-weight: $font-weight-normal;
+    margin: 0;
+    padding-left: $column-gutter;
+    display: inline-block;
+  }
+
   @include bem-element('nav') {
     float: right;
     text-align: right;
+
+    &:last-child {
+      text-align: left;
+    }
   }
 
   @include bem-element('nav-group') {
     @extend %button-group;
   }
 
+  @include bem-element('nav-group-type') {
+    @extend %button;
+
+    text-transform: uppercase;
+
+    @include bem-modifier('current') {
+      background: color(border);
+    }
+  }
+
   @include bem-element('nav-group-action') {
     @extend %button;
 
-    @include bem-modifier('previous-week') {
+    @include bem-modifier('previous') {
       @include icon('caret-left');
     }
 
-    @include bem-modifier('next-week') {
+    @include bem-modifier('next') {
       @include icon('caret-right');
     }
 
-    @include bem-modifier('current-week') {
+    @include bem-modifier('current-period') {
       text-transform: uppercase;
 
       &:disabled {

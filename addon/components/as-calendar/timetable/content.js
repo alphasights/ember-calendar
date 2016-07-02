@@ -2,7 +2,7 @@ import Ember from 'ember';
 import moment from 'moment';
 
 export default Ember.Component.extend({
-  classNameBindings: [':as-calendar-timetable-content'],
+  classNameBindings: [':as-calendar-timetable__content'],
   attributeBindings: ['_style:style'],
 
   days: Ember.computed.oneWay('model.days'),
@@ -54,5 +54,13 @@ export default Ember.Component.extend({
     this.attrs.onSelectTime(
       moment(day.get('value')).add(timeSlot.get('time'))
     );
-  })
+  }),
+
+  actions: {
+    goTo: function (day) {
+      if (this.attrs['onNavigateToDay']) {
+        this.attrs['onNavigateToDay'](day);
+      }
+    }
+  }
 });

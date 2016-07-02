@@ -5,21 +5,37 @@ import Ember from 'ember';
 var Day = Ember.Object.extend({
   calendar: null,
   offset: 0,
+  isInPeriod: true,
+  shortListLimit: 2,
 
-  value: Ember.computed('_week', 'offset', function() {
-    return moment(this.get('_week')).add(this.get('offset'), 'day');
+  value: Ember.computed('_period', 'offset', function () {
+    return moment(this.get('_period')).clone().add(this.get('offset'), 'day');
   }),
 
   occurrences: Ember.computed(
     'calendar.occurrences.@each.startingTime',
     'startingTime',
-    'endingTime', function() {
-    return this.get('calendar.occurrences').filter((occurrence) => {
-      var startingTime = occurrence.get('startingTime');
+    'endingTime', function () {
+      return this.get('calendar.occurrences').filter((occurrence) => {
+        var startingTime = occurrence.get('startingTime');
 
-      return startingTime >= this.get('startingTime') &&
-             startingTime <= this.get('endingTime');
-    });
+        return startingTime >= this.get('startingTime') &&
+          startingTime <= this.get('endingTime');
+      });
+    }),
+
+  shortOccurencesList: Ember.computed('occurrences', function () { // get first 3 occurences for month view
+    return this.get('occurrences').slice(0, this.get('shortListLimit'));
+  }),
+
+  showMoreCount: Ember.computed('occurrences', function () { // get first 3 occurences for month view
+    const length = this.get('occurrences.length');
+    const limit = this.get('shortListLimit');
+    return length > limit ? length - limit : 0;
+  }),
+
+  hasShowMore: Ember.computed('showMoreCount', function () { // get first 3 occurences for month view
+    return !!this.get('showMoreCount');
   }),
 
   occurrencePreview: Ember.computed(
@@ -44,15 +60,15 @@ var Day = Ember.Object.extend({
 
   startingTime: Ember.computed(
     'value',
-    '_timeSlots.firstObject.time', function() {
-    return moment(this.get('value'))
+    '_timeSlots.firstObject.time', function () {
+    return moment(this.get('value')).clone().startOf('day')
       .add(this.get('_timeSlots.firstObject.time'));
   }),
 
   endingTime: Ember.computed(
     'value',
     '_timeSlots.lastObject.endingTime', function() {
-    return moment(this.get('value'))
+    return moment(this.get('value')).clone().startOf('day')
       .add(this.get('_timeSlots.lastObject.endingTime'));
   }),
 
@@ -60,7 +76,11 @@ var Day = Ember.Object.extend({
     return this.get('value').isSame(moment(), 'day');
   }),
 
-  _week: Ember.computed.oneWay('calendar.week'),
+  isOutOfPeriod: Ember.computed('isInPeriod', function() {
+    return !this.get('isInPeriod');
+  }),
+
+  _period: Ember.computed.oneWay('calendar.period'),
   _timeSlots: Ember.computed.oneWay('calendar.timeSlots')
 });
 
@@ -70,6 +90,29 @@ Day.reopenClass({
       return Day.create({
         calendar: options.calendar,
         offset: dayOffset
+      });
+    }));
+  },
+  buildDay: function(options) {
+    return Ember.A([Day.create({
+      calendar: options.calendar,
+      offset: 0
+    })
+    ]);
+  },
+  buildMonth: function (options) {
+    const maxDaysNumber = 42;
+    const calendarStartingTime = options.calendar.get('startingTime');
+    const firstDate = calendarStartingTime.isAfter(calendarStartingTime.clone().startOf('isoWeek')) ?
+                calendarStartingTime.clone().startOf('isoWeek') :
+      calendarStartingTime.clone().startOf('isoWeek').subtract(7, "days");
+    const firstDateDifference = firstDate.date() - firstDate.daysInMonth() - 1;
+
+    return Ember.A(_.range(firstDateDifference, maxDaysNumber + firstDateDifference).map(function(dayOffset) {
+      return Day.create({
+        calendar: options.calendar,
+        offset: dayOffset,
+        isInPeriod: (dayOffset >= 0) && (dayOffset < (calendarStartingTime.daysInMonth()))
       });
     }));
   }

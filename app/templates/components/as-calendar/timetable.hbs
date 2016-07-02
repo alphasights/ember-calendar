@@ -1,40 +1,57 @@
 <div class="as-calendar-timetable__row as-calendar-timetable__row--highlighted">
   <div class="as-calendar-timetable__first-column">
-    {{as-calendar/time-zone-select
+    {{!--{{as-calendar/time-zone-select
       value=timeZone
       options=timeZoneOptions
       defaultQuery=defaultTimeZoneQuery
       showSearch=showTimeZoneSearch
-      onChangeTimeZone=(action this.attrs.onChangeTimeZone)}}
+      onChangeTimeZone=(action this.attrs.onChangeTimeZone)}}--}}
   </div>
 
   <div class="as-calendar-timetable__columns">
     <ul>
-      {{#each days as |day|}}
-        <li class="as-calendar-timetable__column-item {{if day.isToday "as-calendar-timetable__column-item--highlighted"}}">
-          {{moment-format day.value "ddd D MMM"}}
+      {{#if model.isMonthView}}
+        {{#each model.dayNames as |dayName|}}
+          <li class="as-calendar-timetable__column-item">
+            {{dayName}}
+          </li>
+        {{/each}}
+      {{/if}}
+      {{#if model.isWeekView}}
+        {{#each days as |day|}}
+          <li class="as-calendar-timetable__column-item as-calendar-timetable__column-item--clickable {{if day.isToday 'as-calendar-timetable__column-item--highlighted'}}" {{action 'goTo' day.value}}>
+            {{moment-format day.value "ddd D MMM"}}
+          </li>
+        {{/each}}
+      {{/if}}
+      {{#if model.isDayView}}
+        <li class="as-calendar-timetable__column-item {{if day.isToday 'as-calendar-timetable__column-item--highlighted'}}">
+          {{moment-format model.startDate "dddd D MMMM"}}
         </li>
-      {{/each}}
+      {{/if}}
     </ul>
   </div>
 </div>
 
 <div class="as-calendar-timetable__row">
-  <div class="as-calendar-timetable__first-column">
-    <ul class="as-calendar-timetable__slot-labels" style={{timeSlotLabelListStyle}}>
-      {{#each labeledTimeSlots as |timeSlot|}}
-        <li class="as-calendar-timetable__slot-label" style={{timeSlotLabelStyle}}>
-          {{moment-format timeSlot.value "h A"}}
-        </li>
-      {{/each}}
-    </ul>
-  </div>
+  {{#if model.hasTimeSlots}}
+    <div class="as-calendar-timetable__first-column">
+      <ul class="as-calendar-timetable__slot-labels" style={{timeSlotLabelListStyle}}>
+        {{#each labeledTimeSlots as |timeSlot|}}
+          <li class="as-calendar-timetable__slot-label" style={{timeSlotLabelStyle}}>
+            {{moment-format timeSlot.value "H:mm"}}
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
 
   <div class="as-calendar-timetable__columns">
     {{#as-calendar/timetable/content
       timeSlotHeight=timeSlotHeight
       model=model
       timetable=this
+      onNavigateToDay=(action onNavigateToDay)
       onSelectTime=(action this.attrs.onSelectTime) as |day|}}
       {{yield day this}}
     {{/as-calendar/timetable/content}}

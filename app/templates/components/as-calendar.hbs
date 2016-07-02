@@ -1,8 +1,9 @@
 {{#if showHeader}}
-  {{as-calendar/header 
-    title=title 
-    model=model 
-    onNavigateWeek=(action "onNavigateWeek")}}
+  {{as-calendar/header
+    title=title
+    model=model
+    onNavigate=(action "onNavigate")
+    onTypeChange=(action "changeType")}}
 {{/if}}
 
 {{#as-calendar/timetable
@@ -12,24 +13,51 @@
   showTimeZoneSearch=showTimeZoneSearch
   timeSlotHeight=timeSlotHeight
   defaultTimeZoneQuery=defaultTimeZoneQuery
+  onNavigateToDay=(action "navigateToDay")
   onSelectTime=(action "addOccurrence")
   onChangeTimeZone=(action "changeTimeZone") as |day timetable|}}
   <ul class="occurrences">
-    {{#each day.occurrences as |occurrence|}}
-      <li>
-        {{#if hasBlock}}
-          {{yield occurrence timetable this}}
-        {{else}}
-          {{as-calendar/timetable/occurrence
-            model=occurrence
-            timeSlotHeight=timeSlotHeight
-            timetable=timetable
-            timeSlotDuration=timeSlotDuration
-            onUpdate=(action this.attrs.onUpdateOccurrence)
-            onRemove=(action this.attrs.onRemoveOccurrence)}}
-        {{/if}}
-      </li>
-    {{/each}}
+    {{#if model.isMonthView}}
+      {{#each day.shortOccurencesList as |occurrence|}}
+        <li>
+          {{#if hasBlock}}
+            {{yield occurrence timetable this}}
+          {{else}}
+            {{as-calendar/timetable/occurrence
+              model=occurrence
+              timeSlotHeight=monthTimeSlotHeight
+              timetable=timetable
+              timeSlotDuration=timeSlotDuration
+              isDraggable=false
+              isResizable=false
+              onUpdate=(action this.attrs.onUpdateOccurrence)
+              onRemove=(action this.attrs.onRemoveOccurrence)}}
+          {{/if}}
+        </li>
+      {{/each}}
+      {{#if day.hasShowMore}}
+        <a href {{action 'navigateToDay' day.value}}>+{{day.showMoreCount}} more</a>
+      {{/if}}
+    {{else}}
+      {{#each day.occurrences as |occurrence|}}
+        <li>
+          {{#if hasBlock}}
+            {{yield occurrence timetable this}}
+          {{else}}
+            {{as-calendar/timetable/occurrence
+              model=occurrence
+              timeSlotHeight=timeSlotHeight
+              timetable=timetable
+              timeSlotDuration=timeSlotDuration
+              isDraggable=true
+              isResizable=true
+              onUpdate=(action this.attrs.onUpdateOccurrence)
+              onRemove=(action this.attrs.onRemoveOccurrence)}}
+          {{/if}}
+        </li>
+      {{/each}}
+    {{/if}}
+
 
     {{#if day.occurrencePreview}}
       <li>

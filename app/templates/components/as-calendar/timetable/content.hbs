@@ -1,12 +1,18 @@
-<ul class="as-calendar-timetable__slots">
-  {{#each timeSlots as |timeSlot|}}
-    <li class="as-calendar-timetable__slot-item" style={{timeSlotStyle}}></li>
-  {{/each}}
-</ul>
+{{#if model.hasTimeSlots}}
+  <ul class="as-calendar-timetable__slots">
+    {{#each timeSlots as |timeSlot|}}
+      <li class="as-calendar-timetable__slot-item" style={{timeSlotStyle}}></li>
+    {{/each}}
+  </ul>
+{{/if}}
 
 <ul class="as-calendar-timetable__days">
   {{#each days as |day|}}
-    <li class="as-calendar-timetable__day {{if day.isToday "as-calendar-timetable__day--today"}}">
+    <li class="as-calendar-timetable__day {{if day.isToday "as-calendar-timetable__day--today"}} {{if day.isOutOfPeriod "as-calendar-timetable__day--out-of-period"}}">
+      {{#if model.isMonthView}}
+        <p class="as-calendar-timetable__day-name" {{action 'goTo' day.value}}>{{moment-format day.value "D"}}</p>
+      {{/if}}
+
       {{yield day this}}
     </li>
   {{/each}}

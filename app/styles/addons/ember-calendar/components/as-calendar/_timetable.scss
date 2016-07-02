@@ -44,6 +44,10 @@
       color: color(link);
     }
 
+    @include bem-modifier('clickable') {
+      cursor: pointer;
+    }
+
     &:not(:last-child) {
       border-right: 1px solid color(border);
     }
@@ -90,8 +94,48 @@
       background-color: rgba(242, 248, 254, .4);
     }
 
+    @include bem-modifier('out-of-period') {
+      opacity: 0.5;
+    }
+
     &:last-child {
       border-right: 0;
+    }
+  }
+
+  @include bem-modifier('day') {
+    .as-calendar-timetable__row--highlighted > .as-calendar-timetable__columns {
+      width: 100%;
+    }
+
+    @include bem-element('column-item' 'day') {
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  @include bem-modifier('week') {
+    .as-calendar-timetable__row--highlighted > .as-calendar-timetable__columns {
+      left: 10%;
+    }
+  }
+
+  @include bem-modifier('month') {
+    @include bem-element('columns') {
+      width: 100%;
+    }
+    @include bem-element('day') {
+      height: 100px;
+      border: 1px solid #ececec;
+    }
+    @include bem-element('day-name') {
+      margin: 5px;
+      color: #888888;
+    }
+
+    .as-calendar-occurrence--timetable {
+      position: initial;
+      margin-top: 3px;
     }
   }
 }

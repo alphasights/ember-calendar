@@ -20,8 +20,10 @@ export default Ember.Component.extend(InboundActionsMixin, {
   startingDate: null,
   timeSlotDuration: '00:30',
   timeSlotHeight: 20,
+  monthTimeSlotHeight: 10,
   timeZone: jstz.determine().name(),
   title: null,
+  type: 'week',
 
   _initializeModel: Ember.on('init', function() {
     this.set('model', ComponentCalendar.create({ component: this }));
@@ -32,7 +34,9 @@ export default Ember.Component.extend(InboundActionsMixin, {
       this.set('timeZone', timeZone);
     },
 
-    addOccurrence: function(time) {
+    addOccurrence: function (time) {
+      if (this.get('model.isMonthView')) { console.log('asdsd'); return false; }
+
       var occurrence = this.get('model').createOccurrence({
         startsAt: time.toDate()
       });
@@ -40,9 +44,21 @@ export default Ember.Component.extend(InboundActionsMixin, {
       this.attrs['onAddOccurrence'](occurrence.get('content'));
     },
 
-    onNavigateWeek: function(index) {
-      if (this.attrs['onNavigateWeek']) {
-        this.attrs['onNavigateWeek'](index);
+    onNavigate: function(index) {
+      if (this.attrs['onNavigate']) {
+        this.attrs['onNavigate'](index);
+      }
+    },
+
+    navigateToDay: function (day) {
+      this.get('model').goToDayView(day);
+    },
+
+    changeType: function (type) {
+      this.get('model').changeType(type);
+
+      if (this.attrs['onTypeChange']) {
+        this.attrs['onTypeChange'](type);
       }
     }
   }

@@ -14,9 +14,9 @@ export default Ember.Component.extend({
   day: Ember.computed.oneWay('model.day'),
   computedTimeSlotDuration: computedDuration('timeSlotDuration'),
 
-  titleStyle: Ember.computed('timeSlotHeight', function() {
-    return `line-height: ${this.get('timeSlotHeight')}px;`.htmlSafe();
-  }),
+  // titleStyle: Ember.computed('timeSlotHeight', function() {
+  //   return `line-height: ${this.get('timeSlotHeight')}px;`.htmlSafe();
+  // }),
 
   _duration: Ember.computed.oneWay('model.duration'),
   _startingTime: Ember.computed.oneWay('model.startingTime'),
@@ -37,7 +37,7 @@ export default Ember.Component.extend({
     '_startingTime',
     '_dayStartingTime',
     'computedTimeSlotDuration',
-    'timeSlotHeight', function() {
+    'timeSlotHeight', function () {
     return (this.get('_startingTime').diff(this.get('_dayStartingTime')) /
             this.get('computedTimeSlotDuration').as('ms')) *
             this.get('timeSlotHeight');

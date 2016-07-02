@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  classNameBindings: [':as-calendar-timetable'],
+  classNameBindings: [':as-calendar-timetable', 'model.isMonthView:as-calendar-timetable--month', 'model.isWeekView:as-calendar-timetable--week', 'model.isDayView:as-calendar-timetable--day'],
   tagName: 'section',
 
   days: Ember.computed.oneWay('model.days'),
@@ -27,5 +27,13 @@ export default Ember.Component.extend({
 
   timeSlotLabelStyle: Ember.computed('timeSlotHeight', function() {
     return (`height: ${2 * this.get('timeSlotHeight')}px;`).htmlSafe();
-  })
+  }),
+
+  actions: {
+    goTo: function (day) {
+      if (this.attrs['onNavigateToDay']) {
+        this.attrs['onNavigateToDay'](day);
+      }
+    }
+  }
 });
