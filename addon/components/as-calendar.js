@@ -35,7 +35,7 @@ export default Ember.Component.extend(InboundActionsMixin, {
     },
 
     addOccurrence: function (time) {
-      if (this.get('model.isMonthView')) { console.log('asdsd'); return false; }
+      if (this.get('model.isMonthView')) { return false; }
 
       var occurrence = this.get('model').createOccurrence({
         startsAt: time.toDate()

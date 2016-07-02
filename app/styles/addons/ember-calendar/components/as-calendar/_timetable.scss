@@ -131,6 +131,7 @@
     @include bem-element('day-name') {
       margin: 5px;
       color: #888888;
+      text-decoration: none;
     }
 
     .as-calendar-occurrence--timetable {
