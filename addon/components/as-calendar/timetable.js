@@ -1,3 +1,4 @@
+import moment from 'moment';
 import Ember from 'ember';
 
 export default Ember.Component.extend({
@@ -21,8 +22,7 @@ export default Ember.Component.extend({
   timeSlotLabelListStyle: Ember.computed('timeSlotHeight', function() {
     var timeSlotHeight = this.get('timeSlotHeight');
 
-    return (`margin-top: -${timeSlotHeight}px;
-             line-height: ${timeSlotHeight * 2}px;`).htmlSafe();
+    return (`line-height: ${timeSlotHeight * 2}px;`).htmlSafe();
   }),
 
   timeSlotLabelStyle: Ember.computed('timeSlotHeight', function() {

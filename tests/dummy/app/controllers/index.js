@@ -1,9 +1,19 @@
+import _ from 'lodash';
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
   selections: null,
   occurrences: null,
-
+  showResults: false,
+  timeOptions: [],
+  selectedStartingTime: 8,
+  selectedEndingTime: 21,
+  dayStartingTime: Ember.computed('selectedStartingTime', function () {
+    return `${this.get('selectedStartingTime')}:00`;
+  }),
+  dayEndingTime: Ember.computed('selectedEndingTime', function () {
+    return `${this.get('selectedEndingTime')}:00`;
+  }),
   _initializeDefaults: Ember.on('init', function() {
     if (this.get('selections') == null) {
       this.set('selections', Ember.A());
@@ -12,6 +22,8 @@ export default Ember.Controller.extend({
     if (this.get('occurrences') == null) {
       this.set('occurrences', Ember.A());
     }
+
+    this.set('timeOptions', _.range(24));
   }),
 
   actions: {
@@ -29,6 +41,14 @@ export default Ember.Controller.extend({
 
     calendarRemoveOccurrence: function(occurrence) {
       this.get('occurrences').removeObject(occurrence);
-    }
+    },
+
+    onStartTimeSelected(time) {
+      this.set('selectedStartingTime', time);
+    },
+
+    onEndTimeSelected(time) {
+      this.set('selectedEndingTime', time);
+    },
   }
 });

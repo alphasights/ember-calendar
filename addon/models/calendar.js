@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import Ember from 'ember';
 import moment from 'moment';
 import TimeSlot from './time-slot';
@@ -174,10 +175,4 @@ export default Ember.Object.extend({
   checkIfDateInPeriod: function (date) {
     return this.get('period').isSame(moment(date).tz(this.get('timeZone')).startOf(this.get('isoType')));
   }
-
-  // onPeriodChangeChange: Ember.observer('startDate', 'endDate', function () {
-  //   if (!this.get('isInCurrentPeriod')) {
-  //     this.set('startingTime', this.get('startDate').clone());
-  //   }
-  // })
 });

@@ -102,17 +102,17 @@ Day.reopenClass({
   },
   buildMonth: function (options) {
     const maxDaysNumber = 42;
-    const calendarStartingTime = options.calendar.get('startingTime');
-    const firstDate = calendarStartingTime.isAfter(calendarStartingTime.clone().startOf('isoWeek')) ?
-                calendarStartingTime.clone().startOf('isoWeek') :
-      calendarStartingTime.clone().startOf('isoWeek').subtract(7, "days");
+    const calendarStartDate = options.calendar.get('startDate');
+    const firstDate = calendarStartDate.isAfter(calendarStartDate.clone().startOf('isoWeek')) ?
+                calendarStartDate.clone().startOf('isoWeek') :
+      calendarStartDate.clone().startOf('isoWeek').subtract(7, "days");
     const firstDateDifference = firstDate.date() - firstDate.daysInMonth() - 1;
 
     return Ember.A(_.range(firstDateDifference, maxDaysNumber + firstDateDifference).map(function(dayOffset) {
       return Day.create({
         calendar: options.calendar,
         offset: dayOffset,
-        isInPeriod: (dayOffset >= 0) && (dayOffset < (calendarStartingTime.daysInMonth()))
+        isInPeriod: (dayOffset >= 0) && (dayOffset < (calendarStartDate.daysInMonth()))
       });
     }));
   }

@@ -1,9 +1,58 @@
+<h4>Day starting and ending time:</h4>
+<div class="time-selects-wrapper">
+  <div class="time-select">
+    {{#rl-dropdown-container dropdownExpanded=showStartResults}}
+      {{#rl-dropdown-toggle}}
+        <span>{{selectedStartingTime}}</span>
+        <i></i>
+      {{/rl-dropdown-toggle}}
+
+      {{#rl-dropdown closeOnChildClick=".results"}}
+        {{#liquid-if showStartResults use="crossFade" containerless=true}}
+
+          <div class="results">
+            <ul>
+              {{#each timeOptions as |option|}}
+                <li {{action "onStartTimeSelected" option}}>
+                  {{option}}
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+        {{/liquid-if}}
+      {{/rl-dropdown}}
+    {{/rl-dropdown-container}}
+  </div>
+
+  <div class="time-select">
+    {{#rl-dropdown-container dropdownExpanded=showEndResults}}
+      {{#rl-dropdown-toggle}}
+        <span>{{selectedEndingTime}}</span>
+        <i></i>
+      {{/rl-dropdown-toggle}}
+
+      {{#rl-dropdown closeOnChildClick=".results"}}
+        {{#liquid-if showEndResults use="crossFade" containerless=true}}
+
+          <div class="results">
+            <ul>
+              {{#each timeOptions as |option|}}
+                <li {{action "onEndTimeSelected" option}}>
+                  {{option}}
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+        {{/liquid-if}}
+      {{/rl-dropdown}}
+    {{/rl-dropdown-container}}
+  </div>
+</div>
 {{as-calendar
   title="Ember Calendar"
   occurrences=occurrences
-  defaultTimeZoneQuery="New York|London|Dubai|Hong Kong"
-  dayStartingTime="7:00"
-  dayEndingTime="22:00"
+  dayStartingTime=dayStartingTime
+  dayEndingTime=dayEndingTime
   timeSlotDuration="00:30"
   onAddOccurrence=(action "calendarAddOccurrence")
   onUpdateOccurrence=(action "calendarUpdateOccurrence")

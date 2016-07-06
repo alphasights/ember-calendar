@@ -23,13 +23,13 @@
 <nav class="as-calendar-header__nav">
   <ul class="as-calendar-header__nav-group">
     <li class="as-calendar-header__nav-group-item">
-      <button class="as-calendar-header__nav-group-action as-calendar-header__nav-group-action--previous" {{action "navigatePrevious"}}></button>
-    </li>
-
-    <li class="as-calendar-header__nav-group-item">
       <button disabled={{isInCurrentPeriod}}
         class="as-calendar-header__nav-group-action as-calendar-header__nav-group-action--current-period"
         {{action "goToToday"}}>Today</button>
+    </li>
+
+    <li class="as-calendar-header__nav-group-item">
+      <button class="as-calendar-header__nav-group-action as-calendar-header__nav-group-action--previous" {{action "navigatePrevious"}}></button>
     </li>
 
     <li class="as-calendar-header__nav-group-item">
