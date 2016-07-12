@@ -66,13 +66,18 @@
     width: 100%;
   }
 
+  @include bem-element('slot-labels') {
+    margin-top: -20px !important;
+  }
+
   @include bem-element('slot-label') {
     color: color(text, small);
     font-weight: $font-weight-bold;
-    text-align: center;
+    text-align: right;
+    padding-right: 7px !important;
 
-    &:not(:first-child) {
-      border-top: 1px solid #ececec;
+    &:first-child {
+      color: transparent;
     }
   }
 
@@ -116,7 +121,26 @@
     }
   }
 
-  @include bem-element('hour-marker') {
+  @include bem-element('slot-label-hour-marker') {
+    position: absolute;
+    left: -110px;
+    top: 0;
+    color: #ff7f6e;
+    font-weight: bold;
+    background: #fff;
+    margin-top: -7px;
+    font-size: 17px;
+  }
+
+  @include bem-element('today-hour-marker') {
+    border: 5px solid #ff7f6e;
+    border-radius: 50%;
+    position: absolute;
+    left: -5px;
+    margin-top: -4px;
+  }
+
+  @include bem-element('day-hour-marker') {
     position: absolute;
     left: 0;
     width: 100%;
