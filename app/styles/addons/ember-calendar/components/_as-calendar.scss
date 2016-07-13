@@ -1,6 +1,7 @@
 @include bem-block(as-calendar(selector)) {
   background: color(white);
   border: 1px solid color(border, dark);
+  min-width: 600px;
 
   @if $as-calendar-global-resets {
     box-sizing: border-box;

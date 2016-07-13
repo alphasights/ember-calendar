@@ -123,13 +123,14 @@
 
   @include bem-element('slot-label-hour-marker') {
     position: absolute;
-    left: -110px;
+    left: -10%;
     top: 0;
     color: #ff7f6e;
     font-weight: bold;
     background: #fff;
     margin-top: -7px;
     font-size: 17px;
+    width: 10%;
   }
 
   @include bem-element('today-hour-marker') {
