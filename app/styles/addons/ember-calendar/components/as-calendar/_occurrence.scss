@@ -6,6 +6,7 @@
   padding: 0 $column-gutter / 4;
   position: absolute;
   right: 0;
+  z-index: 1;
 
   @include bem-modifier('preview') {
     opacity: .7;
