@@ -38,10 +38,17 @@
     <div class="as-calendar-timetable__first-column">
       <ul class="as-calendar-timetable__slot-labels" style={{timeSlotLabelListStyle}}>
         {{#each labeledTimeSlots as |timeSlot|}}
-          <li class="as-calendar-timetable__slot-label" style={{timeSlotLabelStyle}}>
-            {{moment-format timeSlot.value "H:mm"}}
+          <li class="as-calendar-timetable__slot-label {{if timeSlot.isHidden 'as-calendar-timetable__slot-label--is-hidden'}}" style={{timeSlotLabelStyle}}>
+            {{timeSlot.label}}
           </li>
         {{/each}}
+        {{#unless model.isMonthView}}
+          <li class="as-calendar-timetable__day-hour-marker" style={{hourMarkerStyle}}>
+            <div class="as-calendar-timetable__now-time">{{nowTime}}</div>
+            <div class="as-calendar-timetable__today-marker as-calendar-timetable__today-marker--day_{{currentDayNumber}}"></div>
+            <div class="as-calendar-timetable__now-line"></div>
+          </li>
+        {{/unless}}
       </ul>
     </div>
   {{/if}}

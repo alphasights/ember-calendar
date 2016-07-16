@@ -1,8 +1,3 @@
-{{!--Move slot-item-hour-marker to the timetable tempate--}}
-{{#unless model.isMonthView}}
-  <div class="as-calendar-timetable__slot-label-hour-marker" style={{hourMarkerStyle}}>{{nowTime}}</div>
-{{/unless}}
-
 {{#if model.hasTimeSlots}}
   <ul class="as-calendar-timetable__slots">
     {{#each timeSlots as |timeSlot|}}
@@ -17,17 +12,6 @@
       {{#if model.isMonthView}}
         <a href class="as-calendar-timetable__day-name" {{action 'goTo' day.value bubbles=false}}>{{moment-format day.value "D"}}</a>
       {{/if}}
-
-      {{!--{{#if (and day.isToday (not model.isMonthView))}}
-        <div class="as-calendar-timetable__day-hour-marker" style={{hourMarkerStyle}}></div>
-      {{/if}}--}}
-
-      {{#unless model.isMonthView}}
-        {{#if day.isToday}}
-          <div class="as-calendar-timetable__today-hour-marker" style={{hourMarkerStyle}}></div>
-        {{/if}}
-        <div class="as-calendar-timetable__day-hour-marker {{if day.isToday "as-calendar-timetable__day-hour-marker--today"}}" style={{hourMarkerStyle}}></div>
-      {{/unless}}
 
       {{yield day this}}
     </li>

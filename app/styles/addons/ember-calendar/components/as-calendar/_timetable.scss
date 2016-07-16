@@ -66,9 +66,9 @@
     width: 100%;
   }
 
-  @include bem-element('slot-labels') {
-    margin-top: -20px !important;
-  }
+  // @include bem-element('slot-labels') {
+  //   margin-top: -20px !important;
+  // }
 
   @include bem-element('slot-label') {
     color: color(text, small);
@@ -78,6 +78,10 @@
 
     &:first-child {
       color: transparent;
+    }
+
+    @include bem-modifier('is-hidden') {
+      opacity: 0;
     }
   }
 
@@ -121,34 +125,48 @@
     }
   }
 
-  @include bem-element('slot-label-hour-marker') {
-    position: absolute;
-    left: -10%;
-    top: 0;
-    color: #ff7f6e;
-    font-weight: bold;
-    background: #fff;
-    margin-top: -7px;
-    font-size: 17px;
-    width: 10%;
-  }
-
-  @include bem-element('today-hour-marker') {
-    border: 5px solid #ff7f6e;
-    border-radius: 50%;
-    position: absolute;
-    left: -5px;
-    margin-top: -4px;
-  }
-
   @include bem-element('day-hour-marker') {
     position: absolute;
     left: 0;
     width: 100%;
     top: 0;
+    z-index: 1;
+  }
+
+  @include bem-element('now-time') {
+    position: absolute;
+    color: #ff7f6e;
+    font-weight: bold;
+    margin-top: -18px;
+    font-size: 17px;
+    width: 10%;
+    text-align: right;
+    padding-right: 7px;
+  }
+
+  @include bem-element('today-marker') {
+    border: 5px solid #ff7f6e;
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+    margin-top: -4px;
+    margin-left: calc(10% - 5px);
+
+    @include bem-modifier('day') {
+      @for $i from 1 through 6 {
+        &_#{$i} {
+          left: $i * (90% / 7);
+        }
+      }
+    }
+  }
+
+  @include bem-element('now-line') {
     height: 0;
     border-top: 2px solid #ff7f6e;
-    overflow: hidden;
+    width: 90%;
+    left: 10%;
+    position: absolute;
   }
 
   @include bem-modifier('day') {

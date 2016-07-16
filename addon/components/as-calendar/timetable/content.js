@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import moment from 'moment';
-import computedDuration from 'ember-calendar/macros/computed-duration';
 
 export default Ember.Component.extend({
   classNameBindings: [':as-calendar-timetable__content'],
@@ -11,21 +10,6 @@ export default Ember.Component.extend({
   timeSlotDuration: Ember.computed.oneWay('model.timeSlotDuration'),
   timeSlots: Ember.computed.oneWay('model.timeSlots'),
   timetable: null,
-
-  isTimerOn: true,
-
-  _dayStartingTime: Ember.computed('model.dayStartingTime', function () {
-    return this.get('model.dayStartingTime');
-  }),
-  _dayEndingTime: Ember.computed.oneWay('model.dayEndingTime'),
-  nowTime: moment().format('H:mm'),
-  computedNowTime: computedDuration('nowTime'),
-  timeFromStartOfTheDay: Ember.computed('computedNowTime', '_dayStartingTime', function () {
-    return this.get('computedNowTime').asMilliseconds() - this.get('_dayStartingTime').asMilliseconds();
-  }),
-  dayDuration: Ember.computed('_dayStartingTime', '_dayEndingTime', function () {
-    return this.get('_dayEndingTime').asMilliseconds() - this.get('_dayStartingTime').asMilliseconds();
-  }),
 
   timeSlotStyle: Ember.computed('timeSlotHeight', function () {
     return `height: ${this.get('timeSlotHeight')}px`.htmlSafe();
@@ -70,44 +54,6 @@ export default Ember.Component.extend({
       moment(day.get('value')).add(timeSlot.get('time'))
     );
   }),
-
-
-  hourMarkerStyle: Ember.computed('timeFromStartOfTheDay', 'dayDuration', function () {
-    const timeFromStartOfTheDay = this.get('timeFromStartOfTheDay');
-    const dayDuration = this.get('dayDuration');
-
-    let topPercentage = 0;
-    let visibility = 'visible';
-
-    if (timeFromStartOfTheDay && dayDuration) {
-      topPercentage = (timeFromStartOfTheDay / dayDuration) * 100;
-    } else {
-      visibility = 'hidden';
-    }
-
-    return Ember.String.htmlSafe(`top: ${topPercentage}%; visibility: ${visibility}`);
-  }),
-
-  didInsertElement() {
-    var that = this;
-    this._super(...arguments);
-
-    const timer = () => {
-      Ember.run.later(function () {
-        that.set('nowTime', moment().format('H:mm'));
-
-        if (that.get('isTimerOn')) {
-          timer();
-        }
-      }, 500);
-    };
-
-    timer();
-  },
-  willDestroyElement() {
-    this._super(...arguments);
-    this.set('isTimerOn', false);
-  },
 
   actions: {
     goTo: function (day) {
