@@ -1,7 +1,7 @@
 {{#if model.hasTimeSlots}}
   <ul class="as-calendar-timetable__slots">
     {{#each timeSlots as |timeSlot|}}
-      <li class="as-calendar-timetable__slot-item" style={{timeSlotStyle}}></li>
+      <li class="as-calendar-timetable__slot-item {{if timeSlot.isActive 'as-calendar-timetable__slot-item--is-active' 'as-calendar-timetable__slot-item--is-disabled'}}" style={{timeSlotStyle}}></li>
     {{/each}}
   </ul>
 {{/if}}

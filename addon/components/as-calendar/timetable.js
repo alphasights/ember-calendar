@@ -19,10 +19,12 @@ export default Ember.Component.extend({
 
   startOfWeek: moment().startOf('isoWeek').day(),
 
-  _dayStartingTime: Ember.computed('model.dayStartingTime', function () {
-    return this.get('model.dayStartingTime');
+  _dayStartingTime: Ember.computed('model.showAllHours', 'model.dayStartingTime', function () {
+    return this.get('model.showAllHours') ? moment.duration(0) : this.get('model.dayStartingTime');
   }),
-  _dayEndingTime: Ember.computed.oneWay('model.dayEndingTime'),
+  _dayEndingTime: Ember.computed('model.showAllHours', 'model.dayEndingTime', function () {
+    return this.get('model.showAllHours') ? moment.duration(1, 'day') : this.get('model.dayEndingTime');
+  }),
   now: moment(),
   currentDayNumber: Ember.computed('now', function () {
     const nowDayNumber = this.get('now').day();

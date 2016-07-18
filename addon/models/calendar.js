@@ -26,6 +26,7 @@ export default Ember.Object.extend({
   occurrencePreview: null,
   type: 'week',
   dayNames: [],
+  showAllHours: true,
 
   indexType: Ember.computed('type', function () {
     return indexTypesMap[this.get('type')];
@@ -58,12 +59,14 @@ export default Ember.Object.extend({
     'timeZone',
     'dayStartingTime',
     'dayEndingTime',
-    'timeSlotDuration', function () {
+    'timeSlotDuration',
+    'showAllHours', function () {
       return TimeSlot.buildDay({
         timeZone: this.get('timeZone'),
         startingTime: this.get('dayStartingTime'),
         endingTime: this.get('dayEndingTime'),
-        duration: this.get('timeSlotDuration')
+        duration: this.get('timeSlotDuration'),
+        showAllHours: this.get('showAllHours')
       });
     }),
 

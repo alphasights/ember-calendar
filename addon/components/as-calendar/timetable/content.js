@@ -26,6 +26,7 @@ export default Ember.Component.extend({
   _wasInserted: false,
 
   _style: Ember.computed(
+    'model.isMonthView',
     'timeSlotHeight',
     'timeSlots.length', function () {
       return (`height: ${this.get('model.isMonthView') ? '600px' : this.get('timeSlots.length') * this.get('timeSlotHeight')}px;`).htmlSafe();
