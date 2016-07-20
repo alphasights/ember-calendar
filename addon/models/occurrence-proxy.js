@@ -9,6 +9,7 @@ var OccurrenceProxy = Ember.Object.extend(Ember.Copyable, {
   endingTime: computedMoment('content.endsAt'),
   startingTime: computedMoment('content.startsAt'),
   title: Ember.computed.oneWay('content.title'),
+  type: Ember.computed.oneWay('content.type'),
 
   duration: Ember.computed('startingTime', 'endingTime', function() {
     return moment.duration(
@@ -30,7 +31,8 @@ var OccurrenceProxy = Ember.Object.extend(Ember.Copyable, {
       content: Ember.Object.create({
         startsAt: this.get('content.startsAt'),
         endsAt: this.get('content.endsAt'),
-        title: this.get('content.title')
+        title: this.get('content.title'),
+        type: this.get('content.type'),
       })
     });
   }

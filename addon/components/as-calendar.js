@@ -11,6 +11,7 @@ export default Ember.Component.extend(InboundActionsMixin, {
   dayStartingTime: '8:00',
   defaultOccurrenceDuration: '1:00',
   defaultOccurrenceTitle: 'New event',
+  defaultOccurrenceType: '',
   defaultTimeZoneQuery: '',
   isEditing: true,
   model: null,

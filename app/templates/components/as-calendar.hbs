@@ -30,13 +30,15 @@
               timeSlotDuration=timeSlotDuration
               isDraggable=false
               isResizable=false
+              isEditable=true
               onUpdate=(action this.attrs.onUpdateOccurrence)
+              onEdit=(action this.attrs.onEditOccurrence)
               onRemove=(action this.attrs.onRemoveOccurrence)}}
           {{/if}}
         </li>
       {{/each}}
       {{#if day.hasShowMore}}
-        <a href {{action 'navigateToDay' day.value}}>+{{day.showMoreCount}} more</a>
+        <a href {{action 'navigateToDay' day.value bubbles=false}}>+{{day.showMoreCount}} more</a>
       {{/if}}
     {{else}}
       {{#each day.occurrences as |occurrence|}}
@@ -51,7 +53,9 @@
               timeSlotDuration=timeSlotDuration
               isDraggable=true
               isResizable=true
+              isEditable=true
               onUpdate=(action this.attrs.onUpdateOccurrence)
+              onEdit=(action this.attrs.onEditOccurrence)
               onRemove=(action this.attrs.onRemoveOccurrence)}}
           {{/if}}
         </li>

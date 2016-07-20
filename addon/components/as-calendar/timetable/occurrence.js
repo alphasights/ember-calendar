@@ -4,18 +4,20 @@ import interact from 'interact';
 import OccurrenceComponent from '../occurrence';
 
 export default OccurrenceComponent.extend({
-  classNameBindings: [':as-calendar-occurrence--timetable'],
+  classNameBindings: [':as-calendar-occurrence--timetable', '_type'],
 
   timetable: null,
   isInteracting: false,
   isDraggable: true,
   isResizable: true,
   isRemovable: true,
+  isEditable: true,
   dayWidth: Ember.computed.oneWay('timetable.dayWidth'),
   referenceElement: Ember.computed.oneWay('timetable.referenceElement'),
 
   _calendar: Ember.computed.oneWay('model.calendar'),
   _dayEndingTime: Ember.computed.oneWay('day.endingTime'),
+  _type: Ember.computed.oneWay('model.content.type'),
   _dragBottomDistance: null,
   _dragTopDistance: null,
   _dragVerticalOffset: null,
@@ -189,6 +191,9 @@ export default OccurrenceComponent.extend({
   actions: {
     remove: function() {
       this.attrs.onRemove(this.get('content'));
+    },
+    edit: function() {
+      this.attrs.onEdit(this.get('content'));
     }
   }
 });

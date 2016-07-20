@@ -20,6 +20,10 @@ export default Calendar.extend({
     'component.defaultOccurrenceDuration'
   ),
 
+  defaultOccurrenceType: computedDuration(
+    'component.defaultOccurrenceType'
+  ),
+
   occurrences: Ember.computed('component.occurrences.[]', function() {
     return this.get('component.occurrences').map((occurrence) => {
       return OccurrenceProxy.create({ calendar: this, content: occurrence });

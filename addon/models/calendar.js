@@ -119,7 +119,8 @@ export default Ember.Object.extend({
       endsAt: moment(options.startsAt)
         .add(this.get('defaultOccurrenceDuration')).toDate(),
 
-      title: this.get('defaultOccurrenceTitle')
+      title: this.get('defaultOccurrenceTitle'),
+      type: this.get('defaultOccurrenceType')
     }, options);
 
     return OccurrenceProxy.create({

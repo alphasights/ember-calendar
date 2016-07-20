@@ -43,6 +43,10 @@ export default Ember.Controller.extend({
       this.get('occurrences').removeObject(occurrence);
     },
 
+    calendarEditOccurrence: function(occurrence) {
+      console.log('Edit', occurrence);
+    },
+
     onStartTimeSelected(time) {
       this.set('selectedStartingTime', time);
     },
