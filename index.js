@@ -16,7 +16,7 @@ module.exports = {
     }
 
     app.import(path.join(app.bowerDirectory, 'lodash/lodash.js'));
-    app.import(path.join(app.bowerDirectory, 'interact/interact.js'));
+    app.import(path.join(app.bowerDirectory, 'interact/dist/interact.js'));
 
     if (options.includeFontAwesomeAssets) {
       app.import(path.join(app.bowerDirectory, 'fontawesome/fonts/fontawesome-webfont.ttf'), {

@@ -18,7 +18,7 @@ module.exports = {
       ]);
     }).then(function() {
       return self.addBowerPackagesToProject([
-        { name: 'interact', target: '1.2.5' },
+        { name: 'interact', target: 'unstable' },
         { name: 'jquery-simulate', target: '1.0.1' },
         { name: 'lodash', target: '3.10.0' },
         { name: 'fontawesome', target: '~4.5.0'}
