@@ -97,15 +97,17 @@ export default OccurrenceComponent.extend({
   _dragStart: function() {
     var $this = this.$();
     var $referenceElement = Ember.$(this.get('referenceElement'));
+    const preview = this.get('model').copy();
 
+    preview.set('isPreview', true);
     this.set('isInteracting', true);
-    this.set('_calendar.occurrencePreview', this.get('model').copy());
+    this.set('_calendar.occurrencePreview', preview);
     this.set('_dragVerticalOffset', 0);
     this.set('_dragTopDistance', $referenceElement.offset().top - $this.offset().top);
 
     this.set('_dragBottomDistance',
              ($referenceElement.offset().top + $referenceElement.height()) -
-             ($this.offset().top + $this.height()));
+      ($this.offset().top + $this.height()));
   },
 
   _dragMove: function(event) {
@@ -191,9 +193,11 @@ export default OccurrenceComponent.extend({
   actions: {
     remove: function() {
       this.attrs.onRemove(this.get('content'));
+      this.set('isInteracting', false);
     },
     edit: function() {
       this.attrs.onEdit(this.get('content'));
+      this.set('isInteracting', false);
     }
   }
 });
