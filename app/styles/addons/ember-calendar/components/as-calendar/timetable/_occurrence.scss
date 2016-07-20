@@ -32,7 +32,7 @@
 
     @include bem-element('edit') {
       @include icon(pencil);
-      right: 10px;
+      right: 15px;
     }
   }
 
