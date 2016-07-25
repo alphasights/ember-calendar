@@ -3,7 +3,7 @@ import computedDuration from 'ember-calendar/macros/computed-duration';
 
 export default Ember.Component.extend({
   attributeBindings: ['_style:style'],
-  classNameBindings: [':as-calendar-occurrence'],
+  classNameBindings: [':as-calendar-occurrence', 'type'],
   tagName: 'article',
 
   model: null,
@@ -12,6 +12,7 @@ export default Ember.Component.extend({
   title: Ember.computed.oneWay('model.title'),
   content: Ember.computed.oneWay('model.content'),
   day: Ember.computed.oneWay('model.day'),
+  type: Ember.computed.oneWay('model.content.type'),
   computedTimeSlotDuration: computedDuration('timeSlotDuration'),
 
   // titleStyle: Ember.computed('timeSlotHeight', function() {

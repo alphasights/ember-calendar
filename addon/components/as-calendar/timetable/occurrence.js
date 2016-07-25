@@ -4,7 +4,7 @@ import interact from 'interact';
 import OccurrenceComponent from '../occurrence';
 
 export default OccurrenceComponent.extend({
-  classNameBindings: [':as-calendar-occurrence--timetable', '_type'],
+  classNameBindings: [':as-calendar-occurrence--timetable'],
 
   timetable: null,
   isInteracting: false,
@@ -17,7 +17,6 @@ export default OccurrenceComponent.extend({
 
   _calendar: Ember.computed.oneWay('model.calendar'),
   _dayEndingTime: Ember.computed.oneWay('day.endingTime'),
-  _type: Ember.computed.oneWay('model.content.type'),
   _dragBottomDistance: null,
   _dragTopDistance: null,
   _dragVerticalOffset: null,
