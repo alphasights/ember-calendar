@@ -64,7 +64,6 @@
     position: absolute;
     top: 0;
     width: 100%;
-    // display: flex;
   }
 
   @include bem-element('slots-column') {
