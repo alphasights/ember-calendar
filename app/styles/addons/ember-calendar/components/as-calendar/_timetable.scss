@@ -64,6 +64,11 @@
     position: absolute;
     top: 0;
     width: 100%;
+    // display: flex;
+  }
+
+  @include bem-element('slots-column') {
+    flex-grow: 1;
   }
 
   @include bem-element('slot-label') {
@@ -80,6 +85,9 @@
     border: 1px solid color(border);
     border-bottom: 0;
     border-right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
     &:first-child {
       border-top: 0;
@@ -92,6 +100,26 @@
     @include bem-modifier('is-disabled') {
       background: #f2f2f2;
     }
+
+    &:hover {
+      background: #53ca53;
+      cursor: pointer;
+      color: #fff;
+
+      & .as-calendar-timetable__slot-item-time {
+        display: block;
+      }
+    }
+  }
+
+  @include bem-element('slot-item-time') {
+    display: none;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  @include bem-element('slot-item-check') {
+    @include icon(check);
   }
 
   @include bem-element('days') {

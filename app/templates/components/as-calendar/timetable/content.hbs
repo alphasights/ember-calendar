@@ -1,14 +1,17 @@
-{{#if model.hasTimeSlots}}
-  <ul class="as-calendar-timetable__slots">
-    {{#each timeSlots as |timeSlot|}}
-      <li class="as-calendar-timetable__slot-item {{if timeSlot.isActive 'as-calendar-timetable__slot-item--is-active' 'as-calendar-timetable__slot-item--is-disabled'}}" style={{timeSlotStyle}}></li>
-    {{/each}}
-  </ul>
-{{/if}}
-
 <ul class="as-calendar-timetable__days">
-  {{#each days as |day|}}
+  {{#each days as |day index|}}
     <li class="as-calendar-timetable__day {{if day.isToday "as-calendar-timetable__day--today"}} {{if day.isOutOfPeriod "as-calendar-timetable__day--out-of-period"}}">
+      {{#if model.hasTimeSlots}}
+        <div class="as-calendar-timetable__slots">
+          {{#each timeSlots as |timeSlot|}}
+              <li class="as-calendar-timetable__slot-item {{if timeSlot.isActive 'as-calendar-timetable__slot-item--is-active' 'as-calendar-timetable__slot-item--is-disabled'}}" style={{timeSlotStyle}}>
+                <div class="as-calendar-timetable__slot-item-time">
+                  <span class="as-calendar-timetable__slot-item-check" aria-hidden="true"></span> {{timeSlot.timeLabel}}
+                </div>
+              </li>
+            {{/each}}
+        </div>
+      {{/if}}
       {{#if model.isMonthView}}
         <a href class="as-calendar-timetable__day-name" {{action 'goTo' day.value bubbles=false}}>{{moment-format day.value "D"}}</a>
       {{/if}}
