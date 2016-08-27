@@ -15,9 +15,6 @@
     "loader.js": "3.4.0",
     "fontawesome": "~4.5.0",
     "qunit": "1.20.0",
-    "spinjs": "2.0.2",
-    "modernizr": "2.8.3",
-    "tooltipster": "3.3.0",
     "trackpad-scroll-emulator": "1.0.8"
   },
   "resolutions": {
