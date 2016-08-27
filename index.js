@@ -15,7 +15,6 @@ module.exports = {
       options.includeFontAwesomeAssets = true;
     }
 
-    app.import(path.join(app.bowerDirectory, 'lodash/lodash.js'));
     app.import(path.join(app.bowerDirectory, 'interact/dist/interact.js'));
 
     if (options.includeFontAwesomeAssets) {
@@ -39,11 +38,6 @@ module.exports = {
         destDir: 'fonts'
       });
     }
-
-    app.import('vendor/ember-calendar/lodash.js', {
-      type: 'vendor',
-      exports: { 'lodash': ['default'] }
-    });
 
     app.import('vendor/ember-calendar/jstz.js', {
       type: 'vendor',

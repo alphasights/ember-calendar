@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import range from '../utils/range';
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
@@ -23,7 +23,7 @@ export default Ember.Controller.extend({
       this.set('occurrences', Ember.A());
     }
 
-    this.set('timeOptions', _.range(24));
+    this.set('timeOptions', range(24));
   }),
 
   actions: {
