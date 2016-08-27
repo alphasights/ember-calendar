@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import range from '../utils/range';
 import Ember from 'ember';
 import moment from 'moment';
 import TimeSlot from './time-slot';
@@ -169,7 +169,7 @@ export default Ember.Object.extend({
 
   generateDayNames: function () {
     const date = moment().day(1);
-    this.set('dayNames', _.range(0, 7).map(function () {
+    this.set('dayNames', range(0, 7).map(function () {
       const name = date.format("ddd");
       date.add(1, 'days');
       return name;

@@ -1,5 +1,5 @@
-import _ from 'lodash';
 import moment from 'moment';
+import range from '../utils/range';
 import Ember from 'ember';
 
 var Day = Ember.Object.extend({
@@ -86,7 +86,7 @@ var Day = Ember.Object.extend({
 
 Day.reopenClass({
   buildWeek: function(options) {
-    return Ember.A(_.range(0, 7).map(function(dayOffset) {
+    return Ember.A(range(0, 7).map(function(dayOffset) {
       return Day.create({
         calendar: options.calendar,
         offset: dayOffset
@@ -108,7 +108,7 @@ Day.reopenClass({
       calendarStartDate.clone().startOf('isoWeek').subtract(7, "days");
     const firstDateDifference = firstDate.date() - firstDate.daysInMonth() - 1;
 
-    return Ember.A(_.range(firstDateDifference, maxDaysNumber + firstDateDifference).map(function(dayOffset) {
+    return Ember.A(range(firstDateDifference, maxDaysNumber + firstDateDifference).map(function(dayOffset) {
       return Day.create({
         calendar: options.calendar,
         offset: dayOffset,
