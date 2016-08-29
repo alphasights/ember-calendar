@@ -21,7 +21,7 @@ export default Ember.Component.extend(InboundActionsMixin, {
   startingDate: null,
   timeSlotDuration: '00:30',
   timeSlotHeight: 20,
-  monthTimeSlotHeight: 10,
+  monthTimeSlotHeight: 20,
   timeZone: jstz.determine().name(),
   title: null,
   type: 'week',

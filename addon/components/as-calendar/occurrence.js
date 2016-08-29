@@ -9,6 +9,7 @@ export default Ember.Component.extend({
   model: null,
   timeSlotDuration: null,
   timeSlotHeight: null,
+  isMonthView: false,
   title: Ember.computed.oneWay('model.title'),
   content: Ember.computed.oneWay('model.content'),
   day: Ember.computed.oneWay('model.day'),
@@ -24,9 +25,10 @@ export default Ember.Component.extend({
   _dayStartingTime: Ember.computed.oneWay('day.startingTime'),
 
   _occupiedTimeSlots: Ember.computed(
+    'isMonthView',
     '_duration',
-    'computedTimeSlotDuration', function() {
-      return this.get('_duration').as('ms') /
+    'computedTimeSlotDuration', function () {
+      return this.get('isMonthView') ? 1 : this.get('_duration').as('ms') /
              this.get('computedTimeSlotDuration').as('ms');
   }),
 
