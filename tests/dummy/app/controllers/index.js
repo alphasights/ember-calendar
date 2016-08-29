@@ -1,4 +1,4 @@
-import range from '../utils/range';
+import range from 'ember-calendar/utils/range';
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
