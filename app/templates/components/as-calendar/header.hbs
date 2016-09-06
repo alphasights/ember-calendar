@@ -39,13 +39,13 @@
 
   <p class="as-calendar-header__status">
     {{#if (eq model.type 'day')}}
-      {{moment-format model.startDate "dddd D MMMM"}}
+      {{moment-format model.startDate dateFormatOptions.day.header}}
     {{/if}}
     {{#if (eq model.type 'week')}}
-      {{moment-format model.startDate "ddd D MMM"}} - {{moment-format model.endDate "ddd D MMM"}}
+      {{moment-format model.startDate dateFormatOptions.week.header.start}} - {{moment-format model.endDate dateFormatOptions.week.header.end}}
     {{/if}}
     {{#if (eq model.type 'month')}}
-      {{moment-format model.startDate "MMMM YYYY"}}
+      {{moment-format model.startDate dateFormatOptions.month.header}}
     {{/if}}
   </p>
 </nav>

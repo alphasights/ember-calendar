@@ -7,6 +7,23 @@ export default Ember.Component.extend(InboundActionsMixin, {
   classNameBindings: [':as-calendar'],
   tagName: 'section',
 
+  dateFormatOptions: {
+    day: {
+      header: 'MMMM DD, YYYY',
+      content: 'dddd',
+    },
+    week: {
+      header: {
+        start: 'ddd D MMM',
+        end: 'ddd D MMM, YYYY',
+      },
+      content: 'ddd D',
+    },
+    month: {
+      header: 'MMMM YYYY',
+      content: 'ddd'
+    }
+  },
   dayEndingTime: '22:00',
   dayStartingTime: '8:00',
   defaultOccurrenceDuration: '1:00',

@@ -169,8 +169,8 @@ export default Ember.Object.extend({
 
   generateDayNames: function () {
     const date = moment().day(1);
-    this.set('dayNames', range(0, 7).map(function () {
-      const name = date.format("ddd");
+    this.set('dayNames', range(0, 7).map(() => {
+      const name = date.format(this.get('component.dateFormatOptions.month.content'));
       date.add(1, 'days');
       return name;
     }));
