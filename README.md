@@ -33,6 +33,9 @@ actions up:
 * `onAddOccurrence`
 * `onUpdateOccurrence`
 * `onRemoveOccurrence`
+* `onEditOccurrence`
+* `onClickOccurrence`
+* `onDoubleClickOccurrence`
 
 In addition, you need to provide an `occurrences` Ember Array to the component.
 Each occurrence should have these properties:

@@ -60,6 +60,15 @@ export default OccurrenceComponent.extend({
         },
       });
     }
+
+    interactable.on('tap', (event) => {
+      if (event.double) { return; }
+      Ember.run(this, this._tap, event);
+    });
+
+    interactable.on('doubletap', (event) => {
+      Ember.run(this, this._doubleTap, event);
+    });
   }),
 
   _teardownInteractable: Ember.on('willDestroyElement', function() {
@@ -167,6 +176,16 @@ export default OccurrenceComponent.extend({
 
   _mouseUp: function() {
     Ember.$(document.documentElement).css('cursor', '');
+  },
+
+  _tap: function(event) {
+    this.attrs.onClick(this.get('content'));
+    event.preventDefault();
+  },
+
+  _doubleTap: function(event) {
+    this.attrs.onDoubleClick(this.get('content'));
+    event.preventDefault();
   },
 
   _validateAndSavePreview: function(changes) {

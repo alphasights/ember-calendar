@@ -39,6 +39,11 @@ export default Ember.Controller.extend({
       }));
     },
 
+    calendarClickOccurrence(occurrence) {
+      window.alert('I was clicked!');
+      console.log(`I start at ${occurrence.get('startsAt')}`);
+    },
+
     calendarUpdateOccurrence: function(occurrence, properties) {
       occurrence.setProperties(properties);
     },
