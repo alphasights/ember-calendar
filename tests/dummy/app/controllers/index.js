@@ -47,6 +47,10 @@ export default Ember.Controller.extend({
       console.log('Edit', occurrence);
     },
 
+    calendarNavigate(props) {
+      console.log(props);
+    },
+
     onStartTimeSelected(time) {
       this.set('selectedStartingTime', time);
     },
