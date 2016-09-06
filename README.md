@@ -97,6 +97,7 @@ example, you can customize the appearance of the occurrences by passing a block:
 {{#as-calendar
   title="Schedule call"
   occurrences=occurrences
+  dateFormatOptions=dateFormatOptions
   dayStartingTime="7:00"
   dayEndingTime="21:30"
   timeSlotDuration="00:30"
@@ -145,6 +146,25 @@ In addition, you can customize the timezone handling using these options:
 * `timeZoneOptions`
 * `defaultTimeZoneQuery`
 * `showTimeZoneSearch`
+
+## Date Formatting
+You may also adjust the format in which dates are displayed on the calendar by passing a `dateFormatOptions` object into the component. You may override any of the below default options:
+
+```js
+// Defaults
+dateFormatOptions: {
+  dayHeader: 'MMMM DD, YYYY',
+  dayContent: 'dddd',
+  weekHeaderStart: 'ddd D MMM',
+  weekHeaderEnd: 'ddd D MMM, YYYY',
+  weekContent: 'ddd D',
+  monthHeader: 'MMMM YYYY',
+  monthContent: 'ddd'
+}
+```
+
+
+[See the moment.js docs](http://momentjs.com/docs/#/displaying/format/) for specifics on the format strings.
 
 ## Styles
 
