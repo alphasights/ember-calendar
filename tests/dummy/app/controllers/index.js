@@ -2,6 +2,10 @@ import range from 'ember-calendar/utils/range';
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+  dateFormatOptions: {
+    dayHeader: 'MMMM YYYY',
+    dayContent: 'dddd DD'
+  },
   selections: null,
   occurrences: null,
   showResults: false,
