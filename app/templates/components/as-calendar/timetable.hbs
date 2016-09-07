@@ -20,13 +20,13 @@
       {{#if model.isWeekView}}
         {{#each days as |day|}}
           <li class="as-calendar-timetable__column-item as-calendar-timetable__column-item--clickable {{if day.isToday 'as-calendar-timetable__column-item--highlighted'}}" {{action 'goTo' day.value}}>
-            {{moment-format day.value "ddd D MMM"}}
+            {{moment-format day.value dateFormatOptions.weekContent}}
           </li>
         {{/each}}
       {{/if}}
       {{#if model.isDayView}}
         <li class="as-calendar-timetable__column-item {{if day.isToday 'as-calendar-timetable__column-item--highlighted'}}">
-          {{moment-format model.startDate "dddd D MMMM"}}
+          {{moment-format model.startDate dateFormatOptions.dayContent}}
         </li>
       {{/if}}
     </ul>
