@@ -82,7 +82,7 @@ export default Ember.Component.extend({
   timeSlotLabelListStyle: Ember.computed('timeSlotHeight', function() {
     var timeSlotHeight = this.get('timeSlotHeight');
 
-    return Ember.String.htmlSafe(`line-height: ${timeSlotHeight * 2}px;`);
+    return Ember.String.htmlSafe(`margin-top: -${timeSlotHeight / 2}px; line-height: ${timeSlotHeight * 2}px;`);
   }),
 
   timeSlotLabelStyle: Ember.computed('timeSlotHeight', function() {
