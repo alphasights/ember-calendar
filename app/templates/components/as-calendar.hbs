@@ -39,7 +39,7 @@
         </li>
       {{/each}}
       {{#if day.hasShowMore}}
-        <a href {{action 'navigateToDay' day.value bubbles=false}}>+{{day.showMoreCount}} more</a>
+        <a class="as-calendar-timetable__day-showmore" href {{action 'navigateToDay' day.value bubbles=false}}>+{{day.showMoreCount}} more</a>
       {{/if}}
     {{else}}
       {{#each day.occurrences as |occurrence|}}
