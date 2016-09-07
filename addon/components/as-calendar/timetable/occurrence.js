@@ -61,14 +61,18 @@ export default OccurrenceComponent.extend({
       });
     }
 
-    interactable.on('tap', (event) => {
-      if (event.double) { return; }
-      Ember.run(this, this._tap, event);
-    });
+    if (this.get('onClick')) {
+      interactable.on('tap', (event) => {
+        if (event.double) { return; }
+        Ember.run(this, this._tap, event);
+      });
+    }
 
-    interactable.on('doubletap', (event) => {
-      Ember.run(this, this._doubleTap, event);
-    });
+    if (this.get('onDoubleClick')) {
+      interactable.on('doubletap', (event) => {
+        Ember.run(this, this._doubleTap, event);
+      });
+    }
   }),
 
   _teardownInteractable: Ember.on('willDestroyElement', function() {
