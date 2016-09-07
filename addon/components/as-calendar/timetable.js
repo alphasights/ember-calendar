@@ -33,7 +33,7 @@ export default Ember.Component.extend({
     return nowDayNumber === 0 ? startOfWeek : nowDayNumber - startOfWeek;
   }),
   nowTime: Ember.computed('now', function () {
-    return this.get('now').format('H:mm');
+    return this.get('now').format(this.get('nowTimeLabelFormat'));
   }),
   computedNowTime: computedDuration('nowTime'),
   timeFromStartOfTheDay: Ember.computed('computedNowTime', '_dayStartingTime', function () {
@@ -73,7 +73,7 @@ export default Ember.Component.extend({
         const ONE_HOUR = 60 * 60 * 1000;
 
         return {
-          label: value.format('H:mm'),
+          label: value.format(this.get('timeSlotLabelFormat')),
           isHidden: diff > 0 && diff < ONE_HOUR // hide label if its close to the now time marker
         };
       });
