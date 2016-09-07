@@ -6,6 +6,8 @@ export default Ember.Controller.extend({
     dayHeader: 'MMMM YYYY',
     dayContent: 'dddd DD'
   },
+  timeSlotLabelFormat: 'h:mma',
+  nowTimeLabelFormat: 'h:mm',
   selections: null,
   occurrences: null,
   showResults: false,

@@ -166,8 +166,15 @@ dateFormatOptions: {
 }
 ```
 
-
 [See the moment.js docs](http://momentjs.com/docs/#/displaying/format/) for specifics on the format strings.
+
+
+## Time Formatting
+You can customize the format of the time slot labels as well as the now time indicator by passing a moment format string to the following properties:
+
+* `timeSlotLabelFormat`
+* `nowTimeLabelFormat`
+
 
 ## Styles
 
