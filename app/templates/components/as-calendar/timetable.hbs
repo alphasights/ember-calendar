@@ -12,7 +12,11 @@
     <ul>
       {{#each days as |day|}}
         <li class="as-calendar-timetable__column-item {{if day.isToday "as-calendar-timetable__column-item--highlighted"}}">
-          {{moment-format day.value "ddd D MMM"}}
+          {{moment-format day.value "ddd"}}
+
+          <span class="as-calendar-timetable__item-subtitle">
+            {{moment-format day.value "D MMM"}}
+          </span>
         </li>
       {{/each}}
     </ul>
