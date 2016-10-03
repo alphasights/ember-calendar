@@ -97,7 +97,7 @@ export default Ember.Component.extend({
         return false;
       }
 
-      Ember.run.later(function () {
+      that._timerId = Ember.run.later(function () {
         that.set('now', moment());
         timer();
       }, 60 * 1000);
@@ -109,6 +109,9 @@ export default Ember.Component.extend({
   willDestroyElement() {
     this._super(...arguments);
     this.set('isTimerOn', false);
+    if (this._timerId) {
+      Ember.run.cancel(this._timerId);
+    }
   },
 
   actions: {
