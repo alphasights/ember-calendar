@@ -41,7 +41,7 @@
     "ember-moment": "6.0.0",
     "ember-rl-dropdown": "0.5.0",
     "ember-try": "0.2.2",
-    "liquid-fire": "0.23.0",
+    "liquid-fire": "0.26.6",
     "moment": "2.11.2",
     "moment-timezone": "0.5.1"
   },
