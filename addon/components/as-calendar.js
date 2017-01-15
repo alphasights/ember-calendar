@@ -1,9 +1,8 @@
 import jstz from 'jstz';
 import Ember from 'ember';
 import ComponentCalendar from 'ember-calendar/models/component-calendar';
-import InboundActionsMixin from 'ember-component-inbound-actions/inbound-actions';
 
-export default Ember.Component.extend(InboundActionsMixin, {
+export default Ember.Component.extend({
   classNameBindings: [':as-calendar'],
   tagName: 'section',
 
