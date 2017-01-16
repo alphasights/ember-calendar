@@ -8,7 +8,7 @@ module.exports = {
     var self = this;
 
     return self.addAddonsToProject({
-      packages: [{ name: 'ember-moment', target: '6.1.0' }]
+      packages: [{ name: 'ember-moment', target: '7.3.0' }]
     }).then(function() {
       return self.addPackagesToProject([
         { name: 'ember-cli-sass', target: '5.6.0' },
