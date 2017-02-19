@@ -15,6 +15,8 @@ action](https://raw.githubusercontent.com/alphasights/ember-calendar/develop/ima
 
 ## Features
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/alphasights/ember-calendar.svg)](https://greenkeeper.io/)
+
 * Click to add occurrences
 * Resize occurrences
 * Drag and drop occurrences
