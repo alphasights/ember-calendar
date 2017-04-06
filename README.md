@@ -103,6 +103,7 @@ example, you can customize the appearance of the occurrences by passing a block:
   timeZoneOptions=timeZoneOptions
   showTimeZoneSearch=false
   timeZone=timeZone
+  weekStart="week"
   onNavigateWeek=(action "calendarNavigateWeek")
   onAddOccurrence=(action "calendarAddOccurrence") as |occurrence timetable calendar|}}
   {{#if occurrence.content.isEditable}}
@@ -145,6 +146,10 @@ In addition, you can customize the timezone handling using these options:
 * `timeZoneOptions`
 * `defaultTimeZoneQuery`
 * `showTimeZoneSearch`
+
+By default the calendar week starts on Monday. You can change it to start on Sunday by setting to `week` the option:
+
+* `weekStart`
 
 ## Styles
 

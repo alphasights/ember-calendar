@@ -217,3 +217,26 @@ test('Change week', function(assert) {
 
   assert.equal(weekIndex, 0, 'it navigates back to the current week');
 });
+
+test('Start week on Monday', function(assert) {
+  this.render(hbs`
+    {{as-calendar
+      title="Ember Calendar"
+      occurrences=occurrences}}
+  `);
+
+  const firstWeekDayText = this.$('.as-calendar-timetable__column-item:first-child').text().trim();
+  assert.ok(firstWeekDayText.includes('Mon'), 'it starts week on Monday');
+});
+
+test('Start week on Sunday', function(assert) {
+  this.render(hbs`
+    {{as-calendar
+      title="Ember Calendar"
+      weekStart="week"
+      occurrences=occurrences}}
+  `);
+
+  const firstWeekDayText = this.$('.as-calendar-timetable__column-item:first-child').text().trim();
+  assert.ok(firstWeekDayText.includes('Sun'), 'it starts week on Sunday');
+});

@@ -6,13 +6,14 @@ import OccurrenceProxy from './occurrence-proxy';
 
 export default Calendar.extend({
   component: null,
-  timeZone: Ember.computed.oneWay('component.timeZone'),
+  timeZone: Ember.computed.reads('component.timeZone'),
   startingTime: computedMoment('component.startingDate'),
   dayStartingTime: computedDuration('component.dayStartingTime'),
   dayEndingTime: computedDuration('component.dayEndingTime'),
   timeSlotDuration: computedDuration('component.timeSlotDuration'),
+  weekStart: Ember.computed.reads('component.weekStart'),
 
-  defaultOccurrenceTitle: Ember.computed.oneWay(
+  defaultOccurrenceTitle: Ember.computed.reads(
     'component.defaultOccurrenceTitle'
   ),
 

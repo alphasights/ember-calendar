@@ -22,6 +22,7 @@ export default Ember.Component.extend(InboundActionsMixin, {
   timeSlotHeight: 20,
   timeZone: jstz.determine().name(),
   title: null,
+  weekStart: 'isoWeek',
 
   _initializeModel: Ember.on('init', function() {
     this.set('model', ComponentCalendar.create({ component: this }));
