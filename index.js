@@ -37,12 +37,11 @@ module.exports = {
       });
     }
 
-    app.import(path.join(app.bowerDirectory, 'interact/interact.js'));
-    app.import('vendor/shims/interact');
+    app.import(path.join(app.bowerDirectory, 'interact/dist/interact.js'));
+    app.import('vendor/shims/interact.js');
 
-    app.import('vendor/jstz.js', { type: 'vendor' });
-    app.import('vendor/shims/interact');
-
+    app.import('vendor/jstz.js');
+    app.import('vendor/shims/jstz.js');
 
     if (app.env === 'test') {
       app.import(path.join(app.bowerDirectory, 'jquery-simulate/jquery.simulate.js'), {
