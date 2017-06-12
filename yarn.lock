@@ -2322,11 +2322,11 @@ ember-resolver@4.0.0:
     ember-cli-babel "^6.0.0-beta.7"
     ember-cli-version-checker "^1.1.6"
 
-ember-rl-dropdown@0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/ember-rl-dropdown/-/ember-rl-dropdown-0.10.0.tgz#0b4b4fb411f5073061bc061bab32d9214f0e6cfe"
+ember-rl-dropdown@^0.10.1:
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/ember-rl-dropdown/-/ember-rl-dropdown-0.10.1.tgz#ca072bb44181632b8ce8bdb4721e6bcccbf93ec1"
   dependencies:
-    ember-cli-babel "^5.1.6"
+    ember-cli-babel "^5.1.7"
 
 ember-router-generator@^1.0.0:
   version "1.2.3"

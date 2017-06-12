@@ -40,7 +40,7 @@
     "ember-lodash": "^4.17.4",
     "ember-moment": "7.3.0",
     "ember-resolver": "4.0.0",
-    "ember-rl-dropdown": "0.10.0",
+    "ember-rl-dropdown": "^0.10.1",
     "ember-source": "2.13.0",
     "loader.js": "4.2.3"
   },
