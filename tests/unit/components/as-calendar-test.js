@@ -1,6 +1,7 @@
 import hbs from 'htmlbars-inline-precompile';
 import { test, moduleForComponent } from 'ember-qunit';
 import Ember from 'ember';
+import moment from 'moment';
 
 import {
   timeSlotHeight,
@@ -189,7 +190,14 @@ test('Change time zone', function(assert) {
 
   selectTimeZone('Rome');
 
-  assert.equal(Ember.$('.as-calendar-occurrence').position().top, timeSlotHeight() * 2,
+  let tzOffset;
+  if (moment().tz('Europe/Rome').isDST()) {
+    tzOffset = 1;
+  } else {
+    tzOffset = 2;
+  }
+
+  assert.equal(Ember.$('.as-calendar-occurrence').position().top, timeSlotHeight() * tzOffset,
     'it shows the occurrence in the Rome time zone');
 });
 
