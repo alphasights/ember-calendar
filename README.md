@@ -13,6 +13,8 @@ An awesome Ember calendar, designed with composability and reusability in mind.
 
 ## Features
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/alphasights/ember-calendar.svg)](https://greenkeeper.io/)
+
 * Click to add occurrences
 * Resize occurrences
 * Drag and drop occurrences
