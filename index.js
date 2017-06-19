@@ -37,7 +37,7 @@ module.exports = {
       });
     }
 
-    app.import(path.join(app.bowerDirectory, 'interact/dist/interact.js'));
+    app.import(path.join(app.bowerDirectory, 'interact/interact.js'));
     app.import('vendor/shims/interact.js');
 
     app.import('vendor/jstz.js');
