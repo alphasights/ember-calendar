@@ -12,6 +12,8 @@ export default Ember.Object.extend({
   timeSlotDuration: null,
   timeZone: null,
   occurrencePreview: null,
+  startingTime: null,
+  weekStart: null,
 
   isInCurrentWeek: Ember.computed('week', '_currentWeek', function() {
     return this.get('week').isSame(this.get('_currentWeek'));
@@ -34,12 +36,18 @@ export default Ember.Object.extend({
     return Day.buildWeek({ calendar: this });
   }),
 
+  weekStartDate: Ember.computed('startingTime', 'weekStart', function () {
+    return moment(this.get('startingTime')).startOf(this.get('weekStart'));
+  }),
+
   week: Ember.computed('startingTime', 'timeZone', function() {
-    return moment(this.get('startingTime')).tz(this.get('timeZone')).startOf('isoWeek');
+    return moment(
+      this.get('startingTime')).tz(this.get('timeZone')).startOf(this.get('weekStart')
+    );
   }),
 
   _currentWeek: Ember.computed('timeZone', function() {
-    return moment().tz(this.get('timeZone')).startOf('isoWeek');
+    return moment().tz(this.get('timeZone')).startOf(this.get('weekStart'));
   }),
 
   initializeCalendar: Ember.on('init', function() {
