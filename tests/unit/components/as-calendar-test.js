@@ -189,3 +189,38 @@ test('Change week', function(assert) {
 
   assert.equal(weekIndex, 0, 'it navigates back to the current week');
 });
+
+test('Displays week of specified day', function(assert) {
+  this.render(hbs`
+    {{as-calendar
+      title="Ember Calendar"
+      occurrences=occurrences
+      startingDate="2017-06-08"}}
+  `);
+
+  assert.equal(this.$('.as-calendar-timetable__column-item:first-child').text().trim(), 'Mon 5 Jun');
+});
+
+test('Week starts from specified day', function(assert) {
+  this.render(hbs`
+    {{as-calendar
+      title="Ember Calendar"
+      occurrences=occurrences
+      startingDate="2017-06-08"
+      startFromDate=true}}
+  `);
+
+  assert.equal(this.$('.as-calendar-timetable__column-item:first-child').text().trim(), 'Thu 8 Jun');
+});
+
+test('Week starts from today', function(assert) {
+  this.render(hbs`
+    {{as-calendar
+      title="Ember Calendar"
+      occurrences=occurrences
+      startFromDate=true}}
+  `);
+
+  const today = moment().format('ddd D MMM');
+  assert.equal(this.$('.as-calendar-timetable__column-item:first-child').text().trim(), today);
+});

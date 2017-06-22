@@ -17,6 +17,7 @@ export default Ember.Component.extend({
   showHeader: true,
   showTimeZoneSearch: true,
   startingDate: null,
+  startFromDate: null,
   timeSlotDuration: '00:30',
   timeSlotHeight: 20,
   timeZone: jstz.determine().name(),

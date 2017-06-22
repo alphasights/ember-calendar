@@ -144,6 +144,8 @@ In addition, you can customize the timezone handling using these options:
 * `defaultTimeZoneQuery`
 * `showTimeZoneSearch`
 
+You can specify the initial week displayed by the calendar using the `startingDate` option. In addition, if you want the week to begin from that day, pass `startFromDate=true`.
+
 ## Styles
 
 We do not add any vendor CSS to your app by default, but you can include it if you want by doing:

@@ -9,6 +9,7 @@ export default Ember.Object.extend({
   dayStartingTime: null,
   occurrences: null,
   startingDate: null,
+  startFromDate: false,
   timeSlotDuration: null,
   timeZone: null,
   occurrencePreview: null,
@@ -34,8 +35,12 @@ export default Ember.Object.extend({
     return Day.buildWeek({ calendar: this });
   }),
 
-  week: Ember.computed('startingTime', 'timeZone', function() {
-    return moment(this.get('startingTime')).tz(this.get('timeZone')).startOf('isoWeek');
+  week: Ember.computed('startFromDate', 'startingTime', 'timeZone', function() {
+    if (this.get('startFromDate')) {
+      return moment(this.get('startingTime')).tz(this.get('timeZone')).startOf('day');
+    } else {
+      return moment(this.get('startingTime')).tz(this.get('timeZone')).startOf('isoWeek');
+    }
   }),
 
   _currentWeek: Ember.computed('timeZone', function() {
@@ -52,7 +57,6 @@ export default Ember.Object.extend({
     var content = Ember.merge({
       endsAt: moment(options.startsAt)
         .add(this.get('defaultOccurrenceDuration')).toDate(),
-
       title: this.get('defaultOccurrenceTitle')
     }, options);
 
