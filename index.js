@@ -1,28 +1,21 @@
-/* jshint node: true */
+/* eslint-env node*/
 'use strict';
 
-var path = require('path');
+const path = require('path');
 
 module.exports = {
   name: 'ember-calendar',
 
   included: function(app) {
     this._super.included(app);
-    
+
     var options = app.options.emberCalendar || {};
 
     if (!('includeFontAwesomeAssets' in options)) {
       options.includeFontAwesomeAssets = true;
     }
 
-    app.import(path.join(app.bowerDirectory, 'lodash/lodash.js'));
-    app.import(path.join(app.bowerDirectory, 'interact/interact.js'));
-    app.import(path.join(app.bowerDirectory, 'moment/moment.js'));
-    app.import(path.join(app.bowerDirectory, 'moment-timezone/builds/moment-timezone-with-data.js'));
-
-
     if (options.includeFontAwesomeAssets) {
-
       app.import(path.join(app.bowerDirectory, 'fontawesome/fonts/fontawesome-webfont.ttf'), {
         destDir: 'fonts'
       });
@@ -44,27 +37,11 @@ module.exports = {
       });
     }
 
+    app.import(path.join(app.bowerDirectory, 'interact/interact.js'));
+    app.import('vendor/shims/interact.js');
 
-
-
-    app.import('vendor/ember-calendar/lodash.js', {
-      type: 'vendor',
-      exports: { 'lodash': ['default'] }
-    });
-
-    app.import('vendor/ember-calendar/jstz.js', {
-      type: 'vendor',
-      exports: { 'jstz': ['default'] }
-    });
-
-    app.import('vendor/ember-calendar/interact.js', {
-      type: 'vendor',
-      exports: { 'interact': ['default'] }
-    });
-
-    app.import('vendor/jstz.js', {
-      type: 'vendor'
-    });
+    app.import('vendor/jstz.js');
+    app.import('vendor/shims/jstz.js');
 
     if (app.env === 'test') {
       app.import(path.join(app.bowerDirectory, 'jquery-simulate/jquery.simulate.js'), {

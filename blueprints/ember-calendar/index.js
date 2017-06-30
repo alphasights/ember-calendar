@@ -1,25 +1,19 @@
-/* jshint node: true */
+/* eslint-env node*/
 'use strict';
 
 module.exports = {
   normalizeEntityName: function() {},
 
   afterInstall: function() {
-    return this.addAddonsToProject({
-      packages: [{ name: 'ember-moment', target: '4.1.0' }]
-    }).then(() => {
-      return this.addPackagesToProject([
-        { name: 'broccoli-sass', target: '0.7.0' },
-        { name: 'ember-component-inbound-actions', target: '0.0.4' },
-        { name: 'ember-rl-dropdown', target: '0.7.0' },
-        { name: 'liquid-fire', target: '0.21.3' }
-      ]);
-    }).then(() => {
-      return this.addBowerPackagesToProject([
-        { name: 'interact', target: '1.2.5' },
+    var self = this;
+
+    return self.addAddonsToProject({
+      packages: [{ name: 'ember-moment', target: '7.3.0' }]
+    }).then(function() {
+      return self.addBowerPackagesToProject([
+        { name: 'interact', target: '1.2.8' },
         { name: 'jquery-simulate', target: '1.0.1' },
-        { name: 'lodash', target: '3.10.0' },
-        { name: 'fontawesome', target: '~4.5.0'}
+        { name: 'fontawesome', target: '~4.7.0'}
       ]);
     });
   }

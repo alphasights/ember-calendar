@@ -51,7 +51,7 @@ export default Ember.Object.extend({
   createOccurrence: function(options) {
     var content = Ember.merge({
       endsAt: moment(options.startsAt)
-        .add(this.get('defaultOccurrenceDuration')),
+        .add(this.get('defaultOccurrenceDuration')).toDate(),
 
       title: this.get('defaultOccurrenceTitle')
     }, options);

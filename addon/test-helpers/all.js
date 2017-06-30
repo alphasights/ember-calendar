@@ -67,12 +67,26 @@ var selectTimeZone = function(name) {
   });
 };
 
+var selectNextWeek = function() {
+  Ember.run(() => {
+    Ember.$('button.as-calendar-header__nav-group-action--next-week').click();
+  });
+};
+
+var selectPreviousWeek = function() {
+  Ember.run(() => {
+    Ember.$('button.as-calendar-header__nav-group-action--previous-week').click();
+  });
+};
+
 export {
   timeSlotHeight,
   dayWidth,
   selectTime,
   resizeOccurrence,
   dragOccurrence,
-  selectTimeZone
+  selectTimeZone,
+  selectNextWeek,
+  selectPreviousWeek
 };
 
