@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import {pack} from 'ember-calendar/utils/occurrence-packer';
 
 export default Ember.Controller.extend({
   selections: null,
@@ -21,14 +22,17 @@ export default Ember.Controller.extend({
         startsAt: occurrence.get('startsAt'),
         endsAt: occurrence.get('endsAt')
       }));
+      pack(this.get('occurrences'));
     },
 
     calendarUpdateOccurrence: function(occurrence, properties) {
       occurrence.setProperties(properties);
+      pack(this.get('occurrences'));
     },
 
     calendarRemoveOccurrence: function(occurrence) {
       this.get('occurrences').removeObject(occurrence);
+      pack(this.get('occurrences'));
     }
   }
 });

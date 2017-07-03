@@ -10,6 +10,9 @@ var OccurrenceProxy = Ember.Object.extend(Ember.Copyable, {
   startingTime: computedMoment('content.startsAt'),
   title: Ember.computed.oneWay('content.title'),
 
+  columns: Ember.computed.alias('content.columns'),
+  column: Ember.computed.alias('content.column'),
+
   duration: Ember.computed('startingTime', 'endingTime', function() {
     return moment.duration(
       this.get('endingTime').diff(this.get('startingTime'))

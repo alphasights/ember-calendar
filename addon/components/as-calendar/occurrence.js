@@ -14,7 +14,7 @@ export default Ember.Component.extend({
   day: Ember.computed.oneWay('model.day'),
   computedTimeSlotDuration: computedDuration('timeSlotDuration'),
 
-  titleStyle: Ember.computed('timeSlotHeight', function() {
+  titleStyle: Ember.computed('timeSlotHeight', function () {
     return Ember.String.htmlSafe(`line-height: ${this.get('timeSlotHeight')}px;`);
   }),
 
@@ -24,12 +24,12 @@ export default Ember.Component.extend({
 
   _occupiedTimeSlots: Ember.computed(
     '_duration',
-    'computedTimeSlotDuration', function() {
+    'computedTimeSlotDuration', function () {
       return this.get('_duration').as('ms') /
-             this.get('computedTimeSlotDuration').as('ms');
-  }),
+        this.get('computedTimeSlotDuration').as('ms');
+    }),
 
-  _height: Ember.computed('_occupiedTimeSlots', function() {
+  _height: Ember.computed('_occupiedTimeSlots', function () {
     return this.get('timeSlotHeight') * this.get('_occupiedTimeSlots');
   }),
 
@@ -37,18 +37,28 @@ export default Ember.Component.extend({
     '_startingTime',
     '_dayStartingTime',
     'computedTimeSlotDuration',
-    'timeSlotHeight', function() {
-    return (this.get('_startingTime').diff(this.get('_dayStartingTime')) /
-            this.get('computedTimeSlotDuration').as('ms')) *
-            this.get('timeSlotHeight');
+    'timeSlotHeight', function () {
+      return (this.get('_startingTime').diff(this.get('_dayStartingTime')) /
+        this.get('computedTimeSlotDuration').as('ms')) *
+        this.get('timeSlotHeight');
+    }),
+
+  _width: Ember.computed('content.columns', function () {
+    return 1 / Math.max(1, this.get('content.columns'));
   }),
 
-  _style: Ember.computed('_height', '_top', function() {
+  _left: Ember.computed('content.columns', 'content.column', function () {
+    return this.get('content.column') / this.get('content.columns');
+  }),
+
+  _style: Ember.computed('_height', '_top', '_width', '_left', function () {
     return Ember.String.htmlSafe(`top: ${this.get('_top')}px;
-            height: ${this.get('_height')}px;`);
+            height: ${this.get('_height')}px;
+            left: ${this.get('_left') * 100}%;
+            width: ${this.get('_width') * 100}%`);
   }),
 
-  _stopPropagation: Ember.on('click', function(event) {
+  _stopPropagation: Ember.on('click', function (event) {
     event.stopPropagation();
   }),
 });
