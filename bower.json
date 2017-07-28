@@ -1,7 +1,6 @@
 {
   "name": "ember-calendar",
   "dependencies": {
-    "interact": "1.2.8",
     "jquery-simulate": "1.0.1",
     "spinjs": "2.0.2",
     "modernizr": "2.8.3",
