@@ -9,7 +9,7 @@ module.exports = {
   included: function(app) {
     this._super.included(app);
 
-    app.import(path.join(app.bowerDirectory, 'interact/interact.js'));
+    app.import(path.join(path.dirname(require.resolve('interactjs')), 'interact.js'));
     app.import('vendor/shims/interact.js');
 
     app.import('vendor/jstz.js');
