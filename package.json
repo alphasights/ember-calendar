@@ -22,6 +22,7 @@
     "ember-cli-sass": "6.2.0",
     "ember-lodash": "^4.17.4",
     "ember-rl-dropdown": "^0.10.1",
+    "fastboot-transform": "^0.1.2",
     "fontawesome": "^4.7.2",
     "interactjs": "1.2.8"
   },
