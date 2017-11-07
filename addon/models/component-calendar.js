@@ -8,7 +8,7 @@ export default Calendar.extend({
   component: null,
   timeZone: Ember.computed.oneWay('component.timeZone'),
   startFromDate: Ember.computed.readOnly('component.startFromDate'),
-  startingTime: computedMoment('component.startingDate'),
+  startingTime: computedMoment('component.startingDate', 'timeZone'),
   dayStartingTime: computedDuration('component.dayStartingTime'),
   dayEndingTime: computedDuration('component.dayEndingTime'),
   timeSlotDuration: computedDuration('component.timeSlotDuration'),

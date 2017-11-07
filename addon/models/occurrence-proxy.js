@@ -6,8 +6,8 @@ import Day from './day';
 var OccurrenceProxy = Ember.Object.extend(Ember.Copyable, {
   calendar: null,
   content: null,
-  endingTime: computedMoment('content.endsAt'),
-  startingTime: computedMoment('content.startsAt'),
+  endingTime: computedMoment('content.endsAt', 'calendar.timeZone'),
+  startingTime: computedMoment('content.startsAt', 'calendar.timeZone'),
   title: Ember.computed.oneWay('content.title'),
 
   duration: Ember.computed('startingTime', 'endingTime', function() {
