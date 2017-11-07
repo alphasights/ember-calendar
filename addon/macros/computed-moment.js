@@ -3,13 +3,14 @@ import Ember from 'ember';
 
 const { computed } = Ember;
 
-export default function(dependentKey) {
-  return computed(dependentKey, {
+export default function(dependentKey, timeZoneKey) {
+  return computed(dependentKey, timeZoneKey, {
     get() {
       var dependentValue = this.get(dependentKey);
+      let timezone = this.get(timeZoneKey);
 
       if (dependentValue != null) {
-        return moment(dependentValue);
+        return moment(dependentValue).tz(timezone);
       } else {
         return null;
       }
