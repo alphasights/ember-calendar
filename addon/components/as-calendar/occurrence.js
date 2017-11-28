@@ -38,7 +38,7 @@ export default Ember.Component.extend({
     '_dayStartingTime',
     'computedTimeSlotDuration',
     'timeSlotHeight', function() {
-    return (this.get('_startingTime').diff(this.get('_dayStartingTime')) /
+    return ((this.get('_startingTime').diff(this.get('_dayStartingTime')) % (24*3600000)) /
             this.get('computedTimeSlotDuration').as('ms')) *
             this.get('timeSlotHeight');
   }),
