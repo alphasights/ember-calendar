@@ -1,5 +1,8 @@
 import Ember from 'ember';
 import computedDuration from 'ember-calendar/macros/computed-duration';
+import moment from 'moment';
+
+const { get } = Ember;
 
 export default Ember.Component.extend({
   attributeBindings: ['_style:style'],
@@ -19,7 +22,13 @@ export default Ember.Component.extend({
   }),
 
   _duration: Ember.computed.oneWay('model.duration'),
-  _startingTime: Ember.computed.oneWay('model.startingTime'),
+  _startingTime: Ember.computed('model.startingTime', function() {
+    let time = get(this, 'model.startingTime');
+    let zone = get(this, 'model.calendar.timeZone');
+
+    return moment(time).tz(zone);
+  }),
+
   _dayStartingTime: Ember.computed.oneWay('day.startingTime'),
 
   _occupiedTimeSlots: Ember.computed(
