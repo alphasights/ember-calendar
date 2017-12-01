@@ -3,4 +3,4 @@
 set -e
 
 bin/lint
-npm test
+yarn test

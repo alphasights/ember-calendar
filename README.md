@@ -193,7 +193,7 @@ module.exports = function(defaults) {
 ### Setup
 
 * `git clone https://github.com/alphasights/ember-calendar.git`
-* `npm install && bower install`
+* `yarn && bower install`
 
 ### Running
 
