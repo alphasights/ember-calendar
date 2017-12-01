@@ -150,12 +150,16 @@ test('Change time zone', function(assert) {
   selectTime({ day: 0, timeSlot: 0 });
 
   assert.equal(Ember.$('.as-calendar-occurrence').position().top, 0,
-    'it shows the occurrence in the UTC time zone');
+    'it shows the occurrence in the London time zone');
 
   selectTimeZone('Rome');
 
   let tzOffset;
-  if (moment().tz('Europe/Rome').isDST()) {
+
+  const romeDst = moment().tz('Europe/Rome').isDST();
+  const londonDst = moment().tz('Europe/London').isDST();
+
+  if (romeDst === londonDst) {
     tzOffset = 1;
   } else {
     tzOffset = 2;
