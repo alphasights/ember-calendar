@@ -58,16 +58,6 @@ var dragOccurrence = function(occurrence, options) {
   });
 };
 
-var selectTimeZone = function(name) {
-  run(() => {
-    $('.as-calendar-time-zone-select .rl-dropdown-toggle').click();
-  });
-
-  run(() => {
-    $(`.as-calendar-time-zone-option:contains('${name}')`).click();
-  });
-};
-
 var selectNextWeek = function() {
   run(() => {
     $('button.as-calendar-header__nav-group-action--next-week').click();

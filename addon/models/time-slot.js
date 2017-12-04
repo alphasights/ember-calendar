@@ -5,14 +5,13 @@ import moment from 'moment';
 var TimeSlot = EmberObject.extend({
   duration: null,
   time: null,
-  timeZone: null,
 
   endingTime: computed('time', 'duration', function() {
     return moment.duration(this.get('time')).add(this.get('duration'));
   }),
 
-  day: computed('timeZone', function() {
-    return moment().tz(this.get('timeZone')).startOf('day');
+  day: computed(function() {
+    return moment().startOf('day');
   }),
 
   value: computed('day', 'time', function() {
@@ -35,7 +34,6 @@ var TimeSlot = EmberObject.extend({
     var duration = this.get('duration');
 
     return TimeSlot.create({
-      timeZone: this.get('timeZone'),
       time: moment.duration(this.get('time')).add(duration),
       duration: duration
     });
@@ -47,7 +45,6 @@ TimeSlot.reopenClass({
     var timeSlots = A();
 
     var currentTimeSlot = this.create({
-      timeZone: options.timeZone,
       time: options.startingTime,
       duration: options.duration
     });

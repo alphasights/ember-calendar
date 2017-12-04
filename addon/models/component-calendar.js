@@ -8,7 +8,6 @@ import OccurrenceProxy from './occurrence-proxy';
 
 export default Calendar.extend({
   component: null,
-  timeZone: oneWay('component.timeZone'),
   startFromDate: readOnly('component.startFromDate'),
   startingTime: computedMoment('component.startingDate'),
   dayStartingTime: computedDuration('component.dayStartingTime'),
