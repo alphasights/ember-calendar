@@ -1,7 +1,7 @@
 {{#if showHeader}}
-  {{as-calendar/header 
-    title=title 
-    model=model 
+  {{as-calendar/header
+    title=title
+    model=model
     onNavigateWeek=(action "onNavigateWeek")}}
 {{/if}}
 
@@ -13,7 +13,7 @@
     {{#each day.occurrences as |occurrence|}}
       <li>
         {{#if hasBlock}}
-          {{yield occurrence timetable this}}
+          {{yield occurrence (hash timetable=timetable day=day calendar=this)}}
         {{else}}
           {{as-calendar/timetable/occurrence
             model=occurrence
