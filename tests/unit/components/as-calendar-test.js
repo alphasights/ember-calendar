@@ -150,12 +150,16 @@ test('Change time zone', function(assert) {
   selectTime({ day: 0, timeSlot: 0 });
 
   assert.equal(Ember.$('.as-calendar-occurrence').position().top, 0,
-    'it shows the occurrence in the UTC time zone');
+    'it shows the occurrence in the London time zone');
 
   selectTimeZone('Rome');
 
   let tzOffset;
-  if (moment().tz('Europe/Rome').isDST()) {
+
+  const romeDst = moment().tz('Europe/Rome').isDST();
+  const londonDst = moment().tz('Europe/London').isDST();
+
+  if (romeDst === londonDst) {
     tzOffset = 1;
   } else {
     tzOffset = 2;
@@ -223,4 +227,34 @@ test('Week starts from today', function(assert) {
 
   const today = moment().format('ddd D MMM');
   assert.equal(this.$('.as-calendar-timetable__column-item:first-child').text().trim(), today);
+});
+
+test('Update function differentiates preview and original object', function(assert) {
+  assert.expect(4);
+
+  this.on('calendarUpdateOccurrence', (occurrence, properties, isPreview) => {
+    occurrence.setProperties(properties);
+
+    if (isPreview) {
+      assert.notDeepEqual(occurrence, this.get('occurrences.firstObject'), 'Passed occurrence not same as original');
+    } else {
+      assert.deepEqual(occurrence, this.get('occurrences.firstObject'), 'Passed occurrence is same as original');
+    }
+  });
+
+  this.render(hbs`
+    {{as-calendar
+      title="Ember Calendar"
+      occurrences=occurrences
+      dayStartingTime="9:00"
+      dayEndingTime="18:00"
+      timeSlotDuration="00:30"
+      onAddOccurrence=(action "calendarAddOccurrence")
+      onUpdateOccurrence=(action "calendarUpdateOccurrence")
+      onRemoveOccurrence=(action "calendarRemoveOccurrence")}}
+  `);
+
+  selectTime({ day: 0, timeSlot: 0 });
+
+  dragOccurrence(this.$('.as-calendar-occurrence'), { days: 2, timeSlots: 4 });
 });
