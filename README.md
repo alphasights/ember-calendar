@@ -75,8 +75,12 @@ export default Ember.Controller.extend({
       }));
     },
 
-    calendarUpdateOccurrence: function(occurrence, properties) {
+    calendarUpdateOccurrence: function(occurrence, properties, isPreview) {
       occurrence.setProperties(properties);
+
+      if (!isPreview) {
+        occurrence.save();
+      }
     },
 
     calendarRemoveOccurrence: function(occurrence) {
