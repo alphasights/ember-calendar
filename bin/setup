@@ -3,7 +3,7 @@
 set -e
 
 yarn global add bower
-yarn
+yarn --ignore-engines
 
 bower install
 bundle install
