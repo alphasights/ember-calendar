@@ -7,8 +7,12 @@ machine:
 test:
   override:
     - ./bin/ci
+    - yarn
 
 dependencies:
   override:
     - "cd bin && wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 && tar xjvf phantomjs-2.0.0-ubuntu-12.04.tar.bz2"
     - "./bin/setup"
+    - yarn
+  cache_directories:
+    - ~/.cache/yarn
