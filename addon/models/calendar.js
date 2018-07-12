@@ -15,7 +15,7 @@ export default Ember.Object.extend({
   occurrencePreview: null,
 
   isInCurrentWeek: Ember.computed('week', '_currentWeek', function() {
-    return this.get('week').isSame(this.get('_currentWeek'));
+    return this.get('week').isSame(this.get('_currentWeek'), 'week');
   }),
 
   timeSlots: Ember.computed(
@@ -71,6 +71,14 @@ export default Ember.Object.extend({
   },
 
   goToCurrentWeek: function() {
-    this.set('startingTime', moment());
+    const startingDate = this.get('startingDate');
+    const startFromDate = this.get('startFromDate');
+    let startingTime = moment();
+
+    if (startFromDate && startingDate) {
+      startingTime = moment().day(startingDate.day());
+    }
+
+    this.set('startingTime', startingTime);
   }
 });
