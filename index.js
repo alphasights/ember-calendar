@@ -7,7 +7,7 @@ module.exports = {
   name: 'ember-calendar',
 
   included: function(app) {
-    this._super.included(app);
+    this._super.included.apply(this, arguments);
 
     app.import('vendor/jstz.js');
     app.import('vendor/shims/jstz.js');
