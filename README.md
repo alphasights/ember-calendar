@@ -19,7 +19,8 @@ An awesome Ember calendar, designed with composability and reusability in mind.
 * Timezone aware
 * Search and change timezones
 
-## Installation
+Installation
+------------------------------------------------------------------------------
 
 `ember install ember-calendar`
 
