@@ -57,7 +57,13 @@
     "eslint-plugin-ember": "^5.2.0",
     "eslint-plugin-node": "^7.0.1",
     "loader.js": "^4.7.0",
-    "qunit-dom": "^0.7.1"
+    "qunit-dom": "^0.7.1",
+    "ember-composable-helpers": "1.1.1",
+    "ember-truth-helpers": "1.2.0",
+    "ember-try": "0.2.2",
+    "liquid-fire": "0.23.0",
+    "moment": "2.11.2",
+    "moment-timezone": "0.5.1"
   },
   "engines": {
     "node": "6.* || 8.* || >= 10.*"

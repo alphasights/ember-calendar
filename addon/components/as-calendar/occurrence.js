@@ -7,15 +7,17 @@ import computedDuration from 'ember-calendar/macros/computed-duration';
 
 export default Component.extend({
   attributeBindings: ['_style:style'],
-  classNameBindings: [':as-calendar-occurrence'],
+  classNameBindings: [':as-calendar-occurrence', 'type'],
   tagName: 'article',
 
   model: null,
   timeSlotDuration: null,
   timeSlotHeight: null,
+  isMonthView: false,
   title: oneWay('model.title'),
   content: oneWay('model.content'),
   day: oneWay('model.day'),
+  type: oneWay('model.content.type'),
   computedTimeSlotDuration: computedDuration('timeSlotDuration'),
 
   titleStyle: computed('timeSlotHeight', function() {
@@ -27,9 +29,10 @@ export default Component.extend({
   _dayStartingTime: oneWay('day.startingTime'),
 
   _occupiedTimeSlots: computed(
+    'isMonthView',
     '_duration',
-    'computedTimeSlotDuration', function() {
-      return this.get('_duration').as('ms') /
+    'computedTimeSlotDuration', function () {
+      return this.get('isMonthView') ? 1 : this.get('_duration').as('ms') /
              this.get('computedTimeSlotDuration').as('ms');
   }),
 
@@ -41,7 +44,7 @@ export default Component.extend({
     '_startingTime',
     '_dayStartingTime',
     'computedTimeSlotDuration',
-    'timeSlotHeight', function() {
+    'timeSlotHeight', function () {
     return (this.get('_startingTime').diff(this.get('_dayStartingTime')) /
             this.get('computedTimeSlotDuration').as('ms')) *
             this.get('timeSlotHeight');

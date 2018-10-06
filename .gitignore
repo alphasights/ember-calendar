@@ -1,5 +1,13 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
+# editor
+.vscode
+.vscodeignore
+jsconfig.json
+
+# typings
+typings/
+
 # compiled output
 /dist/
 /tmp/

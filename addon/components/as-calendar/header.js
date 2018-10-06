@@ -5,21 +5,44 @@ export default Component.extend({
   classNameBindings: [':as-calendar-header'],
   tagName: 'header',
 
-  isInCurrentWeek: oneWay('model.isInCurrentWeek'),
+  isInCurrentWeek: oneWay('model.isInCurrentPeriod'),
   model: null,
   title: '',
 
   actions: {
-    navigateWeek: function(index) {
-      this.get('model').navigateWeek(index);
+    navigateNext: function () {
+      this.get('model').navigateNext();
 
-      if (this.attrs['onNavigateWeek']) {
-        this.attrs['onNavigateWeek'](index);
+      if (this.attrs['onNavigate']) {
+        this.attrs['onNavigate']({
+          view: this.get('model.type'),
+          start: this.get('model.startDate'),
+          end: this.get('model.endDate'),
+          dir: 1
+        });
+      }
+    },
+    navigatePrevious: function() {
+      this.get('model').navigatePrevious();
+
+      if (this.attrs['onNavigate']) {
+        this.attrs['onNavigate']({
+          view: this.get('model.type'),
+          start: this.get('model.startDate'),
+          end: this.get('model.endDate'),
+          dir: -1
+        });
       }
     },
 
-    goToCurrentWeek: function() {
-      this.get('model').goToCurrentWeek();
+    changeType: function (type) {
+      if (this.attrs['onTypeChange']) {
+        this.attrs['onTypeChange'](type);
+      }
+    },
+
+    goToToday: function() {
+      this.get('model').goToToday();
     }
   }
 });

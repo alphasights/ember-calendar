@@ -30,6 +30,9 @@ actions up:
 * `onAddOccurrence`
 * `onUpdateOccurrence`
 * `onRemoveOccurrence`
+* `onEditOccurrence`
+* `onClickOccurrence`
+* `onDoubleClickOccurrence`
 
 In addition, you need to provide an `occurrences` Ember Array to the component.
 Each occurrence should have these properties:
@@ -93,6 +96,7 @@ example, you can customize the appearance of the occurrences by passing a block:
 {{#as-calendar
   title="Schedule call"
   occurrences=occurrences
+  dateFormatOptions=dateFormatOptions
   dayStartingTime="7:00"
   dayEndingTime="21:30"
   timeSlotDuration="00:30"
@@ -133,6 +137,32 @@ You can customize the time slots by passing these options:
 * `defaultOccurrenceDuration`
 
 You can specify the initial week displayed by the calendar using the `startingDate` option. In addition, if you want the week to begin from that day, pass `startFromDate=true`.
+
+## Date Formatting
+You may also adjust the format in which dates are displayed on the calendar by passing a `dateFormatOptions` object into the component. You may override any of the below default options:
+
+```js
+// Defaults
+dateFormatOptions: {
+  dayHeader: 'MMMM DD, YYYY',
+  dayContent: 'dddd',
+  weekHeaderStart: 'ddd D MMM',
+  weekHeaderEnd: 'ddd D MMM, YYYY',
+  weekContent: 'ddd D',
+  monthHeader: 'MMMM YYYY',
+  monthContent: 'ddd'
+}
+```
+
+[See the moment.js docs](http://momentjs.com/docs/#/displaying/format/) for specifics on the format strings.
+
+
+## Time Formatting
+You can customize the format of the time slot labels as well as the now time indicator by passing a moment format string to the following properties:
+
+* `timeSlotLabelFormat`
+* `nowTimeLabelFormat`
+
 
 ## Styles
 

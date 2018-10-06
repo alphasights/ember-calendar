@@ -6,7 +6,7 @@ import Component from '@ember/component';
 import moment from 'moment';
 
 export default Component.extend({
-  classNameBindings: [':as-calendar-timetable-content'],
+  classNameBindings: [':as-calendar-timetable__content'],
   attributeBindings: ['_style:style'],
 
   days: oneWay('model.days'),
@@ -30,10 +30,10 @@ export default Component.extend({
   _wasInserted: false,
 
   _style: computed(
+  'model.isMonthView',
   'timeSlotHeight',
   'timeSlots.length', function() {
-    return htmlSafe(`height: ${this.get('timeSlots.length') *
-                       this.get('timeSlotHeight')}px;`);
+      return htmlSafe(`height: ${this.get('model.isMonthView') ? '600px' : this.get('timeSlots.length') * this.get('timeSlotHeight')}px;`);
   }),
 
   _setWasInserted: on('didInsertElement', function() {
@@ -58,5 +58,13 @@ export default Component.extend({
     this.attrs.onSelectTime(
       moment(day.get('value')).add(timeSlot.get('time'))
     );
-  })
+  }),
+
+  actions: {
+    goTo: function (day) {
+      if (this.attrs['onNavigateToDay']) {
+        this.attrs['onNavigateToDay'](day);
+      }
+    }
+  }
 });

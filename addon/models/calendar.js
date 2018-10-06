@@ -1,10 +1,22 @@
 import { merge } from '@ember/polyfills';
 import { on } from '@ember/object/evented';
 import EmberObject, { computed } from '@ember/object';
+import range from '../utils/range';
 import moment from 'moment';
 import TimeSlot from './time-slot';
 import Day from './day';
 import OccurrenceProxy from './occurrence-proxy';
+
+const indexTypesMap = {
+  day: 'days',
+  week: 'weeks',
+  month: 'months',
+};
+const isoTypesMap = {
+  day: 'Day',
+  week: 'isoWeek',
+  month: 'Month',
+};
 
 export default EmberObject.extend({
   dayEndingTime: null,
@@ -14,49 +26,103 @@ export default EmberObject.extend({
   startFromDate: false,
   timeSlotDuration: null,
   occurrencePreview: null,
+  type: 'week',
+  dayNames: [],
+  showAllHours: true,
 
-  isInCurrentWeek: computed('week', '_currentWeek', function() {
-    return this.get('week').isSame(this.get('_currentWeek'));
+  indexType: computed('type', function () {
+    return indexTypesMap[this.get('type')];
+  }),
+
+  isoType: computed('type', function () {
+    return isoTypesMap[this.get('type')];
+  }),
+
+  isInCurrentPeriod: computed('period', '_currentPeriod', function () {
+    return this.get('period').isSame(this.get('_currentPeriod'));
+  }),
+
+  hasTimeSlots: computed('type', function () {
+    return this.get('type') !== 'month';
+  }),
+
+  isMonthView: computed('type', function () {
+    return this.get('type') === 'month';
+  }),
+
+  isWeekView: computed('type', function () {
+    return this.get('type') === 'week';
+  }),
+
+  isDayView: computed('type', function () {
+    return this.get('type') === 'day';
   }),
 
   timeSlots: computed(
     'dayStartingTime',
     'dayEndingTime',
-    'timeSlotDuration', function() {
-    return TimeSlot.buildDay({
-      startingTime: this.get('dayStartingTime'),
-      endingTime: this.get('dayEndingTime'),
-      duration: this.get('timeSlotDuration')
-    });
-  }),
+    'timeSlotDuration',
+    'showAllHours', function () {
+      return TimeSlot.buildDay({
+        timeZone: this.get('timeZone'),
+        startingTime: this.get('dayStartingTime'),
+        endingTime: this.get('dayEndingTime'),
+        duration: this.get('timeSlotDuration'),
+        showAllHours: this.get('showAllHours')
+      });
+    }),
 
-  days: computed(function() {
-    return Day.buildWeek({ calendar: this });
-  }),
+  days: computed('type', 'period', function () {
+    var res = null;
+    switch (this.get('type')) {
+    case 'day':
+      res = Day.buildDay({ calendar: this });
+      break;
+    case 'week':
+      res = Day.buildWeek({ calendar: this });
+      break;
+    case 'month':
+      res = Day.buildMonth({ calendar: this });
+      break;
 
-  week: computed('startFromDate', 'startingTime', function() {
-    if (this.get('startFromDate')) {
-      return moment(this.get('startingTime')).startOf('day');
-    } else {
-      return moment(this.get('startingTime')).startOf('isoWeek');
+    default:
+      break;
     }
+    return res;
   }),
 
-  _currentWeek: computed(function() {
-    return moment().startOf('isoWeek');
+  startDate: computed('startingTime', 'isoType', function () {
+    return moment(this.get('startingTime')).startOf(this.get('isoType'));
   }),
 
-  initializeCalendar: on('init', function() {
+  endDate: computed('startingTime', 'isoType', function () {
+    return moment(this.get('startingTime')).endOf(this.get('isoType'));
+  }),
+
+  period: computed('startingTime', 'timeZone', 'isoType', function () {
+    return moment(this.get('startingTime')).tz(this.get('timeZone')).startOf(this.get('isoType'));
+  }),
+
+  _currentPeriod: computed('timeZone', 'isoType', function () {
+    return moment().tz(this.get('timeZone')).startOf(this.get('isoType'));
+  }),
+
+  initializeCalendar: on('init', function () {
     if (this.get('startingTime') == null) {
-      this.goToCurrentWeek();
+      this.goToToday();
+    }
+    if (!this.get('dayNames') || !this.get('dayNames').length) {
+      this.generateDayNames();
     }
   }),
 
-  createOccurrence: function(options) {
-    var content = merge({
+  createOccurrence: function (options) {
+    var content = Ember.merge({
       endsAt: moment(options.startsAt)
         .add(this.get('defaultOccurrenceDuration')).toDate(),
-      title: this.get('defaultOccurrenceTitle')
+
+      title: this.get('defaultOccurrenceTitle'),
+      type: this.get('defaultOccurrenceType')
     }, options);
 
     return OccurrenceProxy.create({
@@ -65,11 +131,54 @@ export default EmberObject.extend({
     });
   },
 
-  navigateWeek: function(index) {
-    this.set('startingTime', moment(this.get('startingTime')).add(index, 'weeks'));
+  changeType: function (type) {
+    this.set('type', type);
   },
 
-  goToCurrentWeek: function() {
-    this.set('startingTime', moment());
+  navigate: function (index) {
+    const indexType = this.get('indexType');
+    const isoType = this.get('isoType');
+    const date = moment(this.get('startingTime')).add(index, indexType).startOf(isoType);
+
+    if (!this.checkIfDateInPeriod(date)) {
+      this.set('startingTime', date);
+    }
+  },
+  navigatePrevious: function () {
+    this.navigate(-1);
+  },
+  navigateNext: function () {
+    this.navigate(1);
+  },
+
+  goToDay: function (day) {
+    this.set('startingTime', moment(day).startOf('day'));
+  },
+  goToDayView: function (day) {
+    this.setProperties({
+      startingTime: moment(day).startOf('day'),
+      type: 'day'
+    });
+  },
+
+  goToToday: function () {
+    this.set('startingTime', moment().startOf('day'));
+  },
+
+  setStartTimeBasedOnType: function (type) {
+    this.set('startingTime', moment(this.get('startingTime')).startOf(isoTypesMap[type]));
+  },
+
+  generateDayNames: function () {
+    const date = moment().day(1);
+    this.set('dayNames', range(0, 7).map(() => {
+      const name = date.format(this.get('component.dateFormatOptions.monthContent'));
+      date.add(1, 'days');
+      return name;
+    }));
+  },
+
+  checkIfDateInPeriod: function (date) {
+    return this.get('period').isSame(moment(date).tz(this.get('timeZone')).startOf(this.get('isoType')));
   }
 });

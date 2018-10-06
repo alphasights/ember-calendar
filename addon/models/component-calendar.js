@@ -13,6 +13,7 @@ export default Calendar.extend({
   dayStartingTime: computedDuration('component.dayStartingTime'),
   dayEndingTime: computedDuration('component.dayEndingTime'),
   timeSlotDuration: computedDuration('component.timeSlotDuration'),
+  type: Ember.computed.oneWay('component.type'),
 
   defaultOccurrenceTitle: oneWay(
     'component.defaultOccurrenceTitle'
@@ -22,13 +23,15 @@ export default Calendar.extend({
     'component.defaultOccurrenceDuration'
   ),
 
-  occurrences: computed('component.occurrences.[]', function() {
-    let newOccurences = A();
+  defaultOccurrenceType: computedDuration(
+    'component.defaultOccurrenceType'
+  ),
 
-    this.get('component.occurrences').forEach((occurrence) => {
-      newOccurences.pushObject(OccurrenceProxy.create({ calendar: this, content: occurrence }));
+  occurrences: computed('component.occurrences.[]', function() {
+    return this.get('component.occurrences').map((occurrence) => {
+      return OccurrenceProxy.create({ calendar: this, content: occurrence });
     });
 
     return newOccurences;
-  })
+  });
 });

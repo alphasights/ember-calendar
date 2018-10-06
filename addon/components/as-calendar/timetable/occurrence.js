@@ -16,6 +16,7 @@ export default OccurrenceComponent.extend({
   isRemovable: true,
   dayWidth: oneWay('timetable.dayWidth'),
   referenceElement: oneWay('timetable.referenceElement'),
+  isEditable: true,
 
   _calendar: oneWay('model.calendar'),
   _dayEndingTime: oneWay('day.endingTime'),
@@ -62,6 +63,19 @@ export default OccurrenceComponent.extend({
         },
       });
     }
+
+    if (this.get('onClick')) {
+      interactable.on('tap', (event) => {
+        if (event.double) { return; }
+        Ember.run(this, this._tap, event);
+      });
+    }
+
+    if (this.get('onDoubleClick')) {
+      interactable.on('doubletap', (event) => {
+        Ember.run(this, this._doubleTap, event);
+      });
+    }
   }),
 
   _teardownInteractable: on('willDestroyElement', function() {
@@ -98,15 +112,17 @@ export default OccurrenceComponent.extend({
   _dragStart: function() {
     var $this = this.$();
     var $referenceElement = $(this.get('referenceElement'));
+    const preview = this.get('model').copy();
 
+    preview.set('isPreview', true);
     this.set('isInteracting', true);
-    this.set('_calendar.occurrencePreview', this.get('model').copy());
+    this.set('_calendar.occurrencePreview', preview);
     this.set('_dragVerticalOffset', 0);
     this.set('_dragTopDistance', $referenceElement.offset().top - $this.offset().top);
 
     this.set('_dragBottomDistance',
              ($referenceElement.offset().top + $referenceElement.height()) -
-             ($this.offset().top + $this.height()));
+      ($this.offset().top + $this.height()));
   },
 
   _dragMove: function(event) {
@@ -169,6 +185,16 @@ export default OccurrenceComponent.extend({
     $(document.documentElement).css('cursor', '');
   },
 
+  _tap: function(event) {
+    this.attrs.onClick(this.get('content'));
+    event.preventDefault();
+  },
+
+  _doubleTap: function(event) {
+    this.attrs.onDoubleClick(this.get('content'));
+    event.preventDefault();
+  },
+
   _validateAndSavePreview: function(changes) {
     if (this._validatePreviewChanges(changes)) {
       this.attrs.onUpdate(this.get('_preview.content'), changes);
@@ -192,6 +218,11 @@ export default OccurrenceComponent.extend({
   actions: {
     remove: function() {
       this.attrs.onRemove(this.get('content'));
+      this.set('isInteracting', false);
+    },
+    edit: function() {
+      this.attrs.onEdit(this.get('content'));
+      this.set('isInteracting', false);
     }
   }
 });

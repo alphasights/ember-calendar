@@ -11,6 +11,7 @@ var OccurrenceProxy = EmberObject.extend(Ember.Copyable, {
   endingTime: computedMoment('content.endsAt'),
   startingTime: computedMoment('content.startsAt'),
   title: oneWay('content.title'),
+  type: oneWay('content.type'),
 
   duration: computed('startingTime', 'endingTime', function() {
     return moment.duration(
@@ -30,7 +31,7 @@ var OccurrenceProxy = EmberObject.extend(Ember.Copyable, {
 
     return Day.create({
       calendar: this.get('calendar'),
-      offset: currentDay.dayOfYear() - firstDay.dayOfYear()
+      offset: this.get('startingTime').diff(this.get('calendar.startDate'), 'days')
     });
   }),
 
@@ -41,7 +42,8 @@ var OccurrenceProxy = EmberObject.extend(Ember.Copyable, {
       content: EmberObject.create({
         startsAt: this.get('content.startsAt'),
         endsAt: this.get('content.endsAt'),
-        title: this.get('content.title')
+        title: this.get('content.title'),
+        type: this.get('content.type'),
       })
     });
   }
