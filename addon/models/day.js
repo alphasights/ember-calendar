@@ -80,7 +80,7 @@ var Day = EmberObject.extend({
   }),
 
   _week: oneWay('calendar.week'),
-  _timeSlots: oneWay('calendar.timeSlots')
+  _timeSlots: oneWay('calendar.timeSlots'),
   isOutOfPeriod: computed('isInPeriod', function() {
     return !this.get('isInPeriod');
   }),
@@ -112,7 +112,7 @@ Day.reopenClass({
       calendarStartDate.clone().startOf('isoWeek').subtract(7, "days");
     const firstDateDifference = firstDate.date() - firstDate.daysInMonth() - 1;
 
-    return Ember.A(range(firstDateDifference, maxDaysNumber + firstDateDifference).map(function(dayOffset) {
+    return A(range(firstDateDifference, maxDaysNumber + firstDateDifference).map(function(dayOffset) {
       return Day.create({
         calendar: options.calendar,
         offset: dayOffset,
