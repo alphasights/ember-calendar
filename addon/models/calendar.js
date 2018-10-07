@@ -100,11 +100,11 @@ export default EmberObject.extend({
   }),
 
   period: computed('startingTime', 'timeZone', 'isoType', function () {
-    return moment(this.get('startingTime')).tz(this.get('timeZone')).startOf(this.get('isoType'));
+    return moment(this.get('startingTime')).startOf(this.get('isoType'));
   }),
 
   _currentPeriod: computed('timeZone', 'isoType', function () {
-    return moment().tz(this.get('timeZone')).startOf(this.get('isoType'));
+    return moment().startOf(this.get('isoType'));
   }),
 
   initializeCalendar: on('init', function () {
@@ -179,6 +179,6 @@ export default EmberObject.extend({
   },
 
   checkIfDateInPeriod: function (date) {
-    return this.get('period').isSame(moment(date).tz(this.get('timeZone')).startOf(this.get('isoType')));
+    return this.get('period').isSame(moment(date).startOf(this.get('isoType')));
   }
 });
