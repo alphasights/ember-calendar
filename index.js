@@ -9,8 +9,6 @@ module.exports = {
   included: function(app) {
     this._super.included.apply(this, arguments);
 
-    var options = app.options.emberCalendar || {};
-
     if (app.env === 'test') {
       app.import(path.join(app.bowerDirectory, 'jquery-simulate/jquery.simulate.js'), {
         type: 'test'
