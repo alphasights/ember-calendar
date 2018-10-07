@@ -5,7 +5,6 @@
     "modernizr": "2.8.3",
     "tooltipster": "3.3.0",
     "jquery-simulate": "1.0.1",
-    "fontawesome": "~4.5.0",
     "trackpad-scroll-emulator": "1.0.8"
   }
 }
