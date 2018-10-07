@@ -9,9 +9,6 @@ module.exports = {
   included: function(app) {
     this._super.included.apply(this, arguments);
 
-    app.import('vendor/jstz.js');
-    app.import('vendor/shims/jstz.js');
-
     var options = app.options.emberCalendar || {};
 
     if (!('includeFontAwesomeAssets' in options)) {
@@ -40,15 +37,6 @@ module.exports = {
         destDir: 'fonts'
       });
     }
-
-    app.import('vendor/ember-calendar/jstz.js', {
-      type: 'vendor',
-      exports: { 'jstz': ['default'] }
-    });
-
-    app.import('vendor/jstz.js', {
-      type: 'vendor'
-    });
 
     if (app.env === 'test') {
       app.import(path.join(app.bowerDirectory, 'jquery-simulate/jquery.simulate.js'), {
