@@ -20,24 +20,25 @@ var Day = EmberObject.extend({
     'startingTime',
     'endingTime', function () {
       return this.get('calendar.occurrences').filter((occurrence) => {
-        var startingTime = occurrence.get('startingTime');
+        const startingTime = occurrence.get('startingTime');
+        const endingTime = this.get('endingTime').subtract('minutes', 1);
 
         return startingTime >= this.get('startingTime') &&
           startingTime <= this.get('endingTime');
       });
-    }),
+  }),
 
-  shortOccurencesList: Ember.computed('occurrences', function () { // get first 3 occurences for month view
+  shortOccurencesList: computed('occurrences', function () { // get first 3 occurences for month view
     return this.get('occurrences').slice(0, this.get('shortListLimit'));
   }),
 
-  showMoreCount: Ember.computed('occurrences', function () { // get first 3 occurences for month view
+  showMoreCount: computed('occurrences', function () { // get first 3 occurences for month view
     const length = this.get('occurrences.length');
     const limit = this.get('shortListLimit');
     return length > limit ? length - limit : 0;
   }),
 
-  hasShowMore: Ember.computed('showMoreCount', function () { // get first 3 occurences for month view
+  hasShowMore: computed('showMoreCount', function () { // get first 3 occurences for month view
     return !!this.get('showMoreCount');
   }),
 
