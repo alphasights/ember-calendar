@@ -100,15 +100,15 @@
       background: #f2f2f2;
     }
 
-    &:hover {
-      background: #53ca53;
-      cursor: pointer;
-      color: #fff;
-
-      & .as-calendar-timetable__slot-item-time {
-        display: block;
-      }
-    }
+    // &:hover {
+    //   background: #53ca53;
+    //   cursor: pointer;
+    //   color: #fff;
+    //
+    //   & .as-calendar-timetable__slot-item-time {
+    //     display: block;
+    //   }
+    // }
   }
 
   @include bem-element('slot-item-time') {
