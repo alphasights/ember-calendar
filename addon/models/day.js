@@ -21,10 +21,10 @@ var Day = EmberObject.extend({
     'endingTime', function () {
       return this.get('calendar.occurrences').filter((occurrence) => {
         const startingTime = occurrence.get('startingTime');
-        const endingTime = this.get('endingTime').subtract('minutes', 1);
+        const endingTime = this.get('endingTime').subtract(1, 'minutes');
 
         return startingTime >= this.get('startingTime') &&
-          startingTime <= this.get('endingTime');
+          startingTime <= endingTime;
       });
   }),
 
