@@ -135,7 +135,7 @@ export default EmberObject.extend({
     this.set('type', type);
   },
 
-  navigate: function (index) {
+  navigate(index) {
     const indexType = this.get('indexType');
     const isoType = this.get('isoType');
     const date = moment(this.get('startingTime')).add(index, indexType).startOf(isoType);

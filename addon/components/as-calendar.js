@@ -50,12 +50,12 @@ export default Component.extend({
         startsAt: time.toDate()
       });
 
-      this.attrs['onAddOccurrence'](occurrence.get('content'));
+      this.get('onAddOccurrence')(occurrence.get('content'));
     },
 
     onNavigate: function(index) {
-      if (this.attrs['onNavigate']) {
-        this.attrs['onNavigate'](index);
+      if (this.get('onNavigate')) {
+        this.get('onNavigate')(index);
       }
     },
 
@@ -66,8 +66,8 @@ export default Component.extend({
     changeType: function (type) {
       this.get('model').changeType(type);
 
-      if (this.attrs['onTypeChange']) {
-        this.attrs['onTypeChange'](type);
+      if (this.get('onTypeChange')) {
+        this.get('onTypeChange')(type);
       }
     }
   }

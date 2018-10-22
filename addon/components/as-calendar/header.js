@@ -13,8 +13,8 @@ export default Component.extend({
     navigateNext: function () {
       this.get('model').navigateNext();
 
-      if (this.attrs['onNavigate']) {
-        this.attrs['onNavigate']({
+      if (this.get('onNavigate')) {
+        this.get('onNavigate')({
           view: this.get('model.type'),
           start: this.get('model.startDate'),
           end: this.get('model.endDate'),
@@ -25,8 +25,8 @@ export default Component.extend({
     navigatePrevious: function() {
       this.get('model').navigatePrevious();
 
-      if (this.attrs['onNavigate']) {
-        this.attrs['onNavigate']({
+      if (this.get('onNavigate')) {
+        this.get('onNavigate')({
           view: this.get('model.type'),
           start: this.get('model.startDate'),
           end: this.get('model.endDate'),
@@ -36,8 +36,8 @@ export default Component.extend({
     },
 
     changeType: function (type) {
-      if (this.attrs['onTypeChange']) {
-        this.attrs['onTypeChange'](type);
+      if (this.get('onTypeChange')) {
+        this.get('onTypeChange')(type);
       }
     },
 
