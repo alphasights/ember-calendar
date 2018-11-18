@@ -1,5 +1,5 @@
-import { merge } from '@ember/polyfills';
 import { on } from '@ember/object/evented';
+import { next } from '@ember/runloop';
 import EmberObject, { computed } from '@ember/object';
 import range from '../utils/range';
 import moment from 'moment';
@@ -152,17 +152,23 @@ export default EmberObject.extend({
   },
 
   goToDay: function (day) {
-    this.set('startingTime', moment(day).startOf('day'));
+    next(() => {
+      this.set('startingTime', moment(day).startOf('day'));
+    });
   },
   goToDayView: function (day) {
-    this.setProperties({
-      startingTime: moment(day).startOf('day'),
-      type: 'day'
+    next(() => {
+      this.setProperties({
+        startingTime: moment(day).startOf('day'),
+        type: 'day'
+      });
     });
   },
 
   goToToday: function () {
-    this.set('startingTime', moment().startOf('day'));
+    next(() => {
+      this.set('startingTime', moment().startOf('day'));
+    });
   },
 
   setStartTimeBasedOnType: function (type) {
