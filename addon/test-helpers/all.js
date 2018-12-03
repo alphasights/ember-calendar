@@ -1,6 +1,6 @@
 import { run } from '@ember/runloop';
 import $ from 'jquery';
-import { drag } from 'ember-calendar/tests/helpers/drag-drop';
+import { drag } from 'ember-drag-drop/test-support/helpers/drag-drop';
 
 var timeSlotHeight = function() {
   return $('.as-calendar-timetable-content')
