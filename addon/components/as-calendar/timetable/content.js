@@ -45,7 +45,7 @@ export default Component.extend({
   },
 
   click(event) {
-    var offset = this.$().offset();
+    var offset = this.element.getBoundingClientRect();
     var offsetX = event.pageX - Math.floor(offset.left);
     var offsetY = event.pageY - Math.floor(offset.top);
 

@@ -25,7 +25,7 @@ export default OccurrenceComponent.extend({
   _preview: oneWay('_calendar.occurrencePreview'),
 
   didInsertElement() {
-    var interactable = interact(this.$()[0]).on('mouseup', (event) => {
+    var interactable = interact(this.element).on('mouseup', (event) => {
       run(this, this._mouseUp, event);
     });
 
@@ -109,19 +109,19 @@ export default OccurrenceComponent.extend({
   },
 
   _dragStart: function() {
-    var $this = this.$();
-    var $referenceElement = $(this.get('referenceElement'));
+    var $this = this.element;
+    var $referenceElement = this.get('referenceElement');
     const preview = this.get('model').copy();
 
     preview.set('isPreview', true);
     this.set('isInteracting', true);
     this.set('_calendar.occurrencePreview', preview);
     this.set('_dragVerticalOffset', 0);
-    this.set('_dragTopDistance', $referenceElement.offset().top - $this.offset().top);
+    this.set('_dragTopDistance', $referenceElement.getBoundingClientRect().top - $this.getBoundingClientRect().top);
 
     this.set('_dragBottomDistance',
-             ($referenceElement.offset().top + $referenceElement.height()) -
-      ($this.offset().top + $this.height()));
+             ($referenceElement.getBoundingClientRect().top + $referenceElement.offsetHeight) -
+      ($this.getBoundingClientRect().top + $this.offsetHeight));
   },
 
   _dragMove: function(event) {
@@ -181,7 +181,7 @@ export default OccurrenceComponent.extend({
   },
 
   _mouseUp: function() {
-    $(document.documentElement).css('cursor', '');
+    document.documentElement.style.cursor = '';
   },
 
   _tap: function(event) {
