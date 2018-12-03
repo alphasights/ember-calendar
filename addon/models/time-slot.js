@@ -46,7 +46,7 @@ var TimeSlot = EmberObject.extend({
 
 TimeSlot.reopenClass({
   buildDay: function(options) {
-    var timeSlots = Ember.A();
+    var timeSlots = A();
     var durationStart = options.showAllHours ? moment.duration(0) : options.startingTime;
     var durationEnd = options.showAllHours ? moment.duration(1, 'day') : options.endingTime;
     var startOfDay = moment().startOf('day').add(durationStart);
