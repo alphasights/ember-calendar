@@ -99,7 +99,7 @@ Day.reopenClass({
     }));
   },
   buildDay: function(options) {
-    return Ember.A([Day.create({
+    return A([Day.create({
       calendar: options.calendar,
       offset: 0
     })
