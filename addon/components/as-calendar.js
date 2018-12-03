@@ -6,15 +6,6 @@ export default Component.extend({
   classNameBindings: [':as-calendar'],
   tagName: 'section',
 
-  dateFormatDefaults: {
-    dayHeader: 'MMMM DD, YYYY',
-    dayContent: 'dddd',
-    weekHeaderStart: 'ddd D MMM',
-    weekHeaderEnd: 'ddd D MMM, YYYY',
-    weekContent: 'ddd D',
-    monthHeader: 'MMMM YYYY',
-    monthContent: 'ddd'
-  },
   dateFormatOptions: null,
   dayEndingTime: '22:00',
   dayStartingTime: '8:00',
@@ -35,12 +26,24 @@ export default Component.extend({
   title: null,
   type: 'week',
 
-  _initializeModel: on('init', function() {
+  init() {
+    this._super(...arguments);
     // merge dateFormatDefaults defaults with anything that's passed in
     this.set('dateFormatOptions', Object.assign(this.get('dateFormatDefaults'), this.get('dateFormatOptions')));
 
     this.set('model', ComponentCalendar.create({ component: this }));
-  }),
+
+    const dateFormatDefaults = {
+      dayHeader: 'MMMM DD, YYYY',
+      dayContent: 'dddd',
+      weekHeaderStart: 'ddd D MMM',
+      weekHeaderEnd: 'ddd D MMM, YYYY',
+      weekContent: 'ddd D',
+      monthHeader: 'MMMM YYYY',
+      monthContent: 'ddd'
+    };
+    this.set('dateFormatDefaults', dateFormatDefaults);
+  },
 
   actions: {
     addOccurrence: function (time) {
