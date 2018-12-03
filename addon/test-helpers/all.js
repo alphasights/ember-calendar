@@ -1,5 +1,6 @@
 import { run } from '@ember/runloop';
 import $ from 'jquery';
+import { drag } from 'ember-calendar/tests/helpers/drag-drop';
 
 var timeSlotHeight = function() {
   return $('.as-calendar-timetable-content')
@@ -40,21 +41,22 @@ var selectTime = function(options) {
   });
 };
 
-var resizeOccurrence = function(occurrence, options) {
-  run(() => {
-    occurrence.find('.as-calendar-occurrence__resize-handle').simulate('drag', {
-      dx: 0,
-      dy: options.timeSlots * timeSlotHeight() + occurrence.height()
-    });
+var resizeOccurrence = async function(occurrence, options) {
+  let dragSelector = occurrence.find('.as-calendar-occurrence__resize-handle');
+  await drag(dragSelector, {
+    dropEndOptions: {
+      pageX: 0,
+      pageY: options.timeSlots * timeSlotHeight() + occurrence.height()
+    }
   });
 };
 
-var dragOccurrence = function(occurrence, options) {
-  run(() => {
-    occurrence.simulate('drag', {
-      dx: options.days * dayWidth(),
-      dy: options.timeSlots * timeSlotHeight() + occurrence.height()
-    });
+var dragOccurrence = async function(occurrence, options) {
+  await drag(occurrence, {
+    dropEndOptions: {
+      pageX: options.days * dayWidth(),
+      pageY: options.timeSlots * timeSlotHeight() + occurrence.height()
+    }
   });
 };
 
@@ -76,7 +78,6 @@ export {
   selectTime,
   resizeOccurrence,
   dragOccurrence,
-  selectTimeZone,
   selectNextWeek,
   selectPreviousWeek
 };

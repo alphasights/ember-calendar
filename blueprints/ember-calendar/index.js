@@ -20,8 +20,7 @@ module.exports = {
       ]);
     }).then(function() {
       return self.addBowerPackagesToProject([
-        { name: 'interact', target: 'unstable' },
-        { name: 'jquery-simulate', target: '1.0.1' }
+        { name: 'interact', target: 'unstable' }
       ]);
     });
   }
