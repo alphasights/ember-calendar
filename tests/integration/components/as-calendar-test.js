@@ -1,4 +1,4 @@
-import { find, findAll, render } from '@ember/test-helpers';
+import { find, findAll, render, click } from '@ember/test-helpers';
 import { run } from '@ember/runloop';
 import $ from 'jquery';
 import { A } from '@ember/array';
@@ -23,9 +23,7 @@ module('AsCalendarComponent', function(hooks) {
   hooks.beforeEach(function() {
     this.actions = {};
     this.send = (actionName, ...args) => this.actions[actionName].apply(this, args);
-  });
 
-  hooks.beforeEach(function() {
     this.set('occurrences', A());
 
     this.actions.calendarAddOccurrence = (occurrence) => {
@@ -54,11 +52,11 @@ module('AsCalendarComponent', function(hooks) {
         onRemoveOccurrence=(action "calendarRemoveOccurrence")}}
     `);
 
-    assert.equal($('.as-calendar-occurrence').length, 0, 'it shows an empty calendar');
+    assert.equal(findAll('.as-calendar-occurrence').length, 0, 'it shows an empty calendar');
 
     selectTime({ day: 0, timeSlot: 0 });
 
-    assert.equal($('.as-calendar-occurrence').length, 1, 'it adds the occurrence to the calendar');
+    assert.equal(findAll('.as-calendar-occurrence').length, 1, 'it adds the occurrence to the calendar');
     assert.ok(this.get('occurrences.firstObject').startsAt instanceof Date, 'startsAt is a Date');
     assert.ok(this.get('occurrences.firstObject').endsAt instanceof Date, 'endsAt is a Date');
   });
@@ -78,13 +76,13 @@ module('AsCalendarComponent', function(hooks) {
 
     selectTime({ day: 0, timeSlot: 0 });
 
-    assert.equal($('.as-calendar-occurrence').length, 1, 'it adds the occurrence to the calendar');
+    assert.equal(findAll('.as-calendar-occurrence').length, 1, 'it adds the occurrence to the calendar');
 
     run(() => {
-      $('.as-calendar-occurrence .as-calendar-occurrence__remove').click();
+      click('.as-calendar-occurrence .as-calendar-occurrence__remove');
     });
 
-    assert.equal($('.as-calendar-occurrence').length, 0, 'it removes the occurrence from the calendar');
+    assert.equal(findAll('.as-calendar-occurrence').length, 0, 'it removes the occurrence from the calendar');
   });
 
 
@@ -104,13 +102,13 @@ module('AsCalendarComponent', function(hooks) {
 
     selectTime({ day: 0, timeSlot: 0 });
 
-    assert.equal($('.as-calendar-occurrence').length, 1,
+    assert.equal(findAll('.as-calendar-occurrence').length, 1,
       'it adds the occurrence to the calendar'
     );
 
-    resizeOccurrence($('.as-calendar-occurrence'), { timeSlots: 2 });
+    resizeOccurrence(find('.as-calendar-occurrence'), { timeSlots: 2 });
 
-    assert.equal($('.as-calendar-occurrence').height(), timeSlotHeight() * 3,
+    assert.equal(find('.as-calendar-occurrence').offsetHeight, timeSlotHeight() * 3,
       'it resizes the occurrence');
   });
 
@@ -130,12 +128,12 @@ module('AsCalendarComponent', function(hooks) {
     selectTime({ day: 0, timeSlot: 0 });
 
     assert.equal(findAll('.as-calendar-occurrence').length, 1, 'it adds the occurrence to the calendar');
-    let inMonday = this.$(testSelector('day-id', '0')).find('.as-calendar-occurrence').length === 1;
+    let inMonday = find(testSelector('day-id', '0')).find('.as-calendar-occurrence').length === 1;
     assert.ok(inMonday);
 
-    dragOccurrence(this.$('.as-calendar-occurrence'), { days: 2, timeSlots: 4 });
+    dragOccurrence(find('.as-calendar-occurrence'), { days: 2, timeSlots: 4 });
 
-    let inWednesday = this.$(testSelector('day-id', '2')).find('.as-calendar-occurrence').length === 1;
+    let inWednesday = find(testSelector('day-id', '2')).find('.as-calendar-occurrence').length === 1;
     assert.ok(inWednesday);
   });
 
