@@ -25,6 +25,7 @@
     "ember-cli-babel": "^6.16.0",
     "ember-cli-moment-shim": "^3.7.1",
     "ember-cli-sass": "6.2.0",
+    "ember-cli-shims": "^1.2.0",
     "ember-lodash": "^4.17.4",
     "ember-moment": "^7.8.0",
     "ember-rl-dropdown": "^0.10.1",
