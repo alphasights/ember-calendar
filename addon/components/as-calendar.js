@@ -1,4 +1,3 @@
-import { on } from '@ember/object/evented';
 import Component from '@ember/component';
 import ComponentCalendar from 'ember-calendar/models/component-calendar';
 
@@ -29,9 +28,6 @@ export default Component.extend({
   init() {
     this._super(...arguments);
     // merge dateFormatDefaults defaults with anything that's passed in
-    this.set('dateFormatOptions', Object.assign(this.get('dateFormatDefaults'), this.get('dateFormatOptions')));
-
-    this.set('model', ComponentCalendar.create({ component: this }));
 
     const dateFormatDefaults = {
       dayHeader: 'MMMM DD, YYYY',
@@ -42,7 +38,9 @@ export default Component.extend({
       monthHeader: 'MMMM YYYY',
       monthContent: 'ddd'
     };
-    this.set('dateFormatDefaults', dateFormatDefaults);
+    this.set('dateFormatOptions', Object.assign(dateFormatDefaults, this.get('dateFormatOptions')));
+
+    this.set('model', ComponentCalendar.create({ component: this }));
   },
 
   actions: {

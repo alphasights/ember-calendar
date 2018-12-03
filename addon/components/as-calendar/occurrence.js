@@ -1,4 +1,3 @@
-import { on } from '@ember/object/evented';
 import { htmlSafe } from '@ember/template';
 import { computed } from '@ember/object';
 import { oneWay } from '@ember/object/computed';
@@ -55,7 +54,7 @@ export default Component.extend({
             height: ${this.get('_height')}px;`);
   }),
 
-  _stopPropagation: on('click', function(event) {
+  click(event) {
     event.stopPropagation();
-  }),
+  },
 });

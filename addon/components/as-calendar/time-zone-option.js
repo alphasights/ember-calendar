@@ -1,4 +1,3 @@
-import { on } from '@ember/object/evented';
 import { computed } from '@ember/object';
 import { oneWay } from '@ember/object/computed';
 import Component from '@ember/component';
@@ -16,7 +15,7 @@ export default Component.extend({
       return this.get('selectedOption.value') === this.get('option.value');
   }),
 
-  _selectOption: on('click', function() {
-    this.attrs.onSelect(this.get('option.value'));
-  })
+  click() {
+    this.get('onSelect')(this.get('option.value'));
+  }
 });

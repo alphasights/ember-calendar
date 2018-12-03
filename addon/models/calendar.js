@@ -1,5 +1,4 @@
 import { merge } from '@ember/polyfills';
-import { on } from '@ember/object/evented';
 import EmberObject, { computed } from '@ember/object';
 import range from '../utils/range';
 import moment from 'moment';
@@ -27,7 +26,6 @@ export default EmberObject.extend({
   timeSlotDuration: null,
   occurrencePreview: null,
   type: 'week',
-  dayNames: [],
   showAllHours: true,
 
   indexType: computed('type', function () {
@@ -107,17 +105,19 @@ export default EmberObject.extend({
     return moment().startOf(this.get('isoType'));
   }),
 
-  initializeCalendar: on('init', function () {
+  init() {
+    this._super(...arguments);
     if (this.get('startingTime') == null) {
       this.goToToday();
     }
     if (!this.get('dayNames') || !this.get('dayNames').length) {
       this.generateDayNames();
     }
-  }),
+    this.dayNames = [];
+  },
 
   createOccurrence: function (options) {
-    var content = Ember.merge({
+    var content = merge({
       endsAt: moment(options.startsAt)
         .add(this.get('defaultOccurrenceDuration')).toDate(),
 

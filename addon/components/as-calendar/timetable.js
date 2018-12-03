@@ -1,6 +1,8 @@
 import { htmlSafe } from '@ember/template';
 import { computed } from '@ember/object';
 import { oneWay } from '@ember/object/computed';
+import { later } from '@ember/runloop';
+import { cancel } from '@ember/runloop';
 import Component from '@ember/component';
 import moment from 'moment';
 import computedDuration from 'ember-calendar/macros/computed-duration';
@@ -22,10 +24,10 @@ export default Component.extend({
 
   startOfWeek: moment().startOf('isoWeek').day(),
 
-  _dayStartingTime: computed('model.showAllHours', 'model.dayStartingTime', function () {
+  _dayStartingTime: computed('model.{showAllHours,dayStartingTime}', function () {
     return this.get('model.showAllHours') ? moment.duration(0) : this.get('model.dayStartingTime');
   }),
-  _dayEndingTime: computed('model.showAllHours', 'model.dayEndingTime', function () {
+  _dayEndingTime: computed('model.{showAllHours,dayEndingTime}', function () {
     return this.get('model.showAllHours') ? moment.duration(1, 'day') : this.get('model.dayEndingTime');
   }),
   now: moment(),
@@ -101,7 +103,7 @@ export default Component.extend({
         return false;
       }
 
-      that._timerId = Ember.run.later(function () {
+      that._timerId = later(function () {
         that.set('now', moment());
         timer();
       }, 60 * 1000);
@@ -114,14 +116,14 @@ export default Component.extend({
     this._super(...arguments);
     this.set('isTimerOn', false);
     if (this._timerId) {
-      Ember.run.cancel(this._timerId);
+      cancel(this._timerId);
     }
   },
 
   actions: {
     goTo: function (day) {
-      if (this.attrs['onNavigateToDay']) {
-        this.attrs['onNavigateToDay'](day);
+      if (this.get('onNavigateToDay')) {
+        this.get('onNavigateToDay')(day);
       }
     }
   }

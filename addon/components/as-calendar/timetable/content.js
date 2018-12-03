@@ -1,4 +1,3 @@
-import { on } from '@ember/object/evented';
 import { htmlSafe } from '@ember/template';
 import { computed } from '@ember/object';
 import { oneWay } from '@ember/object/computed';
@@ -36,15 +35,16 @@ export default Component.extend({
       return htmlSafe(`height: ${this.get('model.isMonthView') ? '600px' : this.get('timeSlots.length') * this.get('timeSlotHeight')}px;`);
   }),
 
-  _setWasInserted: on('didInsertElement', function() {
+  didInsertElement() {
     this.set('_wasInserted', true);
-  }),
+  },
 
-  _registerWithParent: on('init', function() {
+  init() {
+    this._super(...arguments);
     this.set('timetable.contentComponent', this);
-  }),
+  },
 
-  _selectTime: on('click', function(event) {
+  click(event) {
     var offset = this.$().offset();
     var offsetX = event.pageX - Math.floor(offset.left);
     var offsetY = event.pageY - Math.floor(offset.top);
@@ -55,15 +55,15 @@ export default Component.extend({
 
     var timeSlot = this.get('timeSlots').objectAt(timeSlotIndex);
 
-    this.attrs.onSelectTime(
+    this.get('onSelectTime')(
       moment(day.get('value')).add(timeSlot.get('time'))
     );
-  }),
+  },
 
   actions: {
     goTo: function (day) {
-      if (this.attrs['onNavigateToDay']) {
-        this.attrs['onNavigateToDay'](day);
+      if (this.get('onNavigateToDay')) {
+        this.get('onNavigateToDay')(day);
       }
     }
   }

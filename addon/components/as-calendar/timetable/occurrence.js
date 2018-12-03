@@ -1,6 +1,5 @@
 import $ from 'jquery';
 import { run } from '@ember/runloop';
-import { on } from '@ember/object/evented';
 import { oneWay } from '@ember/object/computed';
 import moment from 'moment';
 import interact from 'interactjs';
@@ -25,7 +24,7 @@ export default OccurrenceComponent.extend({
   _dragVerticalOffset: null,
   _preview: oneWay('_calendar.occurrencePreview'),
 
-  _setupInteractable: on('didInsertElement', function() {
+  didInsertElement() {
     var interactable = interact(this.$()[0]).on('mouseup', (event) => {
       run(this, this._mouseUp, event);
     });
@@ -67,20 +66,20 @@ export default OccurrenceComponent.extend({
     if (this.get('onClick')) {
       interactable.on('tap', (event) => {
         if (event.double) { return; }
-        Ember.run(this, this._tap, event);
+        run(this, this._tap, event);
       });
     }
 
     if (this.get('onDoubleClick')) {
       interactable.on('doubletap', (event) => {
-        Ember.run(this, this._doubleTap, event);
+        run(this, this._doubleTap, event);
       });
     }
-  }),
+  },
 
-  _teardownInteractable: on('willDestroyElement', function() {
+  willDestroyElement() {
     interact(this.$()[0]).off();
-  }),
+  },
 
   _resizeStart: function() {
     this.set('isInteracting', true);
@@ -101,7 +100,7 @@ export default OccurrenceComponent.extend({
   },
 
   _resizeEnd: function() {
-    this.attrs.onUpdate(this.get('content'), {
+    this.get('onUpdate')(this.get('content'), {
       endsAt: this.get('_preview.content.endsAt')
     });
 
@@ -169,7 +168,7 @@ export default OccurrenceComponent.extend({
   },
 
   _dragEnd: function() {
-    this.attrs.onUpdate(this.get('content'), {
+    this.get('onUpdate')(this.get('content'), {
       startsAt: this.get('_preview.content.startsAt'),
       endsAt: this.get('_preview.content.endsAt')
     });
@@ -186,18 +185,18 @@ export default OccurrenceComponent.extend({
   },
 
   _tap: function(event) {
-    this.attrs.onClick(this.get('content'));
+    this.get('onClick')(this.get('content'));
     event.preventDefault();
   },
 
   _doubleTap: function(event) {
-    this.attrs.onDoubleClick(this.get('content'));
+    this.get('onDoubleClick')(this.get('content'));
     event.preventDefault();
   },
 
   _validateAndSavePreview: function(changes) {
     if (this._validatePreviewChanges(changes)) {
-      this.attrs.onUpdate(this.get('_preview.content'), changes);
+      this.get('onUpdate')(this.get('_preview.content'), changes);
     }
   },
 
@@ -217,11 +216,11 @@ export default OccurrenceComponent.extend({
 
   actions: {
     remove: function() {
-      this.attrs.onRemove(this.get('content'));
+      this.get('onRemove')(this.get('content'));
       this.set('isInteracting', false);
     },
     edit: function() {
-      this.attrs.onEdit(this.get('content'));
+      this.get('onEdit')(this.get('content'));
       this.set('isInteracting', false);
     }
   }
