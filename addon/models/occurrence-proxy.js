@@ -10,29 +10,22 @@ var OccurrenceProxy = Ember.Object.extend(Ember.Copyable, {
   startingTime: computedMoment('content.startsAt'),
   title: Ember.computed.oneWay('content.title'),
 
-  duration: Ember.computed('startingTime', 'endingTime', function() {
+  duration: Ember.computed('startingTime', 'endingTime', function () {
     return moment.duration(
       this.get('endingTime').diff(this.get('startingTime'))
     );
   }),
 
-  day: Ember.computed('startingTime', 'calendar', 'calendar.{startingTime,startFromDate}', function() {
+  day: Ember.computed('startingTime', 'calendar', 'calendar.{startingTime,startFromDate}', function () {
     let currentDay = this.get('startingTime');
-    let firstDay;
-
-    if (this.get('calendar.startFromDate')) {
-      firstDay = this.get('calendar.startingTime');
-    } else {
-      firstDay = this.get('calendar.startingTime').startOf('isoWeek');
-    }
 
     return Day.create({
       calendar: this.get('calendar'),
-      offset: currentDay.dayOfYear() - firstDay.dayOfYear()
+      offset: currentDay.isoWeekday() - 1
     });
   }),
 
-  copy: function() {
+  copy: function () {
     return OccurrenceProxy.create({
       calendar: this.get('calendar'),
 
