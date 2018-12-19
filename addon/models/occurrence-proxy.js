@@ -30,7 +30,7 @@ var OccurrenceProxy = Ember.Object.extend(Ember.Copyable, {
     if (currentDay.year() === firstDay.year()) {
       offset = currentDay.dayOfYear() - firstDay.dayOfYear();
     } else {
-      offset = Math.ceil(currentDay.diff(firstDay, 'days', true));
+      offset = currentDay.startOf('day').diff(firstDay.startOf('day'), 'days', true);
     }
 
     return Day.create({
