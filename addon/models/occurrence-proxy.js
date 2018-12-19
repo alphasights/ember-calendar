@@ -25,9 +25,9 @@ var OccurrenceProxy = Ember.Object.extend(Ember.Copyable, {
     } else {
       firstDay = this.get('calendar.startingTime').startOf('isoWeek');
     }
-    let firstDayclone = firstDay.clone()
-    let offset = currentDay.startOf('day').diff(firstDayclone.startOf('day'), 'days', true);
 
+    let firstDayclone = firstDay.clone()
+    let offset = currentDay.startOf('day').diff(firstDayclone.startOf('day'), 'days');
 
     return Day.create({
       calendar: this.get('calendar'),
