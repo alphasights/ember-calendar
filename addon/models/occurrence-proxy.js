@@ -18,10 +18,24 @@ var OccurrenceProxy = Ember.Object.extend(Ember.Copyable, {
 
   day: Ember.computed('startingTime', 'calendar', 'calendar.{startingTime,startFromDate}', function () {
     let currentDay = this.get('startingTime');
+    let firstDay;
+
+    if (this.get('calendar.startFromDate')) {
+      firstDay = this.get('calendar.startingTime');
+    } else {
+      firstDay = this.get('calendar.startingTime').startOf('isoWeek');
+    }
+
+    let offset;
+    if (currentDay.year() === firstDay.year()) {
+      offset = currentDay.dayOfYear() - firstDay.dayOfYear();
+    } else {
+      offset = currentDay.diff(firstDay, 'days');
+    }
 
     return Day.create({
       calendar: this.get('calendar'),
-      offset: currentDay.isoWeekday() - 1
+      offset: offset
     });
   }),
 
