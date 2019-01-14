@@ -165,10 +165,6 @@ export default EmberObject.extend({
     this.set('startingTime', moment().startOf('day'));
   },
 
-  setStartTimeBasedOnType: function (type) {
-    this.set('startingTime', moment(this.get('startingTime')).startOf(isoTypesMap[type]));
-  },
-
   generateDayNames: function () {
     const date = moment().day(1);
     this.set('dayNames', range(0, 7).map(() => {
