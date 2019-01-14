@@ -78,7 +78,7 @@ export default OccurrenceComponent.extend({
   },
 
   willDestroyElement() {
-    interact(this.$()[0]).off();
+    interact(this.element).off();
   },
 
   _resizeStart: function() {
