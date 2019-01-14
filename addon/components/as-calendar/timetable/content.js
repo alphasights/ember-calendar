@@ -20,7 +20,7 @@ export default Component.extend({
 
   dayWidth: computed(function() {
     if (this.get('_wasInserted')) {
-      return this.$().width() / this.get('days.length');
+      return this.element.offsetWidth / this.get('days.length');
     } else {
       return 0;
     }
