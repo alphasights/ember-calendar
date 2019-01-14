@@ -1,15 +1,13 @@
 <h4>Day starting and ending time:</h4>
 <div class="time-selects-wrapper">
   <div class="time-select">
-    {{#rl-dropdown-container dropdownExpanded=showStartResults}}
-      {{#rl-dropdown-toggle}}
+    {{#basic-dropdown as |dd|}}
+      {{#dd.trigger}}
         <span>{{selectedStartingTime}}</span>
         <i></i>
-      {{/rl-dropdown-toggle}}
+      {{/dd.trigger}}
 
-      {{#rl-dropdown closeOnChildClick=".results"}}
-        {{#liquid-if showStartResults use="crossFade" containerless=true}}
-
+      {{#dd.content}}
           <div class="results">
             <ul>
               {{#each timeOptions as |option|}}
@@ -19,21 +17,18 @@
               {{/each}}
             </ul>
           </div>
-        {{/liquid-if}}
-      {{/rl-dropdown}}
-    {{/rl-dropdown-container}}
+      {{/dd.content}}
+    {{/basic-dropdown}}
   </div>
 
   <div class="time-select">
-    {{#rl-dropdown-container dropdownExpanded=showEndResults}}
-      {{#rl-dropdown-toggle}}
+    {{#basic-dropdown as |dd|}}
+      {{#dd.toggle}}
         <span>{{selectedEndingTime}}</span>
         <i></i>
-      {{/rl-dropdown-toggle}}
+      {{/dd.toggle}}
 
-      {{#rl-dropdown closeOnChildClick=".results"}}
-        {{#liquid-if showEndResults use="crossFade" containerless=true}}
-
+      {{#dd.content}}
           <div class="results">
             <ul>
               {{#each timeOptions as |option|}}
@@ -43,9 +38,8 @@
               {{/each}}
             </ul>
           </div>
-        {{/liquid-if}}
-      {{/rl-dropdown}}
-    {{/rl-dropdown-container}}
+      {{/dd.content}}
+    {{/basic-dropdown}}
   </div>
 </div>
 {{as-calendar
