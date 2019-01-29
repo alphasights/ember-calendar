@@ -75,7 +75,6 @@ export {
   selectTime,
   resizeOccurrence,
   dragOccurrence,
-  selectTimeZone,
   selectNextWeek,
   selectPreviousWeek
 };
