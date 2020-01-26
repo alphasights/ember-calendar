@@ -118,7 +118,7 @@
   }
 
   @include bem-element('slot-item-check') {
-    @include icon(check);
+    //@include icon(check);
   }
 
   @include bem-element('days') {

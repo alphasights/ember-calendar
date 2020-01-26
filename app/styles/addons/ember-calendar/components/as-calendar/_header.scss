@@ -51,13 +51,13 @@
   @include bem-element('nav-group-action') {
     @extend %button;
 
-    @include bem-modifier('previous') {
-      @include icon('caret-left');
-    }
-
-    @include bem-modifier('next') {
-      @include icon('caret-right');
-    }
+    // @include bem-modifier('previous') {
+    //   @include icon('caret-left');
+    // }
+    //
+    // @include bem-modifier('next') {
+    //   @include icon('caret-right');
+    // }
 
     @include bem-modifier('current-period') {
       text-transform: uppercase;

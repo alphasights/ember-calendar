@@ -19,7 +19,7 @@
     }
 
     i {
-      @include icon(caret-down);
+      //@include icon(caret-down);
 
       transition: transform 200ms ease;
     }
@@ -67,7 +67,7 @@
         width: dropdown-settings(search, icon-size);
 
         i {
-          @include icon(search);
+          //@include icon(search);
 
           color: color(primary);
           line-height: dropdown-settings(search, icon-size);
