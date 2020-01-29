@@ -35,22 +35,6 @@ $global-transition-duration: .325s !default;
   }
 }
 
-// @mixin icon($name, $selector: '') {
-//   @extend .fa-#{$name};
-//
-//   @if $selector == '' {
-//     @include fa-icon;
-//   } @else {
-//     &:#{$selector} {
-//       @include fa-icon;
-//     }
-//   }
-// }
-//
-// @mixin button-icon($icon) {
-//   @include icon($icon);
-// }
-
 $colors: (
   text: (
     base: #222222,

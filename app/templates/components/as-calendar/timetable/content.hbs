@@ -6,7 +6,7 @@
           {{#each timeSlots as |timeSlot|}}
               <li class="as-calendar-timetable__slot-item {{if timeSlot.isActive 'as-calendar-timetable__slot-item--is-active' 'as-calendar-timetable__slot-item--is-disabled'}}" style={{timeSlotStyle}}>
                 <div class="as-calendar-timetable__slot-item-time">
-                  <span class="as-calendar-timetable__slot-item-check" aria-hidden="true"></span> {{timeSlot.timeLabel}}
+                  <span class="as-calendar-timetable__slot-item-check" aria-hidden="true">{{fa-icon "check"}}</span> {{timeSlot.timeLabel}}
                 </div>
               </li>
             {{/each}}

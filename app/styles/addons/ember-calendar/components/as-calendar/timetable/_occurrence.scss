@@ -26,12 +26,10 @@
     }
 
     @include bem-element('remove') {
-      //@include icon(times);
       right: 0;
     }
 
     @include bem-element('edit') {
-      //@include icon(pencil);
       right: 15px;
     }
   }
