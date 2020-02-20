@@ -117,10 +117,6 @@
     font-weight: bold;
   }
 
-  @include bem-element('slot-item-check') {
-    @include icon(check);
-  }
-
   @include bem-element('days') {
     height: 100%;
     left: 0;

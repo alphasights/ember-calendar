@@ -7,10 +7,10 @@
 
   {{#unless isInteracting}}
     {{#if isEditable}}
-      <a {{action "edit" bubbles=false}} class="as-calendar-occurrence__edit"></a>
+      <a {{action "edit" bubbles=false}} class="as-calendar-occurrence__edit">{{fa-icon "edit"}}</a>
     {{/if}}
     {{#if isRemovable}}
-      <a {{action "remove" bubbles=false}} class="as-calendar-occurrence__remove"></a>
+      <a {{action "remove" bubbles=false}} class="as-calendar-occurrence__remove">{{fa-icon "times"}}</a>
     {{/if}}
 
     {{#if isResizable}}
