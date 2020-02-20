@@ -40,7 +40,10 @@ export default Component.extend({
   nowTime: computed('now', function () {
     return this.get('now').format(this.get('nowTimeLabelFormat'));
   }),
-  computedNowTime: computedDuration('nowTime'),
+  _formattedNow: computed('now', function() {
+    return this.get('now').format('kk:mm');
+  }),
+  computedNowTime: computedDuration('_formattedNow'),
   timeFromStartOfTheDay: computed('computedNowTime', '_dayStartingTime', function () {
     return this.get('computedNowTime').asMilliseconds() - this.get('_dayStartingTime').asMilliseconds();
   }),
