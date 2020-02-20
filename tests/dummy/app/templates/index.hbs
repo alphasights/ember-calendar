@@ -1,10 +1,60 @@
+<h4>Day starting and ending time:</h4>
+<div class="time-selects-wrapper">
+  <div class="time-select">
+    {{#basic-dropdown as |dd|}}
+      {{#dd.trigger}}
+        <span>{{selectedStartingTime}}</span>
+        <i></i>
+      {{/dd.trigger}}
+
+      {{#dd.content}}
+          <div class="results">
+            <ul>
+              {{#each timeOptions as |option|}}
+                <li {{action "onStartTimeSelected" option}}>
+                  {{option}}
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+      {{/dd.content}}
+    {{/basic-dropdown}}
+  </div>
+
+  <div class="time-select">
+    {{#basic-dropdown as |dd|}}
+      {{#dd.toggle}}
+        <span>{{selectedEndingTime}}</span>
+        <i></i>
+      {{/dd.toggle}}
+
+      {{#dd.content}}
+          <div class="results">
+            <ul>
+              {{#each timeOptions as |option|}}
+                <li {{action "onEndTimeSelected" option}}>
+                  {{option}}
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+      {{/dd.content}}
+    {{/basic-dropdown}}
+  </div>
+</div>
 {{as-calendar
   title="Ember Calendar"
   occurrences=occurrences
-  defaultTimeZoneQuery="New York|London|Dubai|Hong Kong"
-  dayStartingTime="7:00"
-  dayEndingTime="22:00"
+  dateFormatOptions=dateFormatOptions
+  defaultOccurrenceType="type"
+  dayStartingTime=dayStartingTime
+  dayEndingTime=dayEndingTime
+  nowTimeLabelFormat=nowTimeLabelFormat
+  timeSlotLabelFormat=timeSlotLabelFormat
   timeSlotDuration="00:30"
+  onNavigate=(action "calendarNavigate")
+  onClickOccurrence=(action "calendarClickOccurrence")
   onAddOccurrence=(action "calendarAddOccurrence")
   onUpdateOccurrence=(action "calendarUpdateOccurrence")
+  onEditOccurrence=(action "calendarEditOccurrence")
   onRemoveOccurrence=(action "calendarRemoveOccurrence")}}

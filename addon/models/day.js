@@ -1,28 +1,48 @@
+import { A } from '@ember/array';
+import { oneWay } from '@ember/object/computed';
+import EmberObject, { computed } from '@ember/object';
 import _ from 'lodash';
 import moment from 'moment';
-import Ember from 'ember';
+import range from '../utils/range';
 
-var Day = Ember.Object.extend({
+var Day = EmberObject.extend({
   calendar: null,
   offset: 0,
+  isInPeriod: true,
+  shortListLimit: 2,
 
-  value: Ember.computed('_week', 'offset', function() {
-    return moment(this.get('_week')).add(this.get('offset'), 'day');
+  value: computed('_period', 'offset', function () {
+    return moment(this.get('_period')).clone().add(this.get('offset'), 'day');
   }),
 
-  occurrences: Ember.computed(
+  occurrences: computed(
     'calendar.occurrences.@each.startingTime',
     'startingTime',
-    'endingTime', function() {
-    return this.get('calendar.occurrences').filter((occurrence) => {
-      var startingTime = occurrence.get('startingTime');
+    'endingTime', function () {
+      return this.get('calendar.occurrences').filter((occurrence) => {
+        const startingTime = occurrence.get('startingTime');
+        const endingTime = this.get('endingTime').subtract(1, 'minutes');
 
-      return startingTime.isSameOrAfter(this.get('startingTime')) &&
-             startingTime.isSameOrBefore(this.get('endingTime'));
-    });
+        return startingTime >= this.get('startingTime') &&
+          startingTime <= endingTime;
+      });
   }),
 
-  occurrencePreview: Ember.computed(
+  shortOccurencesList: computed('occurrences', function () { // get first 3 occurences for month view
+    return this.get('occurrences').slice(0, this.get('shortListLimit'));
+  }),
+
+  showMoreCount: computed('occurrences', function () { // get first 3 occurences for month view
+    const length = this.get('occurrences.length');
+    const limit = this.get('shortListLimit');
+    return length > limit ? length - limit : 0;
+  }),
+
+  hasShowMore: computed('showMoreCount', function () { // get first 3 occurences for month view
+    return !!this.get('showMoreCount');
+  }),
+
+  occurrencePreview: computed(
     'calendar.occurrencePreview.startingTime',
     'startingTime',
     'endingTime', function() {
@@ -42,34 +62,62 @@ var Day = Ember.Object.extend({
     }
   }),
 
-  startingTime: Ember.computed(
+  startingTime: computed(
     'value',
-    '_timeSlots.firstObject.time', function() {
-    return moment(this.get('value'))
+    '_timeSlots.firstObject.time', function () {
+    return moment(this.get('value')).clone().startOf('day')
       .add(this.get('_timeSlots.firstObject.time'));
   }),
 
-  endingTime: Ember.computed(
+  endingTime: computed(
     'value',
     '_timeSlots.lastObject.endingTime', function() {
-    return moment(this.get('value'))
+    return moment(this.get('value')).clone().startOf('day')
       .add(this.get('_timeSlots.lastObject.endingTime'));
   }),
 
-  isToday: Ember.computed('value', function() {
+  isToday: computed('value', function() {
     return this.get('value').isSame(moment(), 'day');
   }),
 
-  _week: Ember.computed.oneWay('calendar.week'),
-  _timeSlots: Ember.computed.oneWay('calendar.timeSlots')
+  _week: oneWay('calendar.week'),
+  _timeSlots: oneWay('calendar.timeSlots'),
+  isOutOfPeriod: computed('isInPeriod', function() {
+    return !this.get('isInPeriod');
+  }),
+
+  _period: oneWay('calendar.period'),
 });
 
 Day.reopenClass({
   buildWeek: function(options) {
-    return Ember.A(_.range(0, 7).map(function(dayOffset) {
+    return A(_.range(0, 7).map(function(dayOffset) {
       return Day.create({
         calendar: options.calendar,
         offset: dayOffset
+      });
+    }));
+  },
+  buildDay: function(options) {
+    return A([Day.create({
+      calendar: options.calendar,
+      offset: 0
+    })
+    ]);
+  },
+  buildMonth: function (options) {
+    const maxDaysNumber = 42;
+    const calendarStartDate = options.calendar.get('startDate');
+    const firstDate = calendarStartDate.isAfter(calendarStartDate.clone().startOf('isoWeek')) ?
+                calendarStartDate.clone().startOf('isoWeek') :
+      calendarStartDate.clone().startOf('isoWeek').subtract(7, "days");
+    const firstDateDifference = firstDate.date() - firstDate.daysInMonth() - 1;
+
+    return A(range(firstDateDifference, maxDaysNumber + firstDateDifference).map(function(dayOffset) {
+      return Day.create({
+        calendar: options.calendar,
+        offset: dayOffset,
+        isInPeriod: (dayOffset >= 0) && (dayOffset < (calendarStartDate.daysInMonth()))
       });
     }));
   }

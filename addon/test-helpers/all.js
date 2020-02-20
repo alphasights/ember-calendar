@@ -1,82 +1,67 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import { click, find, triggerEvent } from '@ember/test-helpers';
+import { drag } from 'ember-drag-drop/test-support/helpers/drag-drop';
 
-var timeSlotHeight = function() {
-  return Ember.$('.as-calendar-timetable-content')
+const timeSlotHeight = function() {
+  return find('.as-calendar-timetable-content')
     .find('.as-calendar-timetable__slot-item:first')
-    .height();
+    .offsetHeight;
 };
 
-var dayWidth = function() {
-  var $content = Ember.$('.as-calendar-timetable-content');
-  return $content.width() / $content.find('.as-calendar-timetable__day').length;
+const dayWidth = function() {
+  const $content = find('.as-calendar-timetable-content');
+  return $content.offsetWidth() / $content.findAll('.as-calendar-timetable__day').length;
 };
 
-var pointForTime = function(options) {
-  var $target = Ember.$('.as-calendar-timetable-content');
-  var offsetX = options.day * dayWidth();
-  var offsetY = options.timeSlot * timeSlotHeight();
-  var pageX = $target.offset().left + offsetX;
-  var pageY = $target.offset().top + offsetY;
+const pointForTime = function(options) {
+  const $target = find('.as-calendar-timetable-content');
+  const offsetX = options.day * dayWidth();
+  const offsetY = options.timeSlot * timeSlotHeight();
+  const pageX = $target.getBoundingClientRect().left + offsetX;
+  const pageY = $target.getBoundingClientRect().top + offsetY;
 
   return {
     pageX: pageX,
     pageY: pageY,
-    clientX: pageX - Ember.$(document).scrollLeft(),
-    clientY: pageY - Ember.$(document).scrollTop()
+    clientX: pageX - document.documentElement.scrollLeft,
+    clientY: pageY - document.documentElement.scrollTop
   };
 };
 
-var selectTime = function(options) {
-  Ember.run(() => {
-    var $target = Ember.$('.as-calendar-timetable-content');
-    var point = pointForTime(options);
-    var event = Ember.$.Event('click');
+const selectTime = function(options) {
+  run(() => {
+    const $target = find('.as-calendar-timetable-content');
+    const point = pointForTime(options);
 
-    event.pageX = point.pageX;
-    event.pageY = point.pageY;
-
-    $target.trigger(event);
+    triggerEvent($target, 'click', point);
   });
 };
 
-var resizeOccurrence = function(occurrence, options) {
-  Ember.run(() => {
-    occurrence.find('.as-calendar-occurrence__resize-handle').simulate('drag', {
-      dx: 0,
-      dy: options.timeSlots * timeSlotHeight() + occurrence.height()
-    });
+const resizeOccurrence = async function(occurrence, options) {
+  let dragSelector = occurrence.find('.as-calendar-occurrence__resize-handle');
+  await drag(dragSelector, {
+    dropEndOptions: {
+      pageX: 0,
+      pageY: options.timeSlots * timeSlotHeight() + occurrence.offsetHeight
+    }
   });
 };
 
-var dragOccurrence = function(occurrence, options) {
-  Ember.run(() => {
-    occurrence.simulate('drag', {
-      dx: options.days * dayWidth(),
-      dy: options.timeSlots * timeSlotHeight() + occurrence.height()
-    });
+const dragOccurrence = async function(occurrence, options) {
+  await drag(occurrence, {
+    dropEndOptions: {
+      pageX: options.days * dayWidth(),
+      pageY: options.timeSlots * timeSlotHeight() + occurrence.offsetHeight
+    }
   });
 };
 
-var selectTimeZone = function(name) {
-  Ember.run(() => {
-    Ember.$('.as-calendar-time-zone-select .rl-dropdown-toggle').click();
-  });
-
-  Ember.run(() => {
-    Ember.$(`.as-calendar-time-zone-option:contains('${name}')`).click();
-  });
+const selectNextWeek = async function() {
+  await click('button.as-calendar-header__nav-group-action--next-week');
 };
 
-var selectNextWeek = function() {
-  Ember.run(() => {
-    Ember.$('button.as-calendar-header__nav-group-action--next-week').click();
-  });
-};
-
-var selectPreviousWeek = function() {
-  Ember.run(() => {
-    Ember.$('button.as-calendar-header__nav-group-action--previous-week').click();
-  });
+const selectPreviousWeek = async function() {
+ await click('button.as-calendar-header__nav-group-action--previous-week');
 };
 
 export {
@@ -85,7 +70,6 @@ export {
   selectTime,
   resizeOccurrence,
   dragOccurrence,
-  selectTimeZone,
   selectNextWeek,
   selectPreviousWeek
 };

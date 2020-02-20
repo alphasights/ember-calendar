@@ -1,23 +1,26 @@
-import Ember from 'ember';
+import { htmlSafe } from '@ember/template';
+import { computed } from '@ember/object';
+import { oneWay } from '@ember/object/computed';
+import Component from '@ember/component';
 import moment from 'moment';
 
-export default Ember.Component.extend({
-  classNameBindings: [':as-calendar-timetable-content'],
+export default Component.extend({
+  classNameBindings: [':as-calendar-timetable__content'],
   attributeBindings: ['_style:style'],
 
-  days: Ember.computed.oneWay('model.days'),
+  days: oneWay('model.days'),
   model: null,
-  timeSlotDuration: Ember.computed.oneWay('model.timeSlotDuration'),
-  timeSlots: Ember.computed.oneWay('model.timeSlots'),
+  timeSlotDuration: oneWay('model.timeSlotDuration'),
+  timeSlots: oneWay('model.timeSlots'),
   timetable: null,
 
-  timeSlotStyle: Ember.computed('timeSlotHeight', function() {
-    return Ember.String.htmlSafe(`height: ${this.get('timeSlotHeight')}px`);
+  timeSlotStyle: computed('timeSlotHeight', function() {
+    return htmlSafe(`height: ${this.get('timeSlotHeight')}px`);
   }),
 
-  dayWidth: Ember.computed(function() {
+  dayWidth: computed(function() {
     if (this.get('_wasInserted')) {
-      return this.$().width() / this.get('days.length');
+      return this.element.offsetWidth / this.get('days.length');
     } else {
       return 0;
     }
@@ -25,23 +28,24 @@ export default Ember.Component.extend({
 
   _wasInserted: false,
 
-  _style: Ember.computed(
+  _style: computed(
+  'model.isMonthView',
   'timeSlotHeight',
   'timeSlots.length', function() {
-    return Ember.String.htmlSafe(`height: ${this.get('timeSlots.length') *
-                       this.get('timeSlotHeight')}px;`);
+      return htmlSafe(`height: ${this.get('model.isMonthView') ? '600px' : this.get('timeSlots.length') * this.get('timeSlotHeight')}px;`);
   }),
 
-  _setWasInserted: Ember.on('didInsertElement', function() {
+  didInsertElement() {
     this.set('_wasInserted', true);
-  }),
+  },
 
-  _registerWithParent: Ember.on('init', function() {
+  init() {
+    this._super(...arguments);
     this.set('timetable.contentComponent', this);
-  }),
+  },
 
-  _selectTime: Ember.on('click', function(event) {
-    var offset = this.$().offset();
+  click(event) {
+    var offset = this.element.getBoundingClientRect();
     var offsetX = event.pageX - Math.floor(offset.left);
     var offsetY = event.pageY - Math.floor(offset.top);
 
@@ -51,8 +55,16 @@ export default Ember.Component.extend({
 
     var timeSlot = this.get('timeSlots').objectAt(timeSlotIndex);
 
-    this.attrs.onSelectTime(
+    this.get('onSelectTime')(
       moment(day.get('value')).add(timeSlot.get('time'))
     );
-  })
+  },
+
+  actions: {
+    goTo: function (day) {
+      if (this.get('onNavigateToDay')) {
+        this.get('onNavigateToDay')(day);
+      }
+    }
+  }
 });

@@ -1,35 +1,71 @@
 {{#if showHeader}}
-  {{as-calendar/header 
-    title=title 
-    model=model 
-    onNavigateWeek=(action "onNavigateWeek")}}
+  {{as-calendar/header
+    title=title
+    model=model
+    dateFormatOptions=dateFormatOptions
+    onNavigate=(action "onNavigate")
+    onTypeChange=(action "changeType")}}
 {{/if}}
 
 {{#as-calendar/timetable
   model=model
-  timeZone=timeZone
-  timeZoneOptions=timeZoneOptions
-  showTimeZoneSearch=showTimeZoneSearch
+  dateFormatOptions=dateFormatOptions
+  nowTimeLabelFormat=nowTimeLabelFormat
+  timeSlotLabelFormat=timeSlotLabelFormat
   timeSlotHeight=timeSlotHeight
-  defaultTimeZoneQuery=defaultTimeZoneQuery
-  onSelectTime=(action "addOccurrence")
-  onChangeTimeZone=(action "changeTimeZone") as |day timetable|}}
+  onNavigateToDay=(action "navigateToDay")
+  onSelectTime=(action "addOccurrence") as |day timetable|}}
   <ul class="occurrences">
-    {{#each day.occurrences as |occurrence|}}
-      <li>
-        {{#if hasBlock}}
-          {{yield occurrence timetable this}}
-        {{else}}
-          {{as-calendar/timetable/occurrence
-            model=occurrence
-            timeSlotHeight=timeSlotHeight
-            timetable=timetable
-            timeSlotDuration=timeSlotDuration
-            onUpdate=(action this.attrs.onUpdateOccurrence)
-            onRemove=(action this.attrs.onRemoveOccurrence)}}
-        {{/if}}
-      </li>
-    {{/each}}
+    {{#if model.isMonthView}}
+      {{#each day.shortOccurencesList as |occurrence|}}
+        <li>
+          {{#if hasBlock}}
+            {{yield occurrence timetable this}}
+          {{else}}
+            {{as-calendar/timetable/occurrence
+              model=occurrence
+              timeSlotHeight=monthTimeSlotHeight
+              timetable=timetable
+              timeSlotDuration=timeSlotDuration
+              isMonthView=true
+              isDraggable=false
+              isResizable=false
+              isEditable=true
+              onClick=(action (optional this.attrs.onClickOccurrence))
+              onDoubleClick=(action (optional this.attrs.onDoubleClickOccurrence))
+              onUpdate=(action this.attrs.onUpdateOccurrence)
+              onEdit=(action (optional this.attrs.onEditOccurrence))
+              onRemove=(action this.attrs.onRemoveOccurrence)}}
+          {{/if}}
+        </li>
+      {{/each}}
+      {{#if day.hasShowMore}}
+        <a class="as-calendar-timetable__day-showmore" href {{action 'navigateToDay' day.value bubbles=false}}>+{{day.showMoreCount}} more</a>
+      {{/if}}
+    {{else}}
+      {{#each day.occurrences as |occurrence|}}
+        <li>
+          {{#if hasBlock}}
+            {{yield occurrence timetable this}}
+          {{else}}
+            {{as-calendar/timetable/occurrence
+              model=occurrence
+              timeSlotHeight=timeSlotHeight
+              timetable=timetable
+              timeSlotDuration=timeSlotDuration
+              isMonthView=false
+              isDraggable=true
+              isResizable=true
+              isEditable=true
+              onClick=(action (optional this.attrs.onClickOccurrence))
+              onDoubleClick=(action (optional this.attrs.onDoubleClickOccurrence))
+              onUpdate=(action this.attrs.onUpdateOccurrence)
+              onEdit=(action (optional this.attrs.onEditOccurrence))
+              onRemove=(action this.attrs.onRemoveOccurrence)}}
+          {{/if}}
+        </li>
+      {{/each}}
+    {{/if}}
 
     {{#if day.occurrencePreview}}
       <li>

@@ -1,34 +1,28 @@
+import { oneWay } from '@ember/object/computed';
+import EmberObject, { computed } from '@ember/object';
 import Ember from 'ember';
 import moment from 'moment';
 import computedMoment from 'ember-calendar/macros/computed-moment';
 import Day from './day';
 
-var OccurrenceProxy = Ember.Object.extend(Ember.Copyable, {
+var OccurrenceProxy = EmberObject.extend(Ember.Copyable, {
   calendar: null,
   content: null,
   endingTime: computedMoment('content.endsAt'),
   startingTime: computedMoment('content.startsAt'),
-  title: Ember.computed.oneWay('content.title'),
+  title: oneWay('content.title'),
+  type: oneWay('content.type'),
 
-  duration: Ember.computed('startingTime', 'endingTime', function() {
+  duration: computed('startingTime', 'endingTime', function() {
     return moment.duration(
       this.get('endingTime').diff(this.get('startingTime'))
     );
   }),
 
-  day: Ember.computed('startingTime', 'calendar', 'calendar.{startingTime,startFromDate}', function() {
-    let currentDay = this.get('startingTime');
-    let firstDay;
-
-    if (this.get('calendar.startFromDate')) {
-      firstDay = this.get('calendar.startingTime');
-    } else {
-      firstDay = this.get('calendar.startingTime').startOf('isoWeek');
-    }
-
+  day: computed('startingTime', 'calendar', 'calendar.{startingTime,startFromDate}', function() {
     return Day.create({
       calendar: this.get('calendar'),
-      offset: currentDay.dayOfYear() - firstDay.dayOfYear()
+      offset: this.get('startingTime').diff(this.get('calendar.startDate'), 'days')
     });
   }),
 
@@ -36,10 +30,11 @@ var OccurrenceProxy = Ember.Object.extend(Ember.Copyable, {
     return OccurrenceProxy.create({
       calendar: this.get('calendar'),
 
-      content: Ember.Object.create({
+      content: EmberObject.create({
         startsAt: this.get('content.startsAt'),
         endsAt: this.get('content.endsAt'),
-        title: this.get('content.title')
+        title: this.get('content.title'),
+        type: this.get('content.type'),
       })
     });
   }

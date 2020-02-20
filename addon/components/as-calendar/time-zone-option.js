@@ -1,19 +1,21 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { oneWay } from '@ember/object/computed';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNameBindings: [':as-calendar-time-zone-option', 'isSelected:selected'],
 
-  description: Ember.computed.oneWay('option.description'),
+  description: oneWay('option.description'),
   option: null,
   selectedOption: null,
 
-  isSelected: Ember.computed(
+  isSelected: computed(
     'selectedOption.value',
     'option.value', function() {
       return this.get('selectedOption.value') === this.get('option.value');
   }),
 
-  _selectOption: Ember.on('click', function() {
-    this.attrs.onSelect(this.get('option.value'));
-  })
+  click() {
+    this.get('onSelect')(this.get('option.value'));
+  }
 });

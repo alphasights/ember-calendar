@@ -1,24 +1,48 @@
-import Ember from 'ember';
+import { oneWay } from '@ember/object/computed';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNameBindings: [':as-calendar-header'],
   tagName: 'header',
 
-  isInCurrentWeek: Ember.computed.oneWay('model.isInCurrentWeek'),
+  isInCurrentWeek: oneWay('model.isInCurrentPeriod'),
   model: null,
   title: '',
 
   actions: {
-    navigateWeek: function(index) {
-      this.get('model').navigateWeek(index);
+    navigateNext: function () {
+      this.get('model').navigateNext();
 
-      if (this.attrs['onNavigateWeek']) {
-        this.attrs['onNavigateWeek'](index);
+      if (this.get('onNavigate')) {
+        this.get('onNavigate')({
+          view: this.get('model.type'),
+          start: this.get('model.startDate'),
+          end: this.get('model.endDate'),
+          dir: 1
+        });
+      }
+    },
+    navigatePrevious: function() {
+      this.get('model').navigatePrevious();
+
+      if (this.get('onNavigate')) {
+        this.get('onNavigate')({
+          view: this.get('model.type'),
+          start: this.get('model.startDate'),
+          end: this.get('model.endDate'),
+          dir: -1
+        });
       }
     },
 
-    goToCurrentWeek: function() {
-      this.get('model').goToCurrentWeek();
+    changeType: function (type) {
+      if (this.get('onTypeChange')) {
+        this.get('onTypeChange')(type);
+      }
+    },
+
+    goToToday: function() {
+      this.get('model').goToToday();
     }
   }
 });
