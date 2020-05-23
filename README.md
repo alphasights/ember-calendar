@@ -3,7 +3,7 @@
 [![Npm Version](https://badge.fury.io/js/ember-calendar.svg)](http://badge.fury.io/js/ember-calendar)
 [![Ember Observer Score](http://emberobserver.com/badges/ember-calendar.svg)](http://emberobserver.com/addons/ember-calendar)
 [![Code Climate](https://codeclimate.com/github/alphasights/ember-calendar/badges/gpa.svg)](https://codeclimate.com/github/alphasights/ember-calendar)
-[![Build Status](https://circleci.com/gh/alphasights/ember-calendar.svg?style=shield&circle-token=6fa581b50c5f8496cf26768394cf6c1d43dfb98e)](https://circleci.com/gh/alphasights/ember-calendar)
+[![Build](https://travis-ci.org/mcfiredrill/ember-calendar.svg?branch=master)](https://travis-ci.org/mcfiredrill/ember-calendar/)
 
 An awesome Ember calendar, designed with composability and reusability in mind.
 
