@@ -24,9 +24,8 @@ export default Ember.Component.extend({
   _duration: Ember.computed.oneWay('model.duration'),
   _startingTime: Ember.computed('model.startingTime', function() {
     let time = get(this, 'model.startingTime');
-    let zone = get(this, 'model.calendar.timeZone');
 
-    return moment(time).tz(zone);
+    return moment(time);
   }),
 
   _dayStartingTime: Ember.computed.oneWay('day.startingTime'),

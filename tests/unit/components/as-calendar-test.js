@@ -9,7 +9,6 @@ import {
   selectTime,
   resizeOccurrence,
   dragOccurrence,
-  selectTimeZone,
   selectNextWeek,
   selectPreviousWeek
 } from 'ember-calendar/test-helpers/all';
@@ -130,43 +129,6 @@ test('Drag an occurrence', function(assert) {
 
   let inWednesday = this.$(testSelector('day-id', '2')).find('.as-calendar-occurrence').length === 1;
   assert.ok(inWednesday);
-});
-
-test('Change time zone', function(assert) {
-  this.render(hbs`
-    {{as-calendar
-      title="Ember Calendar"
-      occurrences=occurrences
-      timeZone="Europe/London"
-      dayStartingTime="9:00"
-      dayEndingTime="18:00"
-      timeSlotDuration="00:30"
-      defaultTimeZoneQuery="Rome"
-      onAddOccurrence=(action "calendarAddOccurrence")
-      onUpdateOccurrence=(action "calendarUpdateOccurrence")
-      onRemoveOccurrence=(action "calendarRemoveOccurrence")}}
-  `);
-
-  selectTime({ day: 0, timeSlot: 0 });
-
-  assert.equal(Ember.$('.as-calendar-occurrence').position().top, 0,
-    'it shows the occurrence in the London time zone');
-
-  selectTimeZone('Rome');
-
-  let tzOffset;
-
-  const romeDst = moment().tz('Europe/Rome').isDST();
-  const londonDst = moment().tz('Europe/London').isDST();
-
-  if (romeDst === londonDst) {
-    tzOffset = 1;
-  } else {
-    tzOffset = 2;
-  }
-
-  assert.equal(Ember.$('.as-calendar-occurrence').position().top, timeSlotHeight() * tzOffset,
-    'it shows the occurrence in the Rome time zone');
 });
 
 test('Change week', function(assert) {

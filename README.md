@@ -16,8 +16,6 @@ An awesome Ember calendar, designed with composability and reusability in mind.
 * Click to add occurrences
 * Resize occurrences
 * Drag and drop occurrences
-* Timezone aware
-* Search and change timezones
 
 ## Installation
 
@@ -50,7 +48,6 @@ the original object in the template, it is available as `occurrence.content`.
 {{as-calendar
   title="Ember Calendar"
   occurrences=occurrences
-  defaultTimeZoneQuery="New York|London|Dubai|Hong Kong"
   dayStartingTime="9:00"
   dayEndingTime="18:00"
   timeSlotDuration="00:30"
@@ -102,9 +99,6 @@ example, you can customize the appearance of the occurrences by passing a block:
   dayStartingTime="7:00"
   dayEndingTime="21:30"
   timeSlotDuration="00:30"
-  timeZoneOptions=timeZoneOptions
-  showTimeZoneSearch=false
-  timeZone=timeZone
   onNavigateWeek=(action "calendarNavigateWeek")
   onAddOccurrence=(action "calendarAddOccurrence") as |occurrence timetable calendar|}}
   {{#if occurrence.content.isEditable}}
@@ -140,13 +134,6 @@ You can customize the time slots by passing these options:
 * `timeSlotHeight`
 * `defaultOccurrenceTitle`
 * `defaultOccurrenceDuration`
-
-In addition, you can customize the timezone handling using these options:
-
-* `timeZone`
-* `timeZoneOptions`
-* `defaultTimeZoneQuery`
-* `showTimeZoneSearch`
 
 You can specify the initial week displayed by the calendar using the `startingDate` option. In addition, if you want the week to begin from that day, pass `startFromDate=true`.
 

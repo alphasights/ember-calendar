@@ -1,25 +1,20 @@
 {{#if showHeader}}
-  {{as-calendar/header 
-    title=title 
-    model=model 
+  {{as-calendar/header
+    title=title
+    model=model
     onNavigateWeek=(action "onNavigateWeek")}}
 {{/if}}
 
 {{#as-calendar/timetable
   model=model
-  timeZone=timeZone
-  timeZoneOptions=timeZoneOptions
-  showTimeZoneSearch=showTimeZoneSearch
   timeSlotHeight=timeSlotHeight
   timeSlotFormat=timeSlotFormat
-  defaultTimeZoneQuery=defaultTimeZoneQuery
-  onSelectTime=(action "addOccurrence")
-  onChangeTimeZone=(action "changeTimeZone") as |day timetable|}}
+  onSelectTime=(action "addOccurrence") as |day timetable|}}
   <ul class="occurrences">
     {{#each day.occurrences as |occurrence|}}
       <li>
         {{#if hasBlock}}
-          {{yield occurrence timetable this}}
+          {{yield occurrence (hash timetable=timetable day=day calendar=this)}}
         {{else}}
           {{as-calendar/timetable/occurrence
             model=occurrence
