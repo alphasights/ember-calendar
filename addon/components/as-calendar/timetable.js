@@ -7,6 +7,7 @@ export default Ember.Component.extend({
   days: Ember.computed.oneWay('model.days'),
   model: null,
   timeSlotHeight: null,
+  timeSlotFormat: 'h A',
   timeSlots: Ember.computed.oneWay('model.timeSlots'),
   contentComponent: null,
   dayWidth: Ember.computed.oneWay('contentComponent.dayWidth'),

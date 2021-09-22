@@ -24,7 +24,7 @@
     <ul class="as-calendar-timetable__slot-labels" style={{timeSlotLabelListStyle}}>
       {{#each labeledTimeSlots as |timeSlot|}}
         <li class="as-calendar-timetable__slot-label" style={{timeSlotLabelStyle}}>
-          {{moment-format timeSlot.value "h A"}}
+          {{moment-format timeSlot.value timeSlotFormat}}
         </li>
       {{/each}}
     </ul>
