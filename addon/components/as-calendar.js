@@ -15,6 +15,7 @@ export default Ember.Component.extend({
   showHeader: true,
   startingDate: null,
   startFromDate: null,
+  timeSlotLabelFormat: 'h A',
   timeSlotDuration: '00:30',
   timeSlotHeight: 20,
   title: null,

@@ -8,6 +8,7 @@
 {{#as-calendar/timetable
   model=model
   timeSlotHeight=timeSlotHeight
+  timeSlotLabelFormat=timeSlotLabelFormat
   onSelectTime=(action "addOccurrence") as |day timetable|}}
   <ul class="occurrences">
     {{#each day.occurrences as |occurrence|}}
