@@ -15,7 +15,7 @@ export default Ember.Component.extend({
   showHeader: true,
   startingDate: null,
   startFromDate: null,
-  timeSlotFormat: 'h A',
+  timeSlotLabelFormat: 'h A',
   timeSlotDuration: '00:30',
   timeSlotHeight: 20,
   title: null,
@@ -29,7 +29,6 @@ export default Ember.Component.extend({
       var occurrence = this.get('model').createOccurrence({
         startsAt: time.toDate()
       });
-
       this.attrs['onAddOccurrence'](occurrence.get('content'));
     },
 
