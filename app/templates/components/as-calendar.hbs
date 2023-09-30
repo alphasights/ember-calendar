@@ -1,0 +1,44 @@
+{{#if showHeader}}
+  {{as-calendar/header 
+    title=title 
+    model=model 
+    onNavigateWeek=(action "onNavigateWeek")}}
+{{/if}}
+
+{{#as-calendar/timetable
+  model=model
+  timeZone=timeZone
+  timeZoneOptions=timeZoneOptions
+  showTimeZoneSearch=showTimeZoneSearch
+  timeSlotHeight=timeSlotHeight
+  defaultTimeZoneQuery=defaultTimeZoneQuery
+  onSelectTime=(action "addOccurrence")
+  onChangeTimeZone=(action "changeTimeZone") as |day timetable|}}
+  <ul class="occurrences">
+    {{#each day.occurrences as |occurrence|}}
+      <li>
+        {{#if hasBlock}}
+          {{yield occurrence timetable this}}
+        {{else}}
+          {{as-calendar/timetable/occurrence
+            model=occurrence
+            timeSlotHeight=timeSlotHeight
+            timetable=timetable
+            timeSlotDuration=timeSlotDuration
+            onUpdate=(action this.attrs.onUpdateOccurrence)
+            onRemove=(action this.attrs.onRemoveOccurrence)}}
+        {{/if}}
+      </li>
+    {{/each}}
+
+    {{#if day.occurrencePreview}}
+      <li>
+        {{as-calendar/occurrence
+          class="as-calendar-occurrence--preview"
+          model=day.occurrencePreview
+          timeSlotHeight=timeSlotHeight
+          timeSlotDuration=timeSlotDuration}}
+      </li>
+    {{/if}}
+  </ul>
+{{/as-calendar/timetable}}

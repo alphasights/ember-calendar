@@ -1,0 +1,42 @@
+<div class="as-calendar-timetable__row as-calendar-timetable__row--highlighted">
+  <div class="as-calendar-timetable__first-column">
+    {{as-calendar/time-zone-select
+      value=timeZone
+      options=timeZoneOptions
+      defaultQuery=defaultTimeZoneQuery
+      showSearch=showTimeZoneSearch
+      onChangeTimeZone=(action this.attrs.onChangeTimeZone)}}
+  </div>
+
+  <div class="as-calendar-timetable__columns">
+    <ul>
+      {{#each days as |day|}}
+        <li class="as-calendar-timetable__column-item {{if day.isToday "as-calendar-timetable__column-item--highlighted"}}">
+          {{moment-format day.value "ddd D MMM"}}
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+</div>
+
+<div class="as-calendar-timetable__row">
+  <div class="as-calendar-timetable__first-column">
+    <ul class="as-calendar-timetable__slot-labels" style={{timeSlotLabelListStyle}}>
+      {{#each labeledTimeSlots as |timeSlot|}}
+        <li class="as-calendar-timetable__slot-label" style={{timeSlotLabelStyle}}>
+          {{moment-format timeSlot.value "h A"}}
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+
+  <div class="as-calendar-timetable__columns">
+    {{#as-calendar/timetable/content
+      timeSlotHeight=timeSlotHeight
+      model=model
+      timetable=this
+      onSelectTime=(action this.attrs.onSelectTime) as |day|}}
+      {{yield day this}}
+    {{/as-calendar/timetable/content}}
+  </div>
+</div>

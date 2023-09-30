@@ -1,0 +1,26 @@
+@include bem-block(as-calendar(occurrence, selector)) {
+  background-color: rgba(color(alert), .8);
+  border-left: 2px solid color(alert, dark);
+  color: color(white);
+  left: 0;
+  padding: 0 $column-gutter / 4;
+  position: absolute;
+  right: 0;
+
+  @include bem-modifier('preview') {
+    opacity: .7;
+  }
+
+  @include bem-element('container') {
+    height: 100%;
+    position: relative;
+  }
+
+  @include bem-element('title') {
+    color: color(white);
+    font-size: .9rem;
+    font-weight: $font-weight-extrabold;
+    margin: 0;
+    text-shadow: 0 0 1px rgba(0, 0, 0, .25);
+  }
+}
