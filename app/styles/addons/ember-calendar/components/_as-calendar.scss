@@ -1,0 +1,25 @@
+@include bem-block(as-calendar(selector)) {
+  background: color(white);
+  border: 1px solid color(border, dark);
+
+  @if $as-calendar-global-resets {
+    box-sizing: border-box;
+
+    *,
+    *:before,
+    *:after {
+      box-sizing: inherit;
+    }
+
+    ul,
+    li {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    ul {
+      line-height: $base-line-height;
+    }
+  }
+}

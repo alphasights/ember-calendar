@@ -1,0 +1,362 @@
+$base-font-family: "Helvetica Neue", Helvetica, sans-serif !default;
+$base-font-size: 14px !default;
+$small-font-size: 85% !default;
+$base-line-height: 1.5 !default;
+$heading-line-height: 1.5 !default;
+$font-weight-normal: 300 !default;
+$font-weight-bold: 400 !default;
+$font-weight-extrabold: 600 !default;
+
+$column-gutter: 1.5rem !default;
+$global-radius: 4px !default;
+$global-transition-duration: .325s !default;
+
+@function strip-units($value) {
+  @return ($value / ($value * 0 + 1));
+}
+
+@function rem($pxval) {
+  @if not unitless($pxval) {
+    $pxval: strip-units($pxval);
+  }
+
+  $base: $base-font-size;
+  @if not unitless($base) {
+    $base: strip-units($base);
+  }
+  @return ($pxval / $base) * 1rem;
+}
+
+@mixin clearfix {
+  &::after {
+    clear: both;
+    content: '';
+    display: table;
+  }
+}
+
+@mixin icon($name, $selector: '') {
+  @extend .fa-#{$name};
+
+  @if $selector == '' {
+    @include fa-icon;
+  } @else {
+    &:#{$selector} {
+      @include fa-icon;
+    }
+  }
+}
+
+@mixin button-icon($icon) {
+  @include icon($icon);
+}
+
+$colors: (
+  text: (
+    base: #222222,
+    small: #888888
+  ),
+
+  link: (
+    base: #008fd9,
+    dark: link (darken: 10%),
+    light: link (lighten: 10%)
+  ),
+
+  border: (
+    base: #ececec,
+    dark: border (darken: 10%),
+    light: border (lighten: 5%)
+  ),
+
+  primary: (
+    base: #f36b09,
+    dark: primary (darken: 20%),
+    light: primary (lighten: 40%)
+  ),
+
+  alert: (
+    base: #ff7f7d,
+    dark: alert (darken: 35%),
+    light: alert (lighten: 18%)
+  ),
+
+  white: #ffffff,
+  black: #000000,
+
+  gray: (
+    ghost: #fafafa,
+    snow: #f9f9f9,
+    vapor: #f6f6f6,
+    white-smoke: #f5f5f5,
+    silver: #efefef,
+    smoke: #eeeeee,
+    gainsboro: #dddddd,
+    iron: #cccccc,
+    base: #aaaaaa,
+    aluminum: #999999,
+    jumbo: #888888,
+    monsoon: #777777,
+    steel: #666666,
+    charcoal: #555555,
+    tuatara: #444444,
+    oil: #333333,
+    jet: #222222
+  )
+);
+
+@function color($color, $variant: base) {
+  $output-color: map-get($colors, $color);
+  $adjust: ();
+  $is-map: false;
+
+  @if type-of($output-color) == 'map' {
+    $output-color: map-get($output-color, $variant);
+    $is-map: true;
+  }
+
+  $base: nth($output-color, 1);
+
+  @if length($output-color) > 1 {
+    $adjust: nth($output-color, 2);
+  }
+
+  @if $is-map {
+    @if map-has-key($colors, $base) {
+      $output-color: color($base);
+    } @else {
+      $output-color: $base;
+    }
+
+    @each $function, $value in $adjust {
+      @if function-exists($function) {
+        $output-color: call($function, $output-color, $value);
+      } @else {
+        @error "Function '#{$function}' in #{$adjust} doesn't exist.";
+      }
+    }
+  }
+
+  @if not $output-color {
+    $output-color: $color;
+  }
+
+  @return $output-color;
+}
+
+$dropdown: (
+  background-color: color(white),
+  border-color: color(border),
+  z-index: 100,
+
+  link: (
+    color: color(text),
+    hover-color: color(black),
+    hover-background-color: color(border),
+    active-color: color(link),
+    active-background-color: color(border, light),
+    disabled-color: color(text, small)
+  ),
+
+  search: (
+    padding-inner: 3px,
+    icon-size: 32px,
+    results-height: 15em
+  )
+);
+
+@function dropdown-settings($setting, $property: null) {
+  @if $property {
+    @return map-get(map-get($dropdown, $setting), $property);
+  } @else {
+    @return map-get($dropdown, $setting);
+  }
+}
+
+$form-input: (
+  border-color: color(border),
+  shadow-color: rgba(color(black), .08),
+  text-color: color(text, small),
+  height: 36px,
+
+  disabled: (
+    background-color: color(border),
+    text-color: color(text, small)
+  )
+);
+
+@function form-input-settings($setting, $property: null) {
+  @if $property {
+    @return map-get(map-get($form-input, $setting), $property);
+  } @else {
+    @return map-get($form-input, $setting);
+  }
+}
+
+@mixin form-input-disabled() {
+  background-color: form-input-settings(disabled, background-color);
+  cursor: not-allowed;
+  color: form-input-settings(disabled, text-color);
+}
+
+@mixin form-input() {
+  background-color: color(white);
+  border-color: form-input-settings(border-color);
+  border-radius: $global-radius;
+  border: 1px solid form-input-settings(border-color);
+  box-shadow: 0 1px 1px form-input-settings(shadow-color);
+  color: form-input-settings(text-color);
+  font-size: $base-font-size;
+  margin-bottom: 0;
+  padding: 0 $base-font-size / 2;
+  text-shadow: 0 1px color(white);
+  width: 100%;
+
+  &:hover {
+    box-shadow: 0 1px 2px rgba(color(black), .1);
+  }
+
+  &:focus,
+  > *:focus, {
+    background-color: color(white);
+    color: color(text);
+    outline: none;
+  }
+
+  &:disabled,
+  &[disabled],
+  &[readonly] {
+    @include form-input-disabled;
+  }
+
+  &::-webkit-input-placeholder {
+    color: lighten(form-input-settings(text-color), 20%);
+  }
+}
+
+%grid-row,
+%grid-row-gutter {
+  @include clearfix;
+
+  display: block;
+  margin: 0;
+  position: relative;
+  width: 100%;
+}
+
+%grid-row-gutter {
+  padding-left: $column-gutter / 2;
+  padding-right: $column-gutter / 2;
+}
+
+%grid-column-6 {
+  float: left;
+  width: 50%;
+}
+
+%grid-column-1-collapsed {
+  float: left;
+  width: 10%;
+};
+
+%grid-column-11 {
+  float: left;
+  width: 90%;
+}
+
+$button-group: (
+  background-color: color(border, light),
+  padding: 15px,
+  icon-size: 28px
+);
+
+@function button-group-settings($setting, $property: null) {
+  @if $property {
+    @return map-get(map-get($button-group, $setting), $property);
+  } @else {
+    @return map-get($button-group, $setting);
+  }
+}
+
+%button {
+  appearance: none;
+  background-color: button-group-settings(background-color);
+  border: 0;
+  border-radius: $global-radius;
+  color: color(text, small);
+  cursor: pointer;
+  display: inline-block;
+  line-height: $base-line-height;
+  padding: 3px 10px;
+  text-decoration: none;
+  transition: background-color $global-transition-duration / 2 ease;
+  user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+
+  &:hover,
+  &:focus {
+    background-color: color(border);
+    outline: none;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: color(border, light);
+    }
+  }
+}
+
+%button-group {
+  display: inline-block;
+  list-style: none;
+  margin: 0;
+  white-space: nowrap;
+
+  &:not(:first-child) {
+    padding-left: button-group-settings(padding) / 2;
+  }
+
+  > li {
+    display: inline-block;
+    margin: 0 -2px 0 -1px;
+
+    button {
+      border-color: color(border);
+      border-radius: 0;
+      border-right: 0;
+      line-height: button-group-settings(icon-size);
+      padding: 0 button-group-settings(padding);
+
+      &:before {
+        display: inline-block;
+      }
+
+      &:not(:empty):before {
+        margin-left: -button-group-settings(padding);
+      }
+    }
+
+    &:first-child {
+      margin-left: 0;
+
+      &,
+      button {
+        border-bottom-left-radius: $global-radius;
+        border-top-left-radius: $global-radius;
+      }
+    }
+
+    &:last-child {
+      margin-right: 0;
+
+      &,
+      button {
+        border-bottom-right-radius: $global-radius;
+        border-top-right-radius: $global-radius;
+      }
+    }
+  }
+}

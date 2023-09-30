@@ -1,0 +1,36 @@
+@include bem-block(as-calendar(occurrence, selector)) {
+  @include bem-modifier('timetable') {
+    @include bem-element('resize-handle') {
+      bottom: 0;
+      cursor: ns-resize;
+      height: rem(8);
+      left: 0;
+      position: absolute;
+      right: 0;
+    }
+
+    @include bem-element('remove') {
+      @include icon(times);
+
+      color: color(white);
+      cursor: pointer;
+      opacity: 0;
+      position: absolute;
+      right: 0;
+      top: $column-gutter / 8;
+      transition: color $global-transition-duration / 2 linear,
+        opacity $global-transition-duration / 2 linear;
+
+      &:hover {
+        background-color: transparent;
+        opacity: 1 !important;
+      }
+    }
+  }
+
+  &:hover {
+    @include bem-element('remove') {
+      opacity: .65;
+    }
+  }
+}
