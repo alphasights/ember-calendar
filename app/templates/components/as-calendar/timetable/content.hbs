@@ -1,0 +1,15 @@
+<ul class="as-calendar-timetable__slots">
+  {{#each timeSlots as |timeSlot|}}
+    <li class="as-calendar-timetable__slot-item" style={{timeSlotStyle}}></li>
+  {{/each}}
+</ul>
+
+<ul class="as-calendar-timetable__days">
+  {{#each days as |day index|}}
+    <li
+      data-test-day data-test-day-id="{{index}}"
+      class="as-calendar-timetable__day {{if day.isToday "as-calendar-timetable__day--today"}}">
+      {{yield day this}}
+    </li>
+  {{/each}}
+</ul>

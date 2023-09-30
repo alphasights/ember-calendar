@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -e
+
+yarn global add bower
+yarn
+
+bower install
+bundle install
