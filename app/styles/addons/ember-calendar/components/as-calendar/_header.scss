@@ -1,0 +1,48 @@
+@include bem-block(as-calendar(header, selector)) {
+  @extend %grid-row-gutter;
+
+  background-color: color(border, light);
+  border-bottom: 1px solid color(gray, gainsboro);
+
+  @include bem-element('nav' 'title') {
+    @extend %grid-column-6;
+
+    line-height: as-calendar(header, height);
+  }
+
+  @include bem-element('title') {
+    font-size: rem(30);
+    font-weight: $font-weight-normal;
+    margin: 0;
+    padding-left: $column-gutter;
+  }
+
+  @include bem-element('nav') {
+    float: right;
+    text-align: right;
+  }
+
+  @include bem-element('nav-group') {
+    @extend %button-group;
+  }
+
+  @include bem-element('nav-group-action') {
+    @extend %button;
+
+    @include bem-modifier('previous-week') {
+      @include icon('caret-left');
+    }
+
+    @include bem-modifier('next-week') {
+      @include icon('caret-right');
+    }
+
+    @include bem-modifier('current-week') {
+      text-transform: uppercase;
+
+      &:disabled {
+        color: color(border);
+      }
+    }
+  }
+}

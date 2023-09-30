@@ -1,0 +1,16 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8-browsers
+
+    steps:
+      - checkout
+      - run: echo 'export PATH=${HOME}/${CIRCLE_PROJECT_REPONAME}/bin:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin:${PATH}' >> $BASH_ENV
+      - run: cd bin && wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 && tar xjvf phantomjs-2.0.0-ubuntu-12.04.tar.bz2
+      - run: ./bin/setup
+      - run: ./bin/ci
+      - save_cache:
+          key: node-modules
+          paths:
+            - ~/.cache/yarn

@@ -1,0 +1,26 @@
+$as-calendar: (
+  selector: 'as-calendar',
+
+  header: (
+    selector: 'as-calendar-header',
+    height: rem(80)
+  ),
+
+  timetable: (
+    selector: 'as-calendar-timetable'
+  ),
+
+  occurrence: (
+    selector: 'as-calendar-occurrence'
+  )
+);
+
+$as-calendar-global-resets: true !default;
+
+@function as-calendar($setting, $property: null) {
+  @if $property {
+    @return map-get(map-get($as-calendar, $setting), $property);
+  } @else {
+    @return map-get($as-calendar, $setting);
+  }
+}
